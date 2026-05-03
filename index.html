@@ -771,7 +771,157 @@
     }
 
     /* ─────────────────────────────────────────────────
-       9. CTA
+       9. REVIEWS
+    ───────────────────────────────────────────────── */
+    #reviews {
+      background: var(--forest);
+      padding: 100px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    #reviews::before {
+      content: '';
+      position: absolute;
+      top: -160px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, rgba(201,148,58,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .reviews-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .reviews-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .reviews-header .section-label { color: var(--gold-light); }
+    .reviews-header .section-divider { background: var(--gold); margin: 28px auto; }
+    .reviews-header-sub {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.82rem;
+      font-weight: 200;
+      color: rgba(255,255,255,0.5);
+      line-height: 2;
+    }
+
+    /* star row */
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 20px;
+    }
+    .review-stars span {
+      color: var(--gold);
+      font-size: 0.85rem;
+    }
+
+    /* grid */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* individual card */
+    .review-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,148,58,0.18);
+      border-radius: 20px;
+      padding: 36px 36px 32px;
+      position: relative;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .review-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(201,148,58,0.38);
+    }
+    /* opening quote mark */
+    .review-card::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 300;
+      color: rgba(201,148,58,0.18);
+      position: absolute;
+      top: 12px; left: 24px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .review-body {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.82);
+      line-height: 2.2;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .review-footer {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-top: 1px solid rgba(201,148,58,0.14);
+      padding-top: 20px;
+    }
+    .review-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--forest-soft), var(--forest-mid));
+      border: 1px solid rgba(201,148,58,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      color: var(--gold-light);
+      flex-shrink: 0;
+    }
+    .review-meta {}
+    .review-name {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2px;
+    }
+    .review-tag {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+    }
+
+    /* highlight card (first = featured, spans full) */
+    .review-card.featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: end;
+    }
+    .review-card.featured .review-body {
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .reviews-grid { grid-template-columns: 1fr; }
+      .review-card.featured {
+        grid-column: auto;
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ─────────────────────────────────────────────────
+       10. CTA
     ───────────────────────────────────────────────── */
     #cta {
       background: linear-gradient(160deg, var(--forest) 0%, #0a1a0d 100%);
@@ -1368,6 +1518,95 @@
           </div>
           <p class="recommend-text">お菓子作りに天然の香りをプラスしたい方</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REVIEWS ── -->
+  <section id="reviews">
+    <div class="reviews-inner">
+
+      <div class="reviews-header reveal">
+        <p class="section-label jost">Customer Reviews</p>
+        <h2 class="section-title light en">お客様の声</h2>
+        <div class="section-divider"></div>
+        <p class="reviews-header-sub">実際にお使いいただいたお客様からのレビュー</p>
+      </div>
+
+      <div class="reviews-grid">
+
+        <!-- featured: review 2 -->
+        <div class="review-card featured reveal">
+          <div>
+            <div class="review-stars">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p class="review-body">
+              「はちみつの香水」という言葉通り、蓋を開けた瞬間の華やかさに毎回感動します。自然のものなのでロットごとの微妙な違いも楽しめますが、芯にある力強さはいつも同じ。添加物のない、野生の生命力をそのまま頂いている安心感があります。
+            </p>
+          </div>
+          <div class="review-footer" style="min-width:160px; align-self:end;">
+            <div class="review-avatar">M</div>
+            <div class="review-meta">
+              <p class="review-name">M.K. 様</p>
+              <p class="review-tag jost">Verified Purchase</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- review 1 -->
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="review-body">
+            飽きずにずっと食べられる、一番好きな蜂蜜です。どのロットでも嫌になることなく、鼻に通る香りが好きです！結晶化してシャリシャリする時が特に美味しい。
+          </p>
+          <div class="review-footer">
+            <div class="review-avatar">A</div>
+            <div class="review-meta">
+              <p class="review-name">A.S. 様</p>
+              <p class="review-tag jost">Verified Purchase</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- review 3 -->
+        <div class="review-card reveal">
+          <div class="review-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="review-body">
+            お菓子作りに使うと、焼き上がりの香りが別物になります。でも結局、そのままスプーンで一口食べるのが一番贅沢かもしれません（笑）。結晶化して少し固まったものを、温かいスコーンに乗せて食べるのが最近のブームです。
+          </p>
+          <div class="review-footer">
+            <div class="review-avatar">Y</div>
+            <div class="review-meta">
+              <p class="review-name">Y.T. 様</p>
+              <p class="review-tag jost">Verified Purchase</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- review 4 -->
+        <div class="review-card featured reveal">
+          <div>
+            <div class="review-stars">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p class="review-body">
+              非加熱、抗生剤フリー。一切の妥協がない品質だからこそ、この澄んだ味がするのだと納得しています。結晶化することを「生きている証」として楽しめる方に、ぜひ手にとって欲しい蜂蜜。何度食べても、初めて食べた時の驚きが薄れません。
+            </p>
+          </div>
+          <div class="review-footer" style="min-width:160px; align-self:end;">
+            <div class="review-avatar">R</div>
+            <div class="review-meta">
+              <p class="review-name">R.N. 様</p>
+              <p class="review-tag jost">Verified Purchase</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
