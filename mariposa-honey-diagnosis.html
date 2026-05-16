@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MARIPOSA | はちみつ診断 — 世界の果てから届いた一匙を</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       CSS Custom Properties
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    :root {
+      --bg:        #F5EFE2;
+      --bg-card:   #FCF8F0;
+      --bg-dark:   #EAE0CC;
+      --text:      #261508;
+      --text-mid:  #6A4E35;
+      --text-lt:   #9A7A5E;
+      --green:     #223528;
+      --green-mid: #374F3C;
+      --beige:     #C0965C;
+      --honey:     #C4801A;
+      --sepia:     #7A5235;
+      --cream:     #FAF6EE;
+      --line:      rgba(192,150,92,0.4);
+      --serif-jp:  'Noto Serif JP', serif;
+      --serif-en:  'Cormorant Garamond', serif;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       Reset & Base
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overscroll-behavior: none; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--serif-jp);
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    /* Grain texture */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+    }
+
+    /* Ambient glow */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 10%, rgba(192,150,92,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 90%, rgba(34,53,40,0.08) 0%, transparent 70%);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       Screen System
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    #app {
+      position: fixed; inset: 0;
+      overflow: hidden;
+    }
+
+    .screen {
+      position: absolute; inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: env(safe-area-inset-top, 0) 1.5rem env(safe-area-inset-bottom, 0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      will-change: opacity, transform;
+    }
+
+    .screen.is-active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .screen.fade-in  { animation: fadeSlideIn  0.55s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .screen.fade-out { animation: fadeSlideOut 0.38s cubic-bezier(0.55,0,1,0.45) forwards; }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeSlideOut {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-22px); }
+    }
+
+    /* Inner centering wrapper */
+    .screen-inner {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       START SCREEN
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    #screen-start {
+      justify-content: center;
+    }
+    #screen-start .screen-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .brand-mark {
+      font-family: var(--serif-en);
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.5em;
+      color: var(--sepia);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 2.6rem;
+      animation: revealUp 1s ease both 0.1s;
+    }
+
+    .start-emblem {
+      width: 108px;
+      height: 108px;
+      margin-bottom: 2.8rem;
+      animation: revealUp 1s ease both 0.3s, float 5s ease-in-out 1.5s infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-9px); }
+    }
+
+    .start-catch {
+      font-size: 1.02rem;
+      font-weight: 300;
+      line-height: 2.1;
+      letter-spacing: 0.06em;
+      text-align: center;
+      color: var(--text);
+      animation: revealUp 1s ease both 0.5s;
+    }
+
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin: 1.6rem 0;
+      animation: revealUp 1s ease both 0.6s;
+    }
+    .ornament-divider::before,
+    .ornament-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .ornament-divider span {
+      font-family: var(--serif-en);
+      font-size: 0.8rem;
+      color: var(--beige);
+      opacity: 0.8;
+    }
+
+    .start-sub {
+      font-size: 0.78rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
+      color: var(--text-lt);
+      text-align: center;
+      animation: revealUp 1s ease both 0.7s;
+    }
+
+    @keyframes revealUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       Buttons
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .btn-start {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 2.4rem auto 0;
+      padding: 1.1rem 2rem;
+      background: var(--green);
+      color: var(--cream);
+      border: none;
+      font-family: var(--serif-jp);
+      font-size: 0.88rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      animation: revealUp 1s ease both 0.9s;
+    }
+    .btn-start::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(192,150,92,0);
+      transition: background 0.3s;
+    }
+    .btn-start:active::after { background: rgba(192,150,92,0.15); }
+
+    /* Choice buttons */
+    .choice-btn {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--line);
+      padding: 1.25rem 1.4rem 1.25rem 1.6rem;
+      cursor: pointer;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .choice-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 100%;
+      background: var(--green);
+      transition: width 0.35s cubic-bezier(0.22,1,0.36,1);
+      z-index: 0;
+    }
+
+    .choice-btn.chosen::before { width: 100%; }
+
+    .choice-inner {
+      position: relative;
+      z-index: 1;
+      transition: color 0.25s;
+    }
+
+    .choice-btn.chosen .choice-inner { color: var(--cream); }
+
+    .choice-label {
+      display: block;
+      font-family: var(--serif-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--beige);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      transition: color 0.25s;
+    }
+    .choice-btn.chosen .choice-label { color: rgba(250,246,238,0.65); }
+
+    .choice-main {
+      display: block;
+      font-size: 0.96rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+      transition: color 0.25s;
+    }
+    .choice-btn.chosen .choice-main { color: var(--cream); }
+
+    .choice-sub {
+      display: block;
+      font-size: 0.73rem;
+      font-weight: 200;
+      line-height: 1.7;
+      color: var(--text-lt);
+      transition: color 0.25s;
+    }
+    .choice-btn.chosen .choice-sub { color: rgba(250,246,238,0.8); }
+
+    /* CTA button */
+    .btn-cta {
+      display: block;
+      width: 100%;
+      padding: 1.15rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--honey);
+      color: var(--honey);
+      font-family: var(--serif-jp);
+      font-size: 0.88rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-cta:active { background: var(--honey); color: var(--cream); }
+
+    .btn-retry {
+      display: block;
+      width: 100%;
+      padding: 0.9rem;
+      background: transparent;
+      border: none;
+      color: var(--text-lt);
+      font-family: var(--serif-jp);
+      font-size: 0.76rem;
+      font-weight: 200;
+      letter-spacing: 0.12em;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       QUESTION SCREEN
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    #screen-q {
+      justify-content: center;
+      min-height: 100%;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    #screen-q .screen-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2.4rem;
+    }
+    .prog-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      transition: background 0.4s, transform 0.4s;
+    }
+    .prog-dot.is-done    { background: var(--beige); }
+    .prog-dot.is-current { background: var(--green); transform: scale(1.4); }
+    .prog-line {
+      flex: 1;
+      max-width: 32px;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .q-number {
+      font-family: var(--serif-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: var(--sepia);
+      text-align: center;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+    }
+    .q-theme {
+      font-family: var(--serif-en);
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      color: var(--beige);
+      text-align: center;
+      margin-bottom: 1.1rem;
+      opacity: 0.85;
+    }
+    .q-divider {
+      width: 28px;
+      height: 1px;
+      background: var(--line);
+      margin: 0 auto 1.5rem;
+    }
+    .q-text {
+      font-size: 0.98rem;
+      font-weight: 300;
+      line-height: 2.0;
+      letter-spacing: 0.06em;
+      text-align: center;
+      color: var(--text);
+      margin-bottom: 2.2rem;
+      white-space: pre-line;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       LOADING SCREEN
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    #screen-loading {
+      justify-content: center;
+      background: var(--green);
+    }
+    #screen-loading::before {
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 20%, rgba(192,150,92,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 70% 80%, rgba(0,0,0,0.2) 0%, transparent 70%);
+    }
+    #screen-loading .screen-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .loading-bee {
+      width: 90px;
+      height: 90px;
+      margin-bottom: 2.5rem;
+    }
+
+    .loading-text {
+      font-size: 0.88rem;
+      font-weight: 200;
+      line-height: 2.1;
+      letter-spacing: 0.1em;
+      color: rgba(250,246,238,0.88);
+      text-align: center;
+    }
+
+    .loading-dots {
+      display: flex;
+      gap: 0.45rem;
+      justify-content: center;
+      margin-top: 1.6rem;
+    }
+    .loading-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(192,150,92,0.7);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    .loading-dot:nth-child(2) { animation-delay: 0.22s; }
+    .loading-dot:nth-child(3) { animation-delay: 0.44s; }
+
+    @keyframes pulse {
+      0%,100% { opacity: 0.3; transform: scale(0.75); }
+      50%      { opacity: 1;   transform: scale(1.2); }
+    }
+
+    /* Bee animation */
+    .bee-body { animation: beeDrift 3.5s ease-in-out infinite; transform-origin: center; }
+    @keyframes beeDrift {
+      0%,100% { transform: translateY(0) rotate(-2deg); }
+      30%     { transform: translateY(-12px) rotate(4deg); }
+      65%     { transform: translateY(-5px) rotate(-3deg); }
+    }
+    .bee-wing-l { animation: wingL 0.18s linear infinite alternate; transform-origin: 58px 36px; }
+    .bee-wing-r { animation: wingR 0.18s linear infinite alternate; transform-origin: 32px 36px; }
+    @keyframes wingL { to { transform: scaleY(0.5) rotate(5deg); } }
+    @keyframes wingR { to { transform: scaleY(0.5) rotate(-5deg); } }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       RESULT SCREEN
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    #screen-result {
+      justify-content: flex-start;
+      padding-top: 3rem;
+      padding-bottom: 5rem;
+    }
+    #screen-result .screen-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .result-top-label {
+      font-family: var(--serif-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      color: var(--sepia);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: revealUp 0.8s ease 0.1s forwards;
+    }
+    .result-element-badge {
+      font-family: var(--serif-en);
+      font-size: 0.88rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--green);
+      text-align: center;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: revealUp 0.8s ease 0.25s forwards;
+    }
+
+    /* Oracle card */
+    .result-card-wrap {
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto 2rem;
+      opacity: 0;
+      animation: revealUp 0.9s ease 0.4s forwards;
+    }
+
+    .result-card {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--bg-card);
+      position: relative;
+    }
+
+    /* Corner ornaments */
+    .result-card::before,
+    .result-card::after,
+    .result-card .card-corner-br,
+    .result-card .card-corner-tl2 { content: ''; position: absolute; width: 18px; height: 18px; }
+    .result-card::before  { top: 6px; left: 6px; border-top: 1px solid var(--beige); border-left: 1px solid var(--beige); }
+    .result-card::after   { top: 6px; right: 6px; border-top: 1px solid var(--beige); border-right: 1px solid var(--beige); }
+
+    .card-corner-br,
+    .card-corner-bl { position: absolute; width: 18px; height: 18px; }
+    .card-corner-br { bottom: 6px; right: 6px; border-bottom: 1px solid var(--beige); border-right: 1px solid var(--beige); }
+    .card-corner-bl { bottom: 6px; left: 6px; border-bottom: 1px solid var(--beige); border-left: 1px solid var(--beige); }
+
+    .card-illustration {
+      width: 100%;
+      display: block;
+      line-height: 0;
+    }
+    .card-illustration svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card-name-area {
+      padding: 1.3rem 1.5rem 1.4rem;
+      text-align: center;
+      border-top: 1px solid var(--bg-dark);
+    }
+    .honey-name-en {
+      display: block;
+      font-family: var(--serif-en);
+      font-size: 1.55rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+    .honey-name-jp {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 200;
+      letter-spacing: 0.28em;
+      color: var(--text-lt);
+    }
+
+    /* Description */
+    .result-desc-wrap {
+      width: 100%;
+      padding: 0 0.2rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: revealUp 0.9s ease 0.65s forwards;
+    }
+    .result-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 2.1;
+      letter-spacing: 0.06em;
+      text-align: center;
+      color: var(--text-mid);
+    }
+
+    /* CTA area */
+    .result-cta-wrap {
+      width: 100%;
+      opacity: 0;
+      animation: revealUp 0.9s ease 0.85s forwards;
+    }
+    .cta-note {
+      font-size: 0.68rem;
+      font-weight: 200;
+      letter-spacing: 0.12em;
+      color: var(--text-lt);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       Misc shared
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .line-ornament {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 1.8rem 0;
+    }
+    .line-ornament::before,
+    .line-ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .line-ornament span {
+      font-family: var(--serif-en);
+      font-size: 0.65rem;
+      color: var(--beige);
+      letter-spacing: 0.2em;
+      opacity: 0.7;
+    }
+
+    /* Scroll fix for result page */
+    #screen-result { overflow-y: auto; }
+
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══════════════════════════════
+       START SCREEN
+  ═══════════════════════════════ -->
+  <div id="screen-start" class="screen is-active">
+    <div class="screen-inner">
+      <p class="brand-mark">Mariposa Honey</p>
+
+      <!-- Animated Emblem SVG -->
+      <svg class="start-emblem" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <defs>
+          <radialGradient id="emblem-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F5EFE2"/>
+            <stop offset="100%" stop-color="#C0965C" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <!-- Outer ring -->
+        <circle cx="54" cy="54" r="50" stroke="#C0965C" stroke-width="0.6" opacity="0.5"/>
+        <circle cx="54" cy="54" r="44" stroke="#C0965C" stroke-width="0.3" opacity="0.35"/>
+        <!-- Honeycomb hex -->
+        <polygon points="54,22 68,30 68,46 54,54 40,46 40,30" stroke="#7A5235" stroke-width="0.8" opacity="0.5"/>
+        <polygon points="54,54 68,62 68,78 54,86 40,78 40,62" stroke="#7A5235" stroke-width="0.8" opacity="0.5"/>
+        <polygon points="22,38 36,30 36,46 22,54 8,46 8,30" stroke="#C0965C" stroke-width="0.5" opacity="0.25" transform="translate(14,0)"/>
+        <polygon points="70,38 84,30 84,46 70,54 56,46 56,30" stroke="#C0965C" stroke-width="0.5" opacity="0.25" transform="translate(0,0)"/>
+        <!-- Bee silhouette -->
+        <!-- Body -->
+        <ellipse cx="54" cy="48" rx="8" ry="12" fill="#C0965C" opacity="0.7"/>
+        <path d="M46,48 Q54,58 62,48" stroke="#7A5235" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M46,52 Q54,62 62,52" stroke="#7A5235" stroke-width="0.8" fill="none" opacity="0.5"/>
+        <!-- Wings -->
+        <ellipse cx="42" cy="43" rx="10" ry="6" fill="#C0965C" opacity="0.25" transform="rotate(-20 42 43)"/>
+        <ellipse cx="66" cy="43" rx="10" ry="6" fill="#C0965C" opacity="0.25" transform="rotate(20 66 43)"/>
+        <!-- Head -->
+        <circle cx="54" cy="36" r="5.5" fill="#7A5235" opacity="0.65"/>
+        <!-- Antennae -->
+        <path d="M51,32 Q47,25 43,22" stroke="#7A5235" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M57,32 Q61,25 65,22" stroke="#7A5235" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <circle cx="43" cy="22" r="1.5" fill="#C0965C" opacity="0.7"/>
+        <circle cx="65" cy="22" r="1.5" fill="#C0965C" opacity="0.7"/>
+        <!-- Honey drop below -->
+        <path d="M54,70 Q60,80 54,88 Q48,80 54,70" fill="#C0965C" opacity="0.55"/>
+      </svg>
+
+      <p class="start-catch">今のあなたに、<br>ぴったりの一匙を。</p>
+
+      <div class="ornament-divider"><span>✦</span></div>
+
+      <p class="start-sub">心と身体を整える&emsp;はちみつ診断</p>
+
+      <button class="btn-start" id="btn-start">診断をはじめる</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       QUESTION SCREEN (dynamic)
+  ═══════════════════════════════ -->
+  <div id="screen-q" class="screen">
+    <div class="screen-inner">
+      <!-- Progress -->
+      <div class="progress-wrap" id="progress-dots"></div>
+      <!-- Question content injected by JS -->
+      <div id="q-content"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       LOADING SCREEN
+  ═══════════════════════════════ -->
+  <div id="screen-loading" class="screen">
+    <div class="screen-inner">
+      <!-- Animated Bee -->
+      <svg class="loading-bee" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <g class="bee-body">
+          <!-- Wings -->
+          <ellipse class="bee-wing-l" cx="62" cy="35" rx="18" ry="10" fill="rgba(250,246,238,0.2)" transform="rotate(-20 62 35)"/>
+          <ellipse class="bee-wing-r" cx="28" cy="35" rx="18" ry="10" fill="rgba(250,246,238,0.2)" transform="rotate(20 28 35)"/>
+          <!-- Body segments -->
+          <ellipse cx="45" cy="55" rx="13" ry="18" fill="#C0965C" opacity="0.85"/>
+          <path d="M32,50 Q45,48 58,50" stroke="#7A5235" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <path d="M32,55 Q45,53 58,55" stroke="#7A5235" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <path d="M33,60 Q45,58 57,60" stroke="#7A5235" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <!-- Stinger -->
+          <path d="M45,73 L45,80" stroke="#7A5235" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          <!-- Head -->
+          <circle cx="45" cy="34" r="9" fill="#C4801A" opacity="0.9"/>
+          <!-- Eyes -->
+          <circle cx="41" cy="32" r="2" fill="#261508" opacity="0.7"/>
+          <circle cx="49" cy="32" r="2" fill="#261508" opacity="0.7"/>
+          <!-- Antennae -->
+          <path d="M41,26 Q36,17 30,14" stroke="rgba(250,246,238,0.7)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <path d="M49,26 Q54,17 60,14" stroke="rgba(250,246,238,0.7)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <circle cx="30" cy="14" r="2" fill="rgba(250,246,238,0.7)"/>
+          <circle cx="60" cy="14" r="2" fill="rgba(250,246,238,0.7)"/>
+          <!-- Legs -->
+          <path d="M36,56 Q30,60 26,65" stroke="rgba(250,246,238,0.5)" stroke-width="1" stroke-linecap="round" fill="none"/>
+          <path d="M54,56 Q60,60 64,65" stroke="rgba(250,246,238,0.5)" stroke-width="1" stroke-linecap="round" fill="none"/>
+          <path d="M34,62 Q28,66 26,72" stroke="rgba(250,246,238,0.4)" stroke-width="1" stroke-linecap="round" fill="none"/>
+          <path d="M56,62 Q62,66 64,72" stroke="rgba(250,246,238,0.4)" stroke-width="1" stroke-linecap="round" fill="none"/>
+        </g>
+      </svg>
+      <p class="loading-text">ミツバチがあなたにぴったりの<br>はちみつを探しています...</p>
+      <div class="loading-dots">
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       RESULT SCREEN (dynamic)
+  ═══════════════════════════════ -->
+  <div id="screen-result" class="screen">
+    <div class="screen-inner">
+      <p class="result-top-label">Your Element</p>
+      <p class="result-element-badge" id="result-element"></p>
+      <div class="result-card-wrap">
+        <div class="result-card" id="result-card">
+          <div class="card-illustration" id="card-illustration"></div>
+          <div class="card-corner-br"></div>
+          <div class="card-corner-bl"></div>
+          <div class="card-name-area">
+            <span class="honey-name-en" id="result-name-en"></span>
+            <span class="honey-name-jp" id="result-name-jp"></span>
+          </div>
+        </div>
+      </div>
+      <div class="result-desc-wrap">
+        <div class="line-ornament"><span>✦</span></div>
+        <p class="result-desc" id="result-desc"></p>
+        <div class="line-ornament"><span>✦</span></div>
+      </div>
+      <div class="result-cta-wrap">
+        <p class="cta-note">あなたのエレメントが選んだ一瓶</p>
+        <a class="btn-cta" id="btn-shop" href="#" target="_blank" rel="noopener">このはちみつをお迎えする</a>
+        <button class="btn-retry" id="btn-retry">もう一度診断する</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+/* ═══════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════ */
+
+const RESULTS = {
+  karri: {
+    nameEn: 'Karri',
+    nameJp: 'カリ',
+    element: '風 — Wind',
+    elementKey: 'wind',
+    desc: '軽やかに心身を巡る「風」のエレメント。日常のコンディションをさらりと健やかに保ち、内側からの軽快な流れをサポートします。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/138397344'
+  },
+  leatherwood: {
+    nameEn: 'Leatherwood',
+    nameJp: 'レザーウッド',
+    element: '風 — Wind',
+    elementKey: 'wind',
+    desc: '五感を呼び覚ます「風」のエレメント。蓋を開けた瞬間の花の香りが、あなたの感性に新しい風を通し、きらめく朝を始めます。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/65052038'
+  },
+  scottish_heather: {
+    nameEn: 'Scottish Heather',
+    nameJp: 'スコティッシュヘザー',
+    element: '火 — Fire',
+    elementKey: 'fire',
+    desc: '穏やかに心に灯る「火」のエレメント。スモーキーな大人の甘みが、今日一日の疲れを優しく燃やし、温かな休息へと導きます。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/71820954'
+  },
+  jarrah: {
+    nameEn: 'Jarrah',
+    nameJp: 'ジャラ',
+    element: '土 — Earth',
+    elementKey: 'earth',
+    desc: '包容力に満ちた「土」のエレメント。上質な黒糖のようなまろやかなコクが、夜のあなたを優しくグラウンディング（安定）させます。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/65052125'
+  },
+  manuka: {
+    nameEn: 'Manuka',
+    nameJp: 'マヌカ',
+    element: '火 — Fire',
+    elementKey: 'fire',
+    desc: '強く燃え上がる「火」のエレメント。大自然の野生の熱量をそのまま凝縮。どんな環境にも負けない、あなたを強く守る究極のお守り。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/81133526'
+  },
+  linden: {
+    nameEn: 'Linden',
+    nameJp: 'リンデン',
+    element: '水 — Water',
+    elementKey: 'water',
+    desc: '清らかな「水」のエレメント。ハーブの清涼感が頭の使いすぎや張り詰めた心をサラサラと洗い流し、深い「凪」の眠りへと誘います。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/66565514'
+  },
+  rewarewa: {
+    nameEn: 'Rewarewa',
+    nameJp: 'レワレワ',
+    element: '土 — Earth',
+    elementKey: 'earth',
+    desc: '活力を生み出す「土」のエレメント。モルトを思わせる力強いコクが、ブレない自分の土台を作り、前向きなエネルギーを満たします。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/82941380'
+  },
+  blackbutt: {
+    nameEn: 'Blackbutt',
+    nameJp: 'ブラックバット',
+    element: '土 — Earth',
+    elementKey: 'earth',
+    desc: '太古の記憶を宿す「土」のエレメント。超濃厚な黄金の蜜が、これまでにないディープなヒーリング（癒やし）を心身に与える特別なご褒美。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/64977161'
+  }
+};
+
+const QUESTIONS = [
+  {
+    id: 'q1',
+    step: 1,
+    number: 'Question  01',
+    theme: '時間のゆらぎ',
+    text: '今のあなたが、はちみつを取り入れたい\n「時間」はどちらですか？',
+    choices: [
+      { id:'A', label:'Morning', main:'朝〜日中', sub:'一日を健やかにスタートしたい、アクティブに過ごしたい' },
+      { id:'B', label:'Evening', main:'夕方〜夜', sub:'今日一日を優しくリセットしたい、心地よい眠りにつきたい' }
+    ]
+  },
+  {
+    id: 'q2',
+    step: 2,
+    number: 'Question  02',
+    theme: '味と食感の好み',
+    text: 'あなたの本能が、いま求めている\n「質感」はどちらですか？',
+    choices: [
+      { id:'A', label:'Refreshing', main:'爽やか・華やか', sub:'ハーブや花の香りが広がる、後に残らないスッキリ感' },
+      { id:'B', label:'Rich',       main:'濃厚・まろやか', sub:'キャラメルや黒糖のような、コク深く余韻のある甘み' }
+    ]
+  }
+];
+
+function getQ3(a1, a2) {
+  if (a1==='A' && a2==='A') return {
+    id:'q3', step:3,
+    number:'Question  03', theme:'呼応する自然のエレメント',
+    text:'いま、あなたの心に吹かせたい\n「風」はどちらですか？',
+    choices:[
+      { id:'A', label:'Clarity',     main:'思考をクリアにし',     sub:'新しいインスピレーションを運ぶ風', result:'leatherwood' },
+      { id:'B', label:'Circulation', main:'そよ風のように',       sub:'心身の滞りを軽やかに巡らせる風', result:'karri' }
+    ]
+  };
+  if (a1==='A' && a2==='B') return {
+    id:'q3', step:3,
+    number:'Question  03', theme:'呼応する自然のエレメント',
+    text:'今日、あなたが心身にチャージしたい\nエネルギーは？',
+    choices:[
+      { id:'A', label:'Grounding', main:'大地に深く根を張り', sub:'軸を安定させるパワー',  result:'rewarewa' },
+      { id:'B', label:'Vitality',  main:'内なる情熱を燃やし', sub:'身体を強く守るパワー', result:'manuka' }
+    ]
+  };
+  if (a1==='B' && a2==='A') return {
+    id:'q3', step:3,
+    number:'Question  03', theme:'呼応する自然のエレメント',
+    text:'眠る前のひととき、あなたの魂が\n還りたい場所は？',
+    choices:[
+      { id:'A', label:'Cleansing', main:'張り詰めた心を洗い流し', sub:'静かに満ちていく場所',      result:'linden' },
+      { id:'B', label:'Warmth',    main:'暖炉の火のように',       sub:'一日の終わりを優しく温める場所', result:'scottish_heather' }
+    ]
+  };
+  return { // B-B
+    id:'q3', step:3,
+    number:'Question  03', theme:'呼応する自然のエレメント',
+    text:'大自然の「土」のエネルギー、\n今夜はどう受け取りたい？',
+    choices:[
+      { id:'A', label:'Embrace', main:'母なる大地の包容力で',  sub:'ゆったりとまろやかに包まれたい',       result:'jarrah' },
+      { id:'B', label:'Release', main:'太古の森の奥深く',      sub:'ディープに自分を解放して癒やされたい', result:'blackbutt' }
+    ]
+  };
+}
+
+/* ═══════════════════════════════════════════════════
+   CARD SVG ILLUSTRATIONS
+═══════════════════════════════════════════════════ */
+
+function cardSVG(key) {
+  const defs = {
+    wind:  { bg1:'#DFF0EC', bg2:'#B8DBE4', acc:'#4A9090', mid:'#7ABCB8', stroke:'#3A7878' },
+    fire:  { bg1:'#F5EBE0', bg2:'#E8C898', acc:'#B8622A', mid:'#D4904A', stroke:'#8A3A18' },
+    earth: { bg1:'#EAF0E2', bg2:'#C8D8B0', acc:'#4A7040', mid:'#6A9058', stroke:'#2A4A28' },
+    water: { bg1:'#DFF0F8', bg2:'#A8CCE0', acc:'#3A6A8C', mid:'#5A98C0', stroke:'#1A4A6C' }
+  };
+
+  const d = defs[RESULTS[key].elementKey];
+
+  const motifs = {
+    // ① Karri — Wind — eucalyptus, flowing
+    karri: `
+      <circle cx="160" cy="165" r="110" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="160" cy="165" r="82"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.25"/>
+      <circle cx="160" cy="165" r="55"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.2"/>
+      <!-- Trunk -->
+      <path d="M158,290 Q162,240 156,200 Q150,160 158,110 Q162,80 160,55" stroke="${d.stroke}" stroke-width="2.2" fill="none" opacity="0.55"/>
+      <!-- Branches -->
+      <path d="M157,170 Q180,150 210,142" stroke="${d.stroke}" stroke-width="1.4" fill="none" opacity="0.45"/>
+      <path d="M155,195 Q130,178 102,172" stroke="${d.stroke}" stroke-width="1.4" fill="none" opacity="0.45"/>
+      <path d="M158,148 Q182,128 215,118" stroke="${d.stroke}" stroke-width="1.2" fill="none" opacity="0.38"/>
+      <path d="M157,125 Q140,110 120,105" stroke="${d.stroke}" stroke-width="1.2" fill="none" opacity="0.35"/>
+      <!-- Leaves (eucalyptus oval) -->
+      <ellipse cx="216" cy="140" rx="18" ry="8" transform="rotate(-35 216 140)" fill="${d.acc}" opacity="0.45"/>
+      <ellipse cx="100" cy="170" rx="17" ry="7" transform="rotate(25 100 170)"  fill="${d.acc}" opacity="0.4"/>
+      <ellipse cx="218" cy="118" rx="15" ry="6" transform="rotate(-50 218 118)" fill="${d.acc}" opacity="0.38"/>
+      <ellipse cx="118" cy="104" rx="14" ry="6" transform="rotate(15 118 104)"  fill="${d.acc}" opacity="0.35"/>
+      <ellipse cx="160" cy="52"  rx="13" ry="5" transform="rotate(-10 160 52)"  fill="${d.acc}" opacity="0.4"/>
+      <ellipse cx="178" cy="62"  rx="12" ry="5" transform="rotate(30 178 62)"   fill="${d.acc}" opacity="0.35"/>
+      <!-- Wind curves -->
+      <path d="M55,248 Q110,235 165,248 Q210,258 265,242" stroke="${d.mid}" stroke-width="1" fill="none" opacity="0.4"/>
+      <path d="M60,268 Q115,256 170,268 Q214,278 262,262" stroke="${d.mid}" stroke-width="0.7" fill="none" opacity="0.3"/>
+      <!-- Roman numeral -->
+      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${d.stroke}" letter-spacing="5" opacity="0.65">I · KARRI</text>`,
+
+    // ② Leatherwood — Wind — exotic flowers
+    leatherwood: `
+      <circle cx="160" cy="160" r="100" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="160" cy="160" r="72"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.25"/>
+      <!-- Leatherwood flowers (5-petal) -->
+      ${[0,72,144,216,288].map(a=>`<path d="M160,135 Q${160+18*Math.cos((a-90)*Math.PI/180)},${135+18*Math.sin((a-90)*Math.PI/180)} ${160+32*Math.cos((a-90)*Math.PI/180)},${135+32*Math.sin((a-90)*Math.PI/180)} Q${160+18*Math.cos((a-90+72)*Math.PI/180)},${135+18*Math.sin((a-90+72)*Math.PI/180)} 160,135" fill="${d.acc}" opacity="0.45"/>`).join('')}
+      <circle cx="160" cy="135" r="8" fill="${d.mid}" opacity="0.6"/>
+      <!-- Second flower -->
+      ${[0,72,144,216,288].map(a=>`<path d="M220,200 Q${220+14*Math.cos((a-90)*Math.PI/180)},${200+14*Math.sin((a-90)*Math.PI/180)} ${220+26*Math.cos((a-90)*Math.PI/180)},${200+26*Math.sin((a-90)*Math.PI/180)} Q${220+14*Math.cos((a-90+72)*Math.PI/180)},${200+14*Math.sin((a-90+72)*Math.PI/180)} 220,200" fill="${d.acc}" opacity="0.35"/>`).join('')}
+      <circle cx="220" cy="200" r="6" fill="${d.mid}" opacity="0.5"/>
+      <!-- Third flower -->
+      ${[0,72,144,216,288].map(a=>`<path d="M100,210 Q${100+12*Math.cos((a-90)*Math.PI/180)},${210+12*Math.sin((a-90)*Math.PI/180)} ${100+22*Math.cos((a-90)*Math.PI/180)},${210+22*Math.sin((a-90)*Math.PI/180)} Q${100+12*Math.cos((a-90+72)*Math.PI/180)},${210+12*Math.sin((a-90+72)*Math.PI/180)} 100,210" fill="${d.acc}" opacity="0.3"/>`).join('')}
+      <circle cx="100" cy="210" r="5" fill="${d.mid}" opacity="0.45"/>
+      <!-- Stems -->
+      <path d="M160,143 Q158,175 150,240" stroke="${d.stroke}" stroke-width="1.3" fill="none" opacity="0.4"/>
+      <path d="M220,206 Q215,230 210,270" stroke="${d.stroke}" stroke-width="1.1" fill="none" opacity="0.35"/>
+      <path d="M100,215 Q105,240 112,275" stroke="${d.stroke}" stroke-width="1" fill="none" opacity="0.3"/>
+      <!-- Sparkle dots (morning light) -->
+      <circle cx="90"  cy="90"  r="2.5" fill="${d.mid}" opacity="0.6"/>
+      <circle cx="240" cy="80"  r="2"   fill="${d.mid}" opacity="0.5"/>
+      <circle cx="255" cy="145" r="1.8" fill="${d.mid}" opacity="0.45"/>
+      <circle cx="72"  cy="175" r="2"   fill="${d.mid}" opacity="0.4"/>
+      <circle cx="195" cy="260" r="1.5" fill="${d.mid}" opacity="0.4"/>
+      <circle cx="88"  cy="258" r="1.5" fill="${d.mid}" opacity="0.35"/>
+      <!-- Wind sweeps -->
+      <path d="M55,245 Q130,232 200,248 Q238,256 275,240" stroke="${d.mid}" stroke-width="0.9" fill="none" opacity="0.35"/>
+      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="9.5" fill="${d.stroke}" letter-spacing="3.5" opacity="0.65">II · LEATHERWOOD</text>`,
+
+    // ③ Scottish Heather — Fire — heather sprigs + warmth
+    scottish_heather: `
+      <circle cx="160" cy="165" r="100" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="160" cy="165" r="72"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.25"/>
+      <!-- Warm glow from bottom -->
+      <ellipse cx="160" cy="320" rx="120" ry="60" fill="${d.mid}" opacity="0.12"/>
+      <ellipse cx="160" cy="310" rx="80"  ry="40" fill="${d.acc}" opacity="0.08"/>
+      <!-- Heather stems -->
+      <path d="M140,280 Q138,240 142,200 Q144,175 140,145" stroke="${d.stroke}" stroke-width="1.3" fill="none" opacity="0.5"/>
+      <path d="M160,280 Q158,238 162,195 Q164,168 160,135" stroke="${d.stroke}" stroke-width="1.5" fill="none" opacity="0.55"/>
+      <path d="M180,280 Q182,242 178,202 Q176,177 180,148" stroke="${d.stroke}" stroke-width="1.3" fill="none" opacity="0.5"/>
+      <path d="M120,285 Q122,250 118,215" stroke="${d.stroke}" stroke-width="1.1" fill="none" opacity="0.4"/>
+      <path d="M200,285 Q198,252 202,218" stroke="${d.stroke}" stroke-width="1.1" fill="none" opacity="0.4"/>
+      <!-- Heather bell flowers -->
+      ${[[140,145],[140,155],[140,165],[140,175],[140,185],[140,195],
+         [160,135],[160,145],[160,155],[160,165],[160,175],[160,185],
+         [180,148],[180,158],[180,168],[180,178],[180,188],[180,198],
+         [120,215],[120,225],[120,235],[200,218],[200,228],[200,238]].map(([x,y])=>
+        `<ellipse cx="${x}" cy="${y}" rx="5" ry="3.5" fill="${d.acc}" opacity="0.55"/>`
+      ).join('')}
+      <!-- Flame shapes -->
+      <path d="M155,295 Q158,285 160,275 Q162,285 165,295 Q160,300 155,295" fill="${d.mid}" opacity="0.2"/>
+      <path d="M148,298 Q153,285 155,272 Q158,285 160,298 Q153,304 148,298" fill="${d.acc}" opacity="0.15"/>
+      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="9" fill="${d.stroke}" letter-spacing="3" opacity="0.65">III · SCOTTISH HEATHER</text>`,
+
+    // ④ Jarrah — Earth — deep roots
+    jarrah: `
+      <circle cx="160" cy="150" r="95"  fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="160" cy="150" r="68"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.22"/>
+      <!-- Earth layer bands -->
+      <path d="M0,290 Q80,282 160,290 Q240,298 320,290 L320,340 L0,340 Z" fill="${d.mid}" opacity="0.15"/>
+      <path d="M0,305 Q80,297 160,305 Q240,313 320,305 L320,340 L0,340 Z" fill="${d.acc}"  opacity="0.12"/>
+      <!-- Main tree trunk (massive) -->
+      <path d="M148,285 Q145,250 148,210 Q150,185 145,155 Q142,130 148,100" stroke="${d.stroke}" stroke-width="5" fill="none" opacity="0.6" stroke-linecap="round"/>
+      <path d="M168,285 Q171,250 168,210 Q166,185 170,155 Q173,130 168,100" stroke="${d.stroke}" stroke-width="4" fill="none" opacity="0.5" stroke-linecap="round"/>
+      <!-- Root system -->
+      <path d="M148,285 Q128,292 105,300 Q90,308 70,318"  stroke="${d.stroke}" stroke-width="2.2" fill="none" opacity="0.5"/>
+      <path d="M148,285 Q135,298 125,315 Q118,328 112,340" stroke="${d.stroke}" stroke-width="1.8" fill="none" opacity="0.45"/>
+      <path d="M168,285 Q185,292 208,302 Q224,310 245,320"  stroke="${d.stroke}" stroke-width="2.2" fill="none" opacity="0.5"/>
+      <path d="M168,285 Q178,300 182,318 Q185,330 186,340" stroke="${d.stroke}" stroke-width="1.8" fill="none" opacity="0.45"/>
+      <path d="M155,292 Q155,308 152,325 Q150,335 148,340" stroke="${d.stroke}" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <!-- Large branches -->
+      <path d="M148,175 Q118,152 88,138"  stroke="${d.stroke}" stroke-width="2.5" fill="none" opacity="0.45"/>
+      <path d="M163,165 Q190,142 222,130"  stroke="${d.stroke}" stroke-width="2.5" fill="none" opacity="0.45"/>
+      <path d="M148,215 Q125,200 100,195"  stroke="${d.stroke}" stroke-width="2" fill="none" opacity="0.38"/>
+      <path d="M168,205 Q192,192 218,188" stroke="${d.stroke}" stroke-width="2" fill="none" opacity="0.38"/>
+      <!-- Leaves cluster -->
+      <ellipse cx="82"  cy="132" rx="22" ry="15" fill="${d.acc}" opacity="0.35" transform="rotate(-20 82 132)"/>
+      <ellipse cx="225" cy="125" rx="22" ry="15" fill="${d.acc}" opacity="0.35" transform="rotate(20 225 125)"/>
+      <ellipse cx="148" cy="92"  rx="20" ry="14" fill="${d.acc}" opacity="0.38"/>
+      <ellipse cx="96"  cy="190" rx="16" ry="10" fill="${d.acc}" opacity="0.3"/>
+      <ellipse cx="222" cy="184" rx="16" ry="10" fill="${d.acc}" opacity="0.3"/>
+      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${d.stroke}" letter-spacing="4.5" opacity="0.65">IV · JARRAH</text>`,
+
+    // ⑤ Manuka — Fire — bold flowers + intensity
+    manuka: `
+      <circle cx="160" cy="155" r="100" fill="none" stroke="${d.acc}" stroke-width="0.6" opacity="0.35"/>
+      <circle cx="160" cy="155" r="72"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.28"/>
+      <!-- Radial energy lines -->
+      ${Array.from({length:16},(_,i)=>{
+        const a=(i*22.5-90)*Math.PI/180;
+        return `<line x1="160" y1="155" x2="${160+115*Math.cos(a)}" y2="${155+115*Math.sin(a)}" stroke="${d.acc}" stroke-width="0.5" opacity="${0.1+0.05*(i%2)}"/>`;
+      }).join('')}
+      <!-- Manuka flowers (5-petal, bold) -->
+      ${[0,72,144,216,288].map(a=>{
+        const rad=(a-90)*Math.PI/180;
+        const x=160+35*Math.cos(rad), y=155+35*Math.sin(rad);
+        return `<ellipse cx="${x}" cy="${y}" rx="18" ry="10" transform="rotate(${a} ${x} ${y})" fill="${d.acc}" opacity="0.55"/>`;
+      }).join('')}
+      <circle cx="160" cy="155" r="14" fill="${d.mid}" opacity="0.7"/>
+      <circle cx="160" cy="155" r="7"  fill="${d.acc}" opacity="0.8"/>
+      <!-- Stamens -->
+      ${Array.from({length:12},(_,i)=>{
+        const a=(i*30-90)*Math.PI/180;
+        return `<line x1="${160+7*Math.cos(a)}" y1="${155+7*Math.sin(a)}" x2="${160+20*Math.cos(a)}" y2="${155+20*Math.sin(a)}" stroke="${d.stroke}" stroke-width="1" opacity="0.6"/>`;
+      }).join('')}
+      <!-- Smaller secondary flowers -->
+      ${[[100,80],[220,90],[75,215],[248,210],[145,258]].map(([cx,cy])=>`
+        ${[0,72,144,216,288].map(a=>{
+          const rad=(a-90)*Math.PI/180;
+          const x=cx+14*Math.cos(rad), y=cy+14*Math.sin(rad);
+          return `<ellipse cx="${x}" cy="${y}" rx="8" ry="5" transform="rotate(${a} ${x} ${y})" fill="${d.acc}" opacity="0.38"/>`;
+        }).join('')}
+        <circle cx="${cx}" cy="${cy}" r="5" fill="${d.mid}" opacity="0.5"/>
+      `).join('')}
+      <!-- Flame shimmer at base -->
+      <path d="M138,300 Q148,280 155,265 Q160,278 165,265 Q172,280 182,300 Q165,308 138,300" fill="${d.mid}" opacity="0.18"/>
+      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${d.stroke}" letter-spacing="4.5" opacity="0.65">V · MANUKA</text>`,
+
+    // ⑥ Linden — Water — ripples + heart leaves
+    linden: `
+      <circle cx="160" cy="160" r="100" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="160" cy="160" r="72"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.25"/>
+      <!-- Water ripple rings -->
+      <ellipse cx="160" cy="280" rx="115" ry="35" fill="none" stroke="${d.acc}" stroke-width="0.6" opacity="0.35"/>
+      <ellipse cx="160" cy="280" rx="85"  ry="25" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.28"/>
+      <ellipse cx="160" cy="280" rx="55"  ry="16" fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.22"/>
+      <ellipse cx="160" cy="280" rx="28"  ry="8"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.18"/>
+      <!-- Moon reflection line -->
+      <line x1="160" y1="50" x2="160" y2="280" stroke="${d.mid}" stroke-width="0.8" opacity="0.2" stroke-dasharray="3,5"/>
+      <!-- Moon -->
+      <circle cx="160" cy="65" r="28" fill="${d.mid}" opacity="0.18"/>
+      <circle cx="170" cy="58" r="22" fill="${d.bg1}" opacity="0.8"/>
+      <!-- Linden heart-shaped leaves -->
+      ${[[115,155],[145,120],[175,120],[205,155],[125,195],[195,195],[160,220]].map(([x,y])=>`
+        <path d="M${x},${y-12} C${x-10},${y-20} ${x-18},${y-8} ${x},${y+8} C${x+18},${y-8} ${x+10},${y-20} ${x},${y-12}" fill="${d.acc}" opacity="0.42"/>
+      `).join('')}
+      <!-- Stems -->
+      <path d="M160,230 Q155,255 152,280" stroke="${d.stroke}" stroke-width="1.2" fill="none" opacity="0.4"/>
+      <path d="M115,163 Q130,200 145,240" stroke="${d.stroke}" stroke-width="1" fill="none" opacity="0.35"/>
+      <path d="M205,163 Q190,200 175,240" stroke="${d.stroke}" stroke-width="1" fill="none" opacity="0.35"/>
+      <!-- Flowing water lines -->
+      <path d="M45,255 Q100,242 160,255 Q218,268 275,250" stroke="${d.mid}" stroke-width="1" fill="none" opacity="0.4"/>
+      <path d="M55,268 Q110,257 165,268 Q222,280 272,264" stroke="${d.mid}" stroke-width="0.7" fill="none" opacity="0.3"/>
+      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${d.stroke}" letter-spacing="4.5" opacity="0.65">VI · LINDEN</text>`,
+
+    // ⑦ Rewarewa — Earth — upward growth
+    rewarewa: `
+      <circle cx="160" cy="155" r="100" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="160" cy="155" r="72"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.25"/>
+      <!-- Ground line -->
+      <path d="M30,285 Q160,278 290,285" stroke="${d.stroke}" stroke-width="1" fill="none" opacity="0.4"/>
+      <!-- Upward energy lines -->
+      ${[-60,-30,0,30,60].map(offset=>`
+        <path d="M${160+offset},285 Q${160+offset+5},220 ${160+offset},155 Q${160+offset-3},100 ${160+offset},55" stroke="${d.stroke}" stroke-width="${offset===0?2:1.2}" fill="none" opacity="${offset===0?0.55:0.38}"/>
+      `).join('')}
+      <!-- Rewarewa flower clusters (tubular/bottlebrush style) -->
+      ${[
+        [160,55, 3, 10], [160,75, 3.5, 10], [160,95, 3.5, 10],
+        [130,90, 2.8, 8], [190,90, 2.8, 8],
+        [100,125, 2.5, 7], [220,125, 2.5, 7]
+      ].map(([cx,cy,r,cnt])=>
+        Array.from({length:cnt},(_,i)=>{
+          const a=(i/cnt)*Math.PI*2;
+          return `<circle cx="${cx+r*2.5*Math.cos(a)}" cy="${cy+r*2.5*Math.sin(a)}" r="${r}" fill="${d.acc}" opacity="0.55"/>`;
+        }).join('')
+      ).join('')}
+      <!-- Leaf clusters -->
+      <ellipse cx="112" cy="145" rx="18" ry="8" transform="rotate(40 112 145)" fill="${d.mid}" opacity="0.4"/>
+      <ellipse cx="208" cy="145" rx="18" ry="8" transform="rotate(-40 208 145)" fill="${d.mid}" opacity="0.4"/>
+      <ellipse cx="90"  cy="175" rx="15" ry="7" transform="rotate(55 90 175)"  fill="${d.mid}" opacity="0.35"/>
+      <ellipse cx="230" cy="175" rx="15" ry="7" transform="rotate(-55 230 175)" fill="${d.mid}" opacity="0.35"/>
+      <!-- Root tendrils -->
+      <path d="M160,285 Q145,295 125,308 Q108,318 95,330" stroke="${d.stroke}" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <path d="M160,285 Q175,295 195,308 Q212,318 225,330" stroke="${d.stroke}" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <path d="M155,290 Q150,308 145,330" stroke="${d.stroke}" stroke-width="1.2" fill="none" opacity="0.35"/>
+      <path d="M165,290 Q170,308 175,330" stroke="${d.stroke}" stroke-width="1.2" fill="none" opacity="0.35"/>
+      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${d.stroke}" letter-spacing="3.5" opacity="0.65">VII · REWAREWA</text>`,
+
+    // ⑧ Blackbutt — Earth — ancient forest, honeycomb
+    blackbutt: `
+      <!-- Dark ancient forest atmosphere -->
+      <ellipse cx="160" cy="380" rx="200" ry="100" fill="${d.acc}" opacity="0.12"/>
+      <ellipse cx="160" cy="340" rx="150" ry="70"  fill="${d.stroke}" opacity="0.08"/>
+      <!-- Honeycomb pattern (ancient treasure) -->
+      ${[
+        [160,90], [184,103], [184,129], [160,142], [136,129], [136,103],
+        [208,90], [208,116], [184,155], [208,168],
+        [112,90], [112,116], [136,155], [112,168]
+      ].map(([cx,cy])=>{
+        const pts = Array.from({length:6},(_,i)=>{
+          const a=(i*60-90)*Math.PI/180;
+          return `${cx+13*Math.cos(a)},${cy+13*Math.sin(a)}`;
+        }).join(' ');
+        return `<polygon points="${pts}" fill="none" stroke="${d.acc}" stroke-width="0.8" opacity="0.55"/>`;
+      }).join('')}
+      <!-- Honey fill on some cells -->
+      ${[[160,90],[184,129],[136,103]].map(([cx,cy])=>{
+        const pts = Array.from({length:6},(_,i)=>{
+          const a=(i*60-90)*Math.PI/180;
+          return `${cx+12*Math.cos(a)},${cy+12*Math.sin(a)}`;
+        }).join(' ');
+        return `<polygon points="${pts}" fill="${d.mid}" opacity="0.3"/>`;
+      }).join('')}
+      <!-- Massive tree trunks -->
+      <path d="M108,340 Q112,280 108,220 Q105,180 110,155" stroke="${d.stroke}" stroke-width="14" fill="none" opacity="0.5" stroke-linecap="round"/>
+      <path d="M212,340 Q208,280 212,220 Q215,180 210,155" stroke="${d.stroke}" stroke-width="14" fill="none" opacity="0.5" stroke-linecap="round"/>
+      <!-- Bark texture lines -->
+      <path d="M102,280 Q108,275 114,280" stroke="${d.acc}" stroke-width="0.8" fill="none" opacity="0.4"/>
+      <path d="M104,255 Q110,250 116,255" stroke="${d.acc}" stroke-width="0.8" fill="none" opacity="0.4"/>
+      <path d="M206,280 Q212,275 218,280" stroke="${d.acc}" stroke-width="0.8" fill="none" opacity="0.4"/>
+      <path d="M204,255 Q210,250 216,255" stroke="${d.acc}" stroke-width="0.8" fill="none" opacity="0.4"/>
+      <!-- Forest depth shadow -->
+      <path d="M0,340 L320,340 L320,400 L0,400 Z" fill="${d.stroke}" opacity="0.08"/>
+      <!-- Honey drip -->
+      <path d="M155,190 Q156,210 155,225 Q154,238 155,250" stroke="${d.mid}" stroke-width="2.5" fill="none" opacity="0.45" stroke-linecap="round"/>
+      <ellipse cx="155" cy="256" rx="5" ry="7" fill="${d.mid}" opacity="0.5"/>
+      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="9.5" fill="${d.cream||'#FAF6EE'}" letter-spacing="3.5" opacity="0.7">VIII · BLACKBUTT</text>`
+  };
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 340" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="card-bg-${key}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${d.bg1}"/>
+        <stop offset="100%" stop-color="${d.bg2}"/>
+      </linearGradient>
+    </defs>
+    <rect width="320" height="340" fill="url(#card-bg-${key})"/>
+    ${motifs[key] || ''}
+  </svg>`;
+}
+
+/* ═══════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════ */
+
+const state = {
+  screen: 'start',
+  step: 0,           // 1,2,3
+  answers: {},       // {q1:'A', q2:'B', q3:'A'}
+  result: null,
+  currentQ: null
+};
+
+/* ═══════════════════════════════════════════════════
+   SCREEN TRANSITIONS
+═══════════════════════════════════════════════════ */
+
+function goTo(id, onSwitch) {
+  const current = document.querySelector('.screen.is-active');
+  const next    = document.getElementById('screen-' + id);
+  if (!next || current === next) return;
+
+  current.classList.add('fade-out');
+
+  setTimeout(() => {
+    current.classList.remove('is-active', 'fade-out');
+    if (onSwitch) onSwitch();
+    next.scrollTop = 0;
+    next.classList.add('is-active', 'fade-in');
+    setTimeout(() => next.classList.remove('fade-in'), 600);
+  }, 380);
+
+  state.screen = id;
+}
+
+/* ═══════════════════════════════════════════════════
+   QUESTION RENDERING
+═══════════════════════════════════════════════════ */
+
+function renderProgress(step) {
+  const dots = document.getElementById('progress-dots');
+  dots.innerHTML = [1,2,3].map((s,i) => {
+    let cls = 'prog-dot';
+    if (s < step)  cls += ' is-done';
+    if (s === step) cls += ' is-current';
+    return (i > 0 ? `<div class="prog-line"></div>` : '') + `<div class="${cls}"></div>`;
+  }).join('');
+}
+
+function renderQuestion(q) {
+  state.currentQ = q;
+  renderProgress(q.step);
+
+  const html = `
+    <p class="q-number">${q.number}</p>
+    <p class="q-theme">${q.theme}</p>
+    <div class="q-divider"></div>
+    <p class="q-text">${q.text.replace(/\n/g,'<br>')}</p>
+    <div class="choices" id="choice-list">
+      ${q.choices.map(c => `
+        <button class="choice-btn" data-id="${c.id}" ${c.result ? `data-result="${c.result}"` : ''}>
+          <div class="choice-inner">
+            <span class="choice-label">${c.label}</span>
+            <span class="choice-main">${c.main}</span>
+            <span class="choice-sub">${c.sub}</span>
+          </div>
+        </button>
+      `).join('')}
+    </div>`;
+
+  const qContent = document.getElementById('q-content');
+
+  // Animate swap if already visible
+  qContent.style.opacity = '0';
+  qContent.style.transform = 'translateY(12px)';
+  qContent.innerHTML = html;
+
+  requestAnimationFrame(() => {
+    qContent.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+    qContent.style.opacity = '1';
+    qContent.style.transform = 'translateY(0)';
+  });
+
+  // Bind choices
+  document.getElementById('choice-list').querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', () => handleChoice(btn));
+  });
+}
+
+function handleChoice(btn) {
+  if (btn.classList.contains('chosen')) return;
+
+  // Disable all choices immediately for visual feedback
+  document.querySelectorAll('.choice-btn').forEach(b => b.style.pointerEvents = 'none');
+  btn.classList.add('chosen');
+
+  const choiceId = btn.dataset.id;
+  const q = state.currentQ;
+
+  // Wait for the fill animation, then transition
+  setTimeout(() => {
+    if (q.step === 1) {
+      // Q1→Q2: same #screen-q element — call renderQuestion directly
+      state.answers.q1 = choiceId;
+      renderQuestion(QUESTIONS[1]);
+
+    } else if (q.step === 2) {
+      // Q2→Q3: same #screen-q element — call renderQuestion directly
+      state.answers.q2 = choiceId;
+      renderQuestion(getQ3(state.answers.q1, choiceId));
+
+    } else {
+      // Q3→Loading→Result: different screens, use goTo normally
+      const resultKey = btn.dataset.result;
+      state.result = resultKey;
+      goTo('loading');
+      setTimeout(() => {
+        renderResult(resultKey);
+        goTo('result');
+      }, 1700);
+    }
+  }, 400);
+}
+
+/* ═══════════════════════════════════════════════════
+   RESULT RENDERING
+═══════════════════════════════════════════════════ */
+
+function renderResult(key) {
+  const r = RESULTS[key];
+
+  document.getElementById('result-element').textContent   = r.element;
+  document.getElementById('result-name-en').textContent   = r.nameEn;
+  document.getElementById('result-name-jp').textContent   = r.nameJp;
+  document.getElementById('result-desc').textContent      = r.desc;
+  document.getElementById('btn-shop').href                = r.shopUrl;
+  document.getElementById('card-illustration').innerHTML  = cardSVG(key);
+
+  // Reset animations
+  ['.result-top-label','.result-element-badge','.result-card-wrap',
+   '.result-desc-wrap','.result-cta-wrap'].forEach(sel => {
+    const el = document.querySelector(sel);
+    if (el) { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; }
+  });
+}
+
+/* ═══════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Start button: start → q (different screens, goTo works normally)
+  document.getElementById('btn-start').addEventListener('click', () => {
+    goTo('q', () => renderQuestion(QUESTIONS[0]));
+  });
+
+  // Retry: result → start (different screens, goTo works normally)
+  document.getElementById('btn-retry').addEventListener('click', () => {
+    state.answers = {};
+    state.result  = null;
+    goTo('start');
+  });
+});
+</script>
+</body>
+</html>
