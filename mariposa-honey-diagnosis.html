@@ -285,6 +285,14 @@
     }
     .choice-btn.chosen .choice-main { color: var(--cream); }
 
+    .choice-main--single {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.88rem;
+      margin-bottom: 0;
+    }
+
     .choice-sub {
       display: block;
       font-size: 0.73rem;
@@ -679,11 +687,11 @@
         <path d="M54,70 Q60,80 54,88 Q48,80 54,70" fill="#C0965C" opacity="0.55"/>
       </svg>
 
-      <p class="start-catch">今のあなたに、<br>ぴったりの一匙を。</p>
+      <p class="start-catch">今のあなたに、ぴったりの<br>世界から届いたはちみつを。</p>
 
       <div class="ornament-divider"><span>✦</span></div>
 
-      <p class="start-sub">心と身体を整える&emsp;はちみつ診断</p>
+      <p class="start-sub">心と身体をととのえる&emsp;はちみつ診断</p>
 
       <button class="btn-start" id="btn-start">診断をはじめる</button>
     </div>
@@ -736,7 +744,7 @@
           <path d="M56,62 Q62,66 64,72" stroke="rgba(250,246,238,0.4)" stroke-width="1" stroke-linecap="round" fill="none"/>
         </g>
       </svg>
-      <p class="loading-text">ミツバチがあなたにぴったりの<br>はちみつを探しています...</p>
+      <p class="loading-text">ミツバチがあなたのための<br>蜜を探しています...</p>
       <div class="loading-dots">
         <div class="loading-dot"></div>
         <div class="loading-dot"></div>
@@ -789,7 +797,7 @@ const RESULTS = {
     nameJp: 'カリ',
     element: '風 — Wind',
     elementKey: 'wind',
-    desc: '軽やかに心身を巡る「風」のエレメント。日常のコンディションをさらりと健やかに保ち、内側からの軽快な流れをサポートします。',
+    desc: '軽やかに心身を巡る「風」のエレメント。日中の緊張をほぐし、静かな休息のひとときをもたらします。',
     shopUrl: 'https://mariposa8.theshop.jp/items/138397344'
   },
   leatherwood: {
@@ -798,7 +806,7 @@ const RESULTS = {
     element: '風 — Wind',
     elementKey: 'wind',
     desc: '五感を呼び覚ます「風」のエレメント。蓋を開けた瞬間の花の香りが、あなたの感性に新しい風を通し、きらめく朝を始めます。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/65052038'
+    shopUrl: 'https://mariposa8.theshop.jp/items/65052038p'
   },
   scottish_heather: {
     nameEn: 'Scottish Heather',
@@ -816,21 +824,21 @@ const RESULTS = {
     desc: '包容力に満ちた「土」のエレメント。上質な黒糖のようなまろやかなコクが、夜のあなたを優しくグラウンディング（安定）させます。',
     shopUrl: 'https://mariposa8.theshop.jp/items/65052125'
   },
-  manuka: {
-    nameEn: 'Manuka',
-    nameJp: 'マヌカ',
+  ginger_honey: {
+    nameEn: 'Ginger Honey',
+    nameJp: 'ジンジャーハニー',
     element: '火 — Fire',
     elementKey: 'fire',
-    desc: '強く燃え上がる「火」のエレメント。大自然の野生の熱量をそのまま凝縮。どんな環境にも負けない、あなたを強く守る究極のお守り。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/81133526'
+    desc: '強く燃え上がる「火」のエレメント。貴重なベントンジンジャーがたっぷりと入り、代謝UPを力強くサポートします。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/104752871'
   },
-  linden: {
-    nameEn: 'Linden',
-    nameJp: 'リンデン',
+  lemon_myrtle: {
+    nameEn: 'Lemon Myrtle',
+    nameJp: 'レモンマートル',
     element: '水 — Water',
     elementKey: 'water',
-    desc: '清らかな「水」のエレメント。ハーブの清涼感が頭の使いすぎや張り詰めた心をサラサラと洗い流し、深い「凪」の眠りへと誘います。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/66565514'
+    desc: '清らかな「水」のエレメント。レモンのような爽やかなハーブの風味が頭の使いすぎや張り詰めた心をサラサラと洗い流し、深い「凪」の眠りへと誘います。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/70835155'
   },
   rewarewa: {
     nameEn: 'Rewarewa',
@@ -840,13 +848,13 @@ const RESULTS = {
     desc: '活力を生み出す「土」のエレメント。モルトを思わせる力強いコクが、ブレない自分の土台を作り、前向きなエネルギーを満たします。',
     shopUrl: 'https://mariposa8.theshop.jp/items/82941380'
   },
-  blackbutt: {
-    nameEn: 'Blackbutt',
-    nameJp: 'ブラックバット',
+  wandoo: {
+    nameEn: 'Wandoo',
+    nameJp: 'ワンドゥ',
     element: '土 — Earth',
     elementKey: 'earth',
-    desc: '太古の記憶を宿す「土」のエレメント。超濃厚な黄金の蜜が、これまでにないディープなヒーリング（癒やし）を心身に与える特別なご褒美。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/64977161'
+    desc: '太古の記憶を宿す「土」のエレメント。まろやかな黄金の蜜が、これまでにないディープなヒーリング（癒やし）を心身に与える特別なご褒美。',
+    shopUrl: 'https://mariposa8.theshop.jp/items/97539037'
   }
 };
 
@@ -881,8 +889,8 @@ function getQ3(a1, a2) {
     number:'Question  03', theme:'呼応する自然のエレメント',
     text:'いま、あなたの心に吹かせたい\n「風」はどちらですか？',
     choices:[
-      { id:'A', label:'Clarity',     main:'思考をクリアにし',     sub:'新しいインスピレーションを運ぶ風', result:'leatherwood' },
-      { id:'B', label:'Circulation', main:'そよ風のように',       sub:'心身の滞りを軽やかに巡らせる風', result:'karri' }
+      { id:'A', label:'Clarity',  main:'思考をクリアにし',         sub:'新しいインスピレーションを運ぶ風',    result:'leatherwood' },
+      { id:'B', label:'Vitality', main:'エネルギッシュに行動する', sub:'ための、追い風',                      result:'ginger_honey' }
     ]
   };
   if (a1==='A' && a2==='B') return {
@@ -891,7 +899,7 @@ function getQ3(a1, a2) {
     text:'今日、あなたが心身にチャージしたい\nエネルギーは？',
     choices:[
       { id:'A', label:'Grounding', main:'大地に深く根を張り', sub:'軸を安定させるパワー',  result:'rewarewa' },
-      { id:'B', label:'Vitality',  main:'内なる情熱を燃やし', sub:'身体を強く守るパワー', result:'manuka' }
+      { id:'B', label:'Passion',   main:'内なる情熱を燃やし', sub:'身体を強く守るパワー', result:'scottish_heather' }
     ]
   };
   if (a1==='B' && a2==='A') return {
@@ -899,8 +907,8 @@ function getQ3(a1, a2) {
     number:'Question  03', theme:'呼応する自然のエレメント',
     text:'眠る前のひととき、あなたの魂が\n還りたい場所は？',
     choices:[
-      { id:'A', label:'Cleansing', main:'張り詰めた心を洗い流し', sub:'静かに満ちていく場所',      result:'linden' },
-      { id:'B', label:'Warmth',    main:'暖炉の火のように',       sub:'一日の終わりを優しく温める場所', result:'scottish_heather' }
+      { id:'A', label:'Cleansing', main:'張り詰めた心を洗い流し', sub:'静かに満ちていく場所',              result:'lemon_myrtle' },
+      { id:'B', label:'Rest',      main:'日中の緊張をほぐし',     sub:'穏やかな余白のある場所',            result:'karri' }
     ]
   };
   return { // B-B
@@ -908,281 +916,344 @@ function getQ3(a1, a2) {
     number:'Question  03', theme:'呼応する自然のエレメント',
     text:'大自然の「土」のエネルギー、\n今夜はどう受け取りたい？',
     choices:[
-      { id:'A', label:'Embrace', main:'母なる大地の包容力で',  sub:'ゆったりとまろやかに包まれたい',       result:'jarrah' },
-      { id:'B', label:'Release', main:'太古の森の奥深く',      sub:'ディープに自分を解放して癒やされたい', result:'blackbutt' }
+      { id:'A', label:'Embrace', main:'母なる大地の包容力で',  sub:'ゆったりとまろやかに包まれたい',         result:'jarrah'  },
+      { id:'B', label:'Release', main:'太古の森の奥深く',      sub:'ディープに自分を解放して癒やされたい',   result:'wandoo'  }
     ]
   };
 }
 
+
 /* ═══════════════════════════════════════════════════
-   CARD SVG ILLUSTRATIONS
+   CARD SVG — GEOMETRIC TAROT ILLUSTRATIONS
 ═══════════════════════════════════════════════════ */
 
 function cardSVG(key) {
-  const defs = {
-    wind:  { bg1:'#DFF0EC', bg2:'#B8DBE4', acc:'#4A9090', mid:'#7ABCB8', stroke:'#3A7878' },
-    fire:  { bg1:'#F5EBE0', bg2:'#E8C898', acc:'#B8622A', mid:'#D4904A', stroke:'#8A3A18' },
-    earth: { bg1:'#EAF0E2', bg2:'#C8D8B0', acc:'#4A7040', mid:'#6A9058', stroke:'#2A4A28' },
-    water: { bg1:'#DFF0F8', bg2:'#A8CCE0', acc:'#3A6A8C', mid:'#5A98C0', stroke:'#1A4A6C' }
+  const E = {
+    wind:  {bg:'#EBF5F3', dk:'#195850', md:'#267868', lt:'#58B0A8', vl:'rgba(88,176,168,0.1)'},
+    fire:  {bg:'#F7EDE4', dk:'#782810', md:'#A84226', lt:'#CC6C3C', vl:'rgba(200,100,56,0.1)'},
+    earth: {bg:'#E9F0E3', dk:'#1A3E16', md:'#285C20', lt:'#548038', vl:'rgba(84,128,56,0.1)'},
+    water: {bg:'#E4EEF7', dk:'#10336A', md:'#1A4E94', lt:'#3678BC', vl:'rgba(54,120,188,0.1)'}
   };
+  const e = E[RESULTS[key].elementKey];
 
-  const d = defs[RESULTS[key].elementKey];
+  // Helpers
+  const P = (cx,cy,r,n,deg=0) => {
+    const pts=[];
+    for(let i=0;i<n;i++){
+      const a=(i/n*Math.PI*2)+(deg-90)*Math.PI/180;
+      pts.push((cx+r*Math.cos(a)).toFixed(2)+','+(cy+r*Math.sin(a)).toFixed(2));
+    }
+    return pts.join(' ');
+  };
+  const ST = (cx,cy,R,ri,n,deg=0) => {
+    const pts=[];
+    for(let i=0;i<n*2;i++){
+      const rad=i%2===0?R:ri;
+      const a=(i/(n*2)*Math.PI*2)+(deg-90)*Math.PI/180;
+      pts.push((cx+rad*Math.cos(a)).toFixed(2)+','+(cy+rad*Math.sin(a)).toFixed(2));
+    }
+    return pts.join(' ');
+  };
+  const XY = (cx,cy,r,deg) => {
+    const a=(deg-90)*Math.PI/180;
+    return {x:(cx+r*Math.cos(a)).toFixed(2), y:(cy+r*Math.sin(a)).toFixed(2)};
+  };
+  const SPOKES = (cx,cy,r1,r2,n,deg=0,sw=0.5,op=0.3) => {
+    let s='';
+    for(let i=0;i<n;i++){
+      const a=(i/n*Math.PI*2)+(deg-90)*Math.PI/180;
+      s+=`<line x1="${(cx+r1*Math.cos(a)).toFixed(2)}" y1="${(cy+r1*Math.sin(a)).toFixed(2)}" x2="${(cx+r2*Math.cos(a)).toFixed(2)}" y2="${(cy+r2*Math.sin(a)).toFixed(2)}" stroke="${e.md}" stroke-width="${sw}" opacity="${op}"/>`;
+    }
+    return s;
+  };
+  const DOT = (cx,cy,r,op=0.5) => `<circle cx="${cx.toFixed(2)}" cy="${cy.toFixed(2)}" r="${r}" fill="${e.md}" opacity="${op}"/>`;
+  const RING = (cx,cy,r,sw=0.5,op=0.35) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${e.md}" stroke-width="${sw}" opacity="${op}"/>`;
+
+  const cx=160, cy=150;
+
+  // Card frame — thin double border + corner marks
+  const frame = `
+    <rect x="12" y="12" width="296" height="316" fill="${e.vl}" rx="2"/>
+    <rect x="12" y="12" width="296" height="316" fill="none" stroke="${e.md}" stroke-width="0.6" opacity="0.45" rx="2"/>
+    <rect x="18" y="18" width="284" height="304" fill="none" stroke="${e.lt}" stroke-width="0.3" opacity="0.3" rx="1"/>
+    <line x1="12" y1="26" x2="12" y2="12" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="12" y1="12" x2="26" y2="12" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="308" y1="26" x2="308" y2="12" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="308" y1="12" x2="294" y2="12" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="12" y1="302" x2="12" y2="316" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="12" y1="316" x2="26" y2="316" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="308" y1="302" x2="308" y2="316" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="308" y1="316" x2="294" y2="316" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>`;
 
   const motifs = {
-    // ① Karri — Wind — eucalyptus, flowing
-    karri: `
-      <circle cx="160" cy="165" r="110" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
-      <circle cx="160" cy="165" r="82"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.25"/>
-      <circle cx="160" cy="165" r="55"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.2"/>
-      <!-- Trunk -->
-      <path d="M158,290 Q162,240 156,200 Q150,160 158,110 Q162,80 160,55" stroke="${d.stroke}" stroke-width="2.2" fill="none" opacity="0.55"/>
-      <!-- Branches -->
-      <path d="M157,170 Q180,150 210,142" stroke="${d.stroke}" stroke-width="1.4" fill="none" opacity="0.45"/>
-      <path d="M155,195 Q130,178 102,172" stroke="${d.stroke}" stroke-width="1.4" fill="none" opacity="0.45"/>
-      <path d="M158,148 Q182,128 215,118" stroke="${d.stroke}" stroke-width="1.2" fill="none" opacity="0.38"/>
-      <path d="M157,125 Q140,110 120,105" stroke="${d.stroke}" stroke-width="1.2" fill="none" opacity="0.35"/>
-      <!-- Leaves (eucalyptus oval) -->
-      <ellipse cx="216" cy="140" rx="18" ry="8" transform="rotate(-35 216 140)" fill="${d.acc}" opacity="0.45"/>
-      <ellipse cx="100" cy="170" rx="17" ry="7" transform="rotate(25 100 170)"  fill="${d.acc}" opacity="0.4"/>
-      <ellipse cx="218" cy="118" rx="15" ry="6" transform="rotate(-50 218 118)" fill="${d.acc}" opacity="0.38"/>
-      <ellipse cx="118" cy="104" rx="14" ry="6" transform="rotate(15 118 104)"  fill="${d.acc}" opacity="0.35"/>
-      <ellipse cx="160" cy="52"  rx="13" ry="5" transform="rotate(-10 160 52)"  fill="${d.acc}" opacity="0.4"/>
-      <ellipse cx="178" cy="62"  rx="12" ry="5" transform="rotate(30 178 62)"   fill="${d.acc}" opacity="0.35"/>
-      <!-- Wind curves -->
-      <path d="M55,248 Q110,235 165,248 Q210,258 265,242" stroke="${d.mid}" stroke-width="1" fill="none" opacity="0.4"/>
-      <path d="M60,268 Q115,256 170,268 Q214,278 262,262" stroke="${d.mid}" stroke-width="0.7" fill="none" opacity="0.3"/>
-      <!-- Roman numeral -->
-      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${d.stroke}" letter-spacing="5" opacity="0.65">I · KARRI</text>`,
 
-    // ② Leatherwood — Wind — exotic flowers
-    leatherwood: `
-      <circle cx="160" cy="160" r="100" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
-      <circle cx="160" cy="160" r="72"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.25"/>
-      <!-- Leatherwood flowers (5-petal) -->
-      ${[0,72,144,216,288].map(a=>`<path d="M160,135 Q${160+18*Math.cos((a-90)*Math.PI/180)},${135+18*Math.sin((a-90)*Math.PI/180)} ${160+32*Math.cos((a-90)*Math.PI/180)},${135+32*Math.sin((a-90)*Math.PI/180)} Q${160+18*Math.cos((a-90+72)*Math.PI/180)},${135+18*Math.sin((a-90+72)*Math.PI/180)} 160,135" fill="${d.acc}" opacity="0.45"/>`).join('')}
-      <circle cx="160" cy="135" r="8" fill="${d.mid}" opacity="0.6"/>
-      <!-- Second flower -->
-      ${[0,72,144,216,288].map(a=>`<path d="M220,200 Q${220+14*Math.cos((a-90)*Math.PI/180)},${200+14*Math.sin((a-90)*Math.PI/180)} ${220+26*Math.cos((a-90)*Math.PI/180)},${200+26*Math.sin((a-90)*Math.PI/180)} Q${220+14*Math.cos((a-90+72)*Math.PI/180)},${200+14*Math.sin((a-90+72)*Math.PI/180)} 220,200" fill="${d.acc}" opacity="0.35"/>`).join('')}
-      <circle cx="220" cy="200" r="6" fill="${d.mid}" opacity="0.5"/>
-      <!-- Third flower -->
-      ${[0,72,144,216,288].map(a=>`<path d="M100,210 Q${100+12*Math.cos((a-90)*Math.PI/180)},${210+12*Math.sin((a-90)*Math.PI/180)} ${100+22*Math.cos((a-90)*Math.PI/180)},${210+22*Math.sin((a-90)*Math.PI/180)} Q${100+12*Math.cos((a-90+72)*Math.PI/180)},${210+12*Math.sin((a-90+72)*Math.PI/180)} 100,210" fill="${d.acc}" opacity="0.3"/>`).join('')}
-      <circle cx="100" cy="210" r="5" fill="${d.mid}" opacity="0.45"/>
-      <!-- Stems -->
-      <path d="M160,143 Q158,175 150,240" stroke="${d.stroke}" stroke-width="1.3" fill="none" opacity="0.4"/>
-      <path d="M220,206 Q215,230 210,270" stroke="${d.stroke}" stroke-width="1.1" fill="none" opacity="0.35"/>
-      <path d="M100,215 Q105,240 112,275" stroke="${d.stroke}" stroke-width="1" fill="none" opacity="0.3"/>
-      <!-- Sparkle dots (morning light) -->
-      <circle cx="90"  cy="90"  r="2.5" fill="${d.mid}" opacity="0.6"/>
-      <circle cx="240" cy="80"  r="2"   fill="${d.mid}" opacity="0.5"/>
-      <circle cx="255" cy="145" r="1.8" fill="${d.mid}" opacity="0.45"/>
-      <circle cx="72"  cy="175" r="2"   fill="${d.mid}" opacity="0.4"/>
-      <circle cx="195" cy="260" r="1.5" fill="${d.mid}" opacity="0.4"/>
-      <circle cx="88"  cy="258" r="1.5" fill="${d.mid}" opacity="0.35"/>
-      <!-- Wind sweeps -->
-      <path d="M55,245 Q130,232 200,248 Q238,256 275,240" stroke="${d.mid}" stroke-width="0.9" fill="none" opacity="0.35"/>
-      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="9.5" fill="${d.stroke}" letter-spacing="3.5" opacity="0.65">II · LEATHERWOOD</text>`,
+    // ━━━━ KARRI ── 夜×爽やか×B ── 風 ─ Night Compass ━━━━
+    karri: (() => {
+      let s = '';
+      // Guide circle
+      s += RING(cx,cy,104,0.4,0.2);
+      // 3 concentric rings
+      s += RING(cx,cy,88,0.5,0.35);
+      s += RING(cx,cy,58,0.5,0.3);
+      s += RING(cx,cy,30,0.5,0.28);
+      // 16 spokes thin
+      s += SPOKES(cx,cy,4,86,16,0,0.4,0.18);
+      // 8-pointed star (compass)
+      s += `<polygon points="${ST(cx,cy,58,22,8)}" fill="${e.lt}" fill-opacity="0.15" stroke="${e.md}" stroke-width="0.7" opacity="0.8"/>`;
+      // Inner 4-pointed cross
+      s += `<polygon points="${ST(cx,cy,28,11,4)}" fill="${e.lt}" fill-opacity="0.2" stroke="${e.md}" stroke-width="0.7" opacity="0.85"/>`;
+      // Crescent moon (two overlapping circles, top)
+      s += `<circle cx="${cx}" cy="${cy-76}" r="20" fill="${e.lt}" opacity="0.38"/>`;
+      s += `<circle cx="${cx+7}" cy="${cy-79}" r="15" fill="${e.bg}" opacity="1"/>`;
+      // 4 wind arcs
+      s += `<path d="M ${cx-88},${cy} Q ${cx-55},${cy-38} ${cx},${cy-88}" fill="none" stroke="${e.md}" stroke-width="0.7" opacity="0.35"/>`;
+      s += `<path d="M ${cx+88},${cy} Q ${cx+55},${cy+38} ${cx},${cy+88}" fill="none" stroke="${e.md}" stroke-width="0.7" opacity="0.35"/>`;
+      s += `<path d="M ${cx-62},${cy-62} Q ${cx-10},${cy-30} ${cx+28},${cy-82}" fill="none" stroke="${e.lt}" stroke-width="0.6" opacity="0.3"/>`;
+      s += `<path d="M ${cx+62},${cy+62} Q ${cx+10},${cy+30} ${cx-28},${cy+82}" fill="none" stroke="${e.lt}" stroke-width="0.6" opacity="0.3"/>`;
+      // Small dots at 8 compass points (r=88)
+      for(let i=0;i<8;i++){const p=XY(cx,cy,88,i*45);s+=DOT(+p.x,+p.y,2.5,0.5);}
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="6" fill="${e.lt}" opacity="0.5"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="2.5" fill="${e.dk}" opacity="0.7"/>`;
+      return s;
+    })(),
 
-    // ③ Scottish Heather — Fire — heather sprigs + warmth
-    scottish_heather: `
-      <circle cx="160" cy="165" r="100" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
-      <circle cx="160" cy="165" r="72"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.25"/>
-      <!-- Warm glow from bottom -->
-      <ellipse cx="160" cy="320" rx="120" ry="60" fill="${d.mid}" opacity="0.12"/>
-      <ellipse cx="160" cy="310" rx="80"  ry="40" fill="${d.acc}" opacity="0.08"/>
-      <!-- Heather stems -->
-      <path d="M140,280 Q138,240 142,200 Q144,175 140,145" stroke="${d.stroke}" stroke-width="1.3" fill="none" opacity="0.5"/>
-      <path d="M160,280 Q158,238 162,195 Q164,168 160,135" stroke="${d.stroke}" stroke-width="1.5" fill="none" opacity="0.55"/>
-      <path d="M180,280 Q182,242 178,202 Q176,177 180,148" stroke="${d.stroke}" stroke-width="1.3" fill="none" opacity="0.5"/>
-      <path d="M120,285 Q122,250 118,215" stroke="${d.stroke}" stroke-width="1.1" fill="none" opacity="0.4"/>
-      <path d="M200,285 Q198,252 202,218" stroke="${d.stroke}" stroke-width="1.1" fill="none" opacity="0.4"/>
-      <!-- Heather bell flowers -->
-      ${[[140,145],[140,155],[140,165],[140,175],[140,185],[140,195],
-         [160,135],[160,145],[160,155],[160,165],[160,175],[160,185],
-         [180,148],[180,158],[180,168],[180,178],[180,188],[180,198],
-         [120,215],[120,225],[120,235],[200,218],[200,228],[200,238]].map(([x,y])=>
-        `<ellipse cx="${x}" cy="${y}" rx="5" ry="3.5" fill="${d.acc}" opacity="0.55"/>`
-      ).join('')}
-      <!-- Flame shapes -->
-      <path d="M155,295 Q158,285 160,275 Q162,285 165,295 Q160,300 155,295" fill="${d.mid}" opacity="0.2"/>
-      <path d="M148,298 Q153,285 155,272 Q158,285 160,298 Q153,304 148,298" fill="${d.acc}" opacity="0.15"/>
-      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="9" fill="${d.stroke}" letter-spacing="3" opacity="0.65">III · SCOTTISH HEATHER</text>`,
+    // ━━━━ LEATHERWOOD ── 朝×爽やか×A ── 風 ─ Morning Pentagram ━━━━
+    leatherwood: (() => {
+      let s = '';
+      s += RING(cx,cy,102,0.4,0.2);
+      s += RING(cx,cy,86,0.5,0.3);
+      // Pentagon outer
+      s += `<polygon points="${P(cx,cy,86,5)}" fill="none" stroke="${e.md}" stroke-width="0.6" opacity="0.4"/>`;
+      // Pentagram (5-pointed star)
+      s += `<polygon points="${ST(cx,cy,86,32,5)}" fill="${e.lt}" fill-opacity="0.12" stroke="${e.md}" stroke-width="0.7" opacity="0.75"/>`;
+      // 5 petal circles at pentagon vertices
+      for(let i=0;i<5;i++){
+        const a=(i/5*Math.PI*2)-Math.PI/2;
+        const px=(cx+62*Math.cos(a)), py=(cy+62*Math.sin(a));
+        s+=`<circle cx="${px.toFixed(2)}" cy="${py.toFixed(2)}" r="22" fill="${e.lt}" fill-opacity="0.12" stroke="${e.md}" stroke-width="0.55" opacity="0.6"/>`;
+      }
+      // Inner small pentagon
+      s += `<polygon points="${P(cx,cy,28,5)}" fill="none" stroke="${e.md}" stroke-width="0.6" opacity="0.45"/>`;
+      // Inner pentagram small
+      s += `<polygon points="${ST(cx,cy,28,11,5)}" fill="${e.lt}" fill-opacity="0.2" stroke="${e.md}" stroke-width="0.6" opacity="0.7"/>`;
+      // 5 spokes from center to petal edges
+      s += SPOKES(cx,cy,4,62,5,0,0.5,0.22);
+      // Sparkle dots — morning light
+      const sparkles=[[cx-90,cy-35],[cx+90,cy-35],[cx,cy-102],[cx-68,cy+72],[cx+68,cy+72]];
+      sparkles.forEach(([sx,sy])=>{ s+=DOT(sx,sy,2,0.45); s+=DOT(sx,sy,4.5,0.12); });
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="7" fill="${e.lt}" opacity="0.45"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="2.8" fill="${e.dk}" opacity="0.65"/>`;
+      return s;
+    })(),
 
-    // ④ Jarrah — Earth — deep roots
-    jarrah: `
-      <circle cx="160" cy="150" r="95"  fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
-      <circle cx="160" cy="150" r="68"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.22"/>
-      <!-- Earth layer bands -->
-      <path d="M0,290 Q80,282 160,290 Q240,298 320,290 L320,340 L0,340 Z" fill="${d.mid}" opacity="0.15"/>
-      <path d="M0,305 Q80,297 160,305 Q240,313 320,305 L320,340 L0,340 Z" fill="${d.acc}"  opacity="0.12"/>
-      <!-- Main tree trunk (massive) -->
-      <path d="M148,285 Q145,250 148,210 Q150,185 145,155 Q142,130 148,100" stroke="${d.stroke}" stroke-width="5" fill="none" opacity="0.6" stroke-linecap="round"/>
-      <path d="M168,285 Q171,250 168,210 Q166,185 170,155 Q173,130 168,100" stroke="${d.stroke}" stroke-width="4" fill="none" opacity="0.5" stroke-linecap="round"/>
-      <!-- Root system -->
-      <path d="M148,285 Q128,292 105,300 Q90,308 70,318"  stroke="${d.stroke}" stroke-width="2.2" fill="none" opacity="0.5"/>
-      <path d="M148,285 Q135,298 125,315 Q118,328 112,340" stroke="${d.stroke}" stroke-width="1.8" fill="none" opacity="0.45"/>
-      <path d="M168,285 Q185,292 208,302 Q224,310 245,320"  stroke="${d.stroke}" stroke-width="2.2" fill="none" opacity="0.5"/>
-      <path d="M168,285 Q178,300 182,318 Q185,330 186,340" stroke="${d.stroke}" stroke-width="1.8" fill="none" opacity="0.45"/>
-      <path d="M155,292 Q155,308 152,325 Q150,335 148,340" stroke="${d.stroke}" stroke-width="1.5" fill="none" opacity="0.4"/>
-      <!-- Large branches -->
-      <path d="M148,175 Q118,152 88,138"  stroke="${d.stroke}" stroke-width="2.5" fill="none" opacity="0.45"/>
-      <path d="M163,165 Q190,142 222,130"  stroke="${d.stroke}" stroke-width="2.5" fill="none" opacity="0.45"/>
-      <path d="M148,215 Q125,200 100,195"  stroke="${d.stroke}" stroke-width="2" fill="none" opacity="0.38"/>
-      <path d="M168,205 Q192,192 218,188" stroke="${d.stroke}" stroke-width="2" fill="none" opacity="0.38"/>
-      <!-- Leaves cluster -->
-      <ellipse cx="82"  cy="132" rx="22" ry="15" fill="${d.acc}" opacity="0.35" transform="rotate(-20 82 132)"/>
-      <ellipse cx="225" cy="125" rx="22" ry="15" fill="${d.acc}" opacity="0.35" transform="rotate(20 225 125)"/>
-      <ellipse cx="148" cy="92"  rx="20" ry="14" fill="${d.acc}" opacity="0.38"/>
-      <ellipse cx="96"  cy="190" rx="16" ry="10" fill="${d.acc}" opacity="0.3"/>
-      <ellipse cx="222" cy="184" rx="16" ry="10" fill="${d.acc}" opacity="0.3"/>
-      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${d.stroke}" letter-spacing="4.5" opacity="0.65">IV · JARRAH</text>`,
+    // ━━━━ SCOTTISH HEATHER ── 朝×濃厚×B ── 火 ─ Fire Yantra ━━━━
+    scottish_heather: (() => {
+      let s = '';
+      s += RING(cx,cy,106,0.4,0.2);
+      s += RING(cx,cy,90,0.5,0.3);
+      // 12-spoke sun rays
+      s += SPOKES(cx,cy,92,108,12,0,0.7,0.35);
+      // Outer sun ring
+      s += RING(cx,cy,108,0.4,0.28);
+      // Hexagram (two triangles — fire & its reflection)
+      s += `<polygon points="${P(cx,cy,80,3,0)}"  fill="${e.lt}" fill-opacity="0.12" stroke="${e.md}" stroke-width="0.8" opacity="0.65"/>`;
+      s += `<polygon points="${P(cx,cy,80,3,180)}" fill="${e.lt}" fill-opacity="0.08" stroke="${e.md}" stroke-width="0.8" opacity="0.55"/>`;
+      // Inner hexagram smaller
+      s += `<polygon points="${P(cx,cy,50,3,0)}"  fill="${e.lt}" fill-opacity="0.15" stroke="${e.md}" stroke-width="0.7" opacity="0.7"/>`;
+      s += `<polygon points="${P(cx,cy,50,3,180)}" fill="${e.lt}" fill-opacity="0.1"  stroke="${e.md}" stroke-width="0.7" opacity="0.6"/>`;
+      // Innermost triangle (fire point up)
+      s += `<polygon points="${P(cx,cy,26,3,0)}" fill="${e.lt}" fill-opacity="0.25" stroke="${e.md}" stroke-width="0.7" opacity="0.8"/>`;
+      // Circle inscribed between hexagrams
+      s += RING(cx,cy,50,0.4,0.3);
+      s += RING(cx,cy,26,0.4,0.35);
+      // 6 dots at outer hexagon vertices
+      for(let i=0;i<6;i++){const p=XY(cx,cy,80,i*60);s+=DOT(+p.x,+p.y,3,0.45);}
+      // Center sun
+      s += `<circle cx="${cx}" cy="${cy}" r="10" fill="${e.lt}" opacity="0.3"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="4" fill="${e.dk}" opacity="0.6"/>`;
+      return s;
+    })(),
 
-    // ⑤ Manuka — Fire — bold flowers + intensity
-    manuka: `
-      <circle cx="160" cy="155" r="100" fill="none" stroke="${d.acc}" stroke-width="0.6" opacity="0.35"/>
-      <circle cx="160" cy="155" r="72"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.28"/>
-      <!-- Radial energy lines -->
-      ${Array.from({length:16},(_,i)=>{
-        const a=(i*22.5-90)*Math.PI/180;
-        return `<line x1="160" y1="155" x2="${160+115*Math.cos(a)}" y2="${155+115*Math.sin(a)}" stroke="${d.acc}" stroke-width="0.5" opacity="${0.1+0.05*(i%2)}"/>`;
-      }).join('')}
-      <!-- Manuka flowers (5-petal, bold) -->
-      ${[0,72,144,216,288].map(a=>{
-        const rad=(a-90)*Math.PI/180;
-        const x=160+35*Math.cos(rad), y=155+35*Math.sin(rad);
-        return `<ellipse cx="${x}" cy="${y}" rx="18" ry="10" transform="rotate(${a} ${x} ${y})" fill="${d.acc}" opacity="0.55"/>`;
-      }).join('')}
-      <circle cx="160" cy="155" r="14" fill="${d.mid}" opacity="0.7"/>
-      <circle cx="160" cy="155" r="7"  fill="${d.acc}" opacity="0.8"/>
-      <!-- Stamens -->
-      ${Array.from({length:12},(_,i)=>{
-        const a=(i*30-90)*Math.PI/180;
-        return `<line x1="${160+7*Math.cos(a)}" y1="${155+7*Math.sin(a)}" x2="${160+20*Math.cos(a)}" y2="${155+20*Math.sin(a)}" stroke="${d.stroke}" stroke-width="1" opacity="0.6"/>`;
-      }).join('')}
-      <!-- Smaller secondary flowers -->
-      ${[[100,80],[220,90],[75,215],[248,210],[145,258]].map(([cx,cy])=>`
-        ${[0,72,144,216,288].map(a=>{
-          const rad=(a-90)*Math.PI/180;
-          const x=cx+14*Math.cos(rad), y=cy+14*Math.sin(rad);
-          return `<ellipse cx="${x}" cy="${y}" rx="8" ry="5" transform="rotate(${a} ${x} ${y})" fill="${d.acc}" opacity="0.38"/>`;
-        }).join('')}
-        <circle cx="${cx}" cy="${cy}" r="5" fill="${d.mid}" opacity="0.5"/>
-      `).join('')}
-      <!-- Flame shimmer at base -->
-      <path d="M138,300 Q148,280 155,265 Q160,278 165,265 Q172,280 182,300 Q165,308 138,300" fill="${d.mid}" opacity="0.18"/>
-      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${d.stroke}" letter-spacing="4.5" opacity="0.65">V · MANUKA</text>`,
+    // ━━━━ JARRAH ── 夜×濃厚×A ── 土 ─ Hexagonal Earth ━━━━
+    jarrah: (() => {
+      let s = '';
+      // Outer circle
+      s += RING(cx,cy,104,0.4,0.22);
+      // 3 hexagons (concentric)
+      [84,56,28].forEach((r,i)=>{
+        s += `<polygon points="${P(cx,cy,r,6)}" fill="none" stroke="${e.md}" stroke-width="${i===0?0.7:0.55}" opacity="${0.45-i*0.05}"/>`;
+      });
+      // Hexagram (two triangles) at r=56
+      s += `<polygon points="${P(cx,cy,56,3,0)}"   fill="${e.lt}" fill-opacity="0.1"  stroke="${e.md}" stroke-width="0.6" opacity="0.6"/>`;
+      s += `<polygon points="${P(cx,cy,56,3,180)}"  fill="${e.lt}" fill-opacity="0.08" stroke="${e.md}" stroke-width="0.6" opacity="0.5"/>`;
+      // 6 satellite circles at outer hexagon vertices
+      for(let i=0;i<6;i++){
+        const p=XY(cx,cy,84,i*60);
+        s+=`<circle cx="${p.x}" cy="${p.y}" r="9" fill="${e.lt}" fill-opacity="0.18" stroke="${e.md}" stroke-width="0.5" opacity="0.6"/>`;
+        s+=DOT(+p.x,+p.y,2.5,0.45);
+      }
+      // Spokes to each satellite
+      s += SPOKES(cx,cy,4,75,6,0,0.5,0.2);
+      // Inner downward triangle (earth, grounding)
+      s += `<polygon points="${P(cx,cy,28,3,180)}" fill="${e.lt}" fill-opacity="0.25" stroke="${e.md}" stroke-width="0.7" opacity="0.75"/>`;
+      // Circle fits inside inner hexagon
+      s += RING(cx,cy,28,0.4,0.3);
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="8" fill="${e.lt}" opacity="0.3"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="3.5" fill="${e.dk}" opacity="0.65"/>`;
+      return s;
+    })(),
 
-    // ⑥ Linden — Water — ripples + heart leaves
-    linden: `
-      <circle cx="160" cy="160" r="100" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
-      <circle cx="160" cy="160" r="72"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.25"/>
-      <!-- Water ripple rings -->
-      <ellipse cx="160" cy="280" rx="115" ry="35" fill="none" stroke="${d.acc}" stroke-width="0.6" opacity="0.35"/>
-      <ellipse cx="160" cy="280" rx="85"  ry="25" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.28"/>
-      <ellipse cx="160" cy="280" rx="55"  ry="16" fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.22"/>
-      <ellipse cx="160" cy="280" rx="28"  ry="8"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.18"/>
-      <!-- Moon reflection line -->
-      <line x1="160" y1="50" x2="160" y2="280" stroke="${d.mid}" stroke-width="0.8" opacity="0.2" stroke-dasharray="3,5"/>
-      <!-- Moon -->
-      <circle cx="160" cy="65" r="28" fill="${d.mid}" opacity="0.18"/>
-      <circle cx="170" cy="58" r="22" fill="${d.bg1}" opacity="0.8"/>
-      <!-- Linden heart-shaped leaves -->
-      ${[[115,155],[145,120],[175,120],[205,155],[125,195],[195,195],[160,220]].map(([x,y])=>`
-        <path d="M${x},${y-12} C${x-10},${y-20} ${x-18},${y-8} ${x},${y+8} C${x+18},${y-8} ${x+10},${y-20} ${x},${y-12}" fill="${d.acc}" opacity="0.42"/>
-      `).join('')}
-      <!-- Stems -->
-      <path d="M160,230 Q155,255 152,280" stroke="${d.stroke}" stroke-width="1.2" fill="none" opacity="0.4"/>
-      <path d="M115,163 Q130,200 145,240" stroke="${d.stroke}" stroke-width="1" fill="none" opacity="0.35"/>
-      <path d="M205,163 Q190,200 175,240" stroke="${d.stroke}" stroke-width="1" fill="none" opacity="0.35"/>
-      <!-- Flowing water lines -->
-      <path d="M45,255 Q100,242 160,255 Q218,268 275,250" stroke="${d.mid}" stroke-width="1" fill="none" opacity="0.4"/>
-      <path d="M55,268 Q110,257 165,268 Q222,280 272,264" stroke="${d.mid}" stroke-width="0.7" fill="none" opacity="0.3"/>
-      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${d.stroke}" letter-spacing="4.5" opacity="0.65">VI · LINDEN</text>`,
+    // ━━━━ GINGER HONEY ── 朝×爽やか×B ── 火 ─ Solar Octagram ━━━━
+    ginger_honey: (() => {
+      let s = '';
+      // Outer rings
+      s += RING(cx,cy,106,0.4,0.22);
+      s += RING(cx,cy,90,0.5,0.28);
+      // 16 radial burst lines
+      s += SPOKES(cx,cy,50,88,16,0,0.5,0.2);
+      // Outer 8-pointed star (two squares)
+      s += `<polygon points="${P(cx,cy,78,4,0)}"  fill="${e.lt}" fill-opacity="0.1"  stroke="${e.md}" stroke-width="0.7" opacity="0.6"/>`;
+      s += `<polygon points="${P(cx,cy,78,4,45)}" fill="${e.lt}" fill-opacity="0.1"  stroke="${e.md}" stroke-width="0.7" opacity="0.6"/>`;
+      // 8-pointed star over them
+      s += `<polygon points="${ST(cx,cy,78,32,8,0)}" fill="${e.lt}" fill-opacity="0.14" stroke="${e.md}" stroke-width="0.8" opacity="0.75"/>`;
+      // Inner octagram smaller
+      s += `<polygon points="${P(cx,cy,48,4,0)}"  fill="none" stroke="${e.md}" stroke-width="0.55" opacity="0.5"/>`;
+      s += `<polygon points="${P(cx,cy,48,4,45)}" fill="none" stroke="${e.md}" stroke-width="0.55" opacity="0.5"/>`;
+      s += `<polygon points="${ST(cx,cy,48,20,8,0)}" fill="${e.lt}" fill-opacity="0.18" stroke="${e.md}" stroke-width="0.6" opacity="0.7"/>`;
+      // 8 dots at outer star tips
+      for(let i=0;i<8;i++){const p=XY(cx,cy,78,i*45);s+=DOT(+p.x,+p.y,3,0.45);}
+      // Innermost circle
+      s += RING(cx,cy,20,0.5,0.4);
+      // Center fire burst
+      s += `<circle cx="${cx}" cy="${cy}" r="10" fill="${e.lt}" opacity="0.35"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="4" fill="${e.dk}" opacity="0.65"/>`;
+      return s;
+    })(),
 
-    // ⑦ Rewarewa — Earth — upward growth
-    rewarewa: `
-      <circle cx="160" cy="155" r="100" fill="none" stroke="${d.acc}" stroke-width="0.5" opacity="0.3"/>
-      <circle cx="160" cy="155" r="72"  fill="none" stroke="${d.acc}" stroke-width="0.4" opacity="0.25"/>
-      <!-- Ground line -->
-      <path d="M30,285 Q160,278 290,285" stroke="${d.stroke}" stroke-width="1" fill="none" opacity="0.4"/>
-      <!-- Upward energy lines -->
-      ${[-60,-30,0,30,60].map(offset=>`
-        <path d="M${160+offset},285 Q${160+offset+5},220 ${160+offset},155 Q${160+offset-3},100 ${160+offset},55" stroke="${d.stroke}" stroke-width="${offset===0?2:1.2}" fill="none" opacity="${offset===0?0.55:0.38}"/>
-      `).join('')}
-      <!-- Rewarewa flower clusters (tubular/bottlebrush style) -->
-      ${[
-        [160,55, 3, 10], [160,75, 3.5, 10], [160,95, 3.5, 10],
-        [130,90, 2.8, 8], [190,90, 2.8, 8],
-        [100,125, 2.5, 7], [220,125, 2.5, 7]
-      ].map(([cx,cy,r,cnt])=>
-        Array.from({length:cnt},(_,i)=>{
-          const a=(i/cnt)*Math.PI*2;
-          return `<circle cx="${cx+r*2.5*Math.cos(a)}" cy="${cy+r*2.5*Math.sin(a)}" r="${r}" fill="${d.acc}" opacity="0.55"/>`;
-        }).join('')
-      ).join('')}
-      <!-- Leaf clusters -->
-      <ellipse cx="112" cy="145" rx="18" ry="8" transform="rotate(40 112 145)" fill="${d.mid}" opacity="0.4"/>
-      <ellipse cx="208" cy="145" rx="18" ry="8" transform="rotate(-40 208 145)" fill="${d.mid}" opacity="0.4"/>
-      <ellipse cx="90"  cy="175" rx="15" ry="7" transform="rotate(55 90 175)"  fill="${d.mid}" opacity="0.35"/>
-      <ellipse cx="230" cy="175" rx="15" ry="7" transform="rotate(-55 230 175)" fill="${d.mid}" opacity="0.35"/>
-      <!-- Root tendrils -->
-      <path d="M160,285 Q145,295 125,308 Q108,318 95,330" stroke="${d.stroke}" stroke-width="1.5" fill="none" opacity="0.4"/>
-      <path d="M160,285 Q175,295 195,308 Q212,318 225,330" stroke="${d.stroke}" stroke-width="1.5" fill="none" opacity="0.4"/>
-      <path d="M155,290 Q150,308 145,330" stroke="${d.stroke}" stroke-width="1.2" fill="none" opacity="0.35"/>
-      <path d="M165,290 Q170,308 175,330" stroke="${d.stroke}" stroke-width="1.2" fill="none" opacity="0.35"/>
-      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${d.stroke}" letter-spacing="3.5" opacity="0.65">VII · REWAREWA</text>`,
+    // ━━━━ LEMON MYRTLE ── 夜×爽やか×A ── 水 ─ Water Ripple ━━━━
+    lemon_myrtle: (() => {
+      let s = '';
+      // 5 concentric ripple circles (varying opacity — like water rings)
+      [20,42,62,82,100].forEach((r,i)=>{
+        s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${e.md}" stroke-width="${i===4?0.4:0.55}" opacity="${0.45-i*0.06}"/>`;
+      });
+      // Moon crescent at top
+      s += `<circle cx="${cx}" cy="${cy-78}" r="22" fill="${e.lt}" opacity="0.35"/>`;
+      s += `<circle cx="${cx+8}" cy="${cy-82}" r="17" fill="${e.bg}" opacity="1"/>`;
+      // Moon reflection line (dashed, vertical)
+      s += `<line x1="${cx}" y1="${cy-56}" x2="${cx}" y2="${cy+100}" stroke="${e.md}" stroke-width="0.4" stroke-dasharray="3,5" opacity="0.22"/>`;
+      // 4 sweeping water arcs — rotational flow
+      const arcs=[0,90,180,270];
+      arcs.forEach(d=>{
+        const a1=XY(cx,cy,100,d); const a2=XY(cx,cy,60,d+60); const a3=XY(cx,cy,100,d+90);
+        s+=`<path d="M${a1.x},${a1.y} Q${a2.x},${a2.y} ${a3.x},${a3.y}" fill="none" stroke="${e.lt}" stroke-width="0.7" opacity="0.35"/>`;
+      });
+      // Vesica piscis at center — two overlapping circles
+      s += `<circle cx="${cx-18}" cy="${cy}" r="32" fill="none" stroke="${e.md}" stroke-width="0.55" opacity="0.4"/>`;
+      s += `<circle cx="${cx+18}" cy="${cy}" r="32" fill="none" stroke="${e.md}" stroke-width="0.55" opacity="0.4"/>`;
+      // 6 dot ornaments on largest ring
+      for(let i=0;i<6;i++){const p=XY(cx,cy,100,i*60);s+=DOT(+p.x,+p.y,2.5,0.4);}
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="7" fill="${e.lt}" opacity="0.4"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="2.8" fill="${e.dk}" opacity="0.6"/>`;
+      return s;
+    })(),
 
-    // ⑧ Blackbutt — Earth — ancient forest, honeycomb
-    blackbutt: `
-      <!-- Dark ancient forest atmosphere -->
-      <ellipse cx="160" cy="380" rx="200" ry="100" fill="${d.acc}" opacity="0.12"/>
-      <ellipse cx="160" cy="340" rx="150" ry="70"  fill="${d.stroke}" opacity="0.08"/>
-      <!-- Honeycomb pattern (ancient treasure) -->
-      ${[
-        [160,90], [184,103], [184,129], [160,142], [136,129], [136,103],
-        [208,90], [208,116], [184,155], [208,168],
-        [112,90], [112,116], [136,155], [112,168]
-      ].map(([cx,cy])=>{
-        const pts = Array.from({length:6},(_,i)=>{
-          const a=(i*60-90)*Math.PI/180;
-          return `${cx+13*Math.cos(a)},${cy+13*Math.sin(a)}`;
-        }).join(' ');
-        return `<polygon points="${pts}" fill="none" stroke="${d.acc}" stroke-width="0.8" opacity="0.55"/>`;
-      }).join('')}
-      <!-- Honey fill on some cells -->
-      ${[[160,90],[184,129],[136,103]].map(([cx,cy])=>{
-        const pts = Array.from({length:6},(_,i)=>{
-          const a=(i*60-90)*Math.PI/180;
-          return `${cx+12*Math.cos(a)},${cy+12*Math.sin(a)}`;
-        }).join(' ');
-        return `<polygon points="${pts}" fill="${d.mid}" opacity="0.3"/>`;
-      }).join('')}
-      <!-- Massive tree trunks -->
-      <path d="M108,340 Q112,280 108,220 Q105,180 110,155" stroke="${d.stroke}" stroke-width="14" fill="none" opacity="0.5" stroke-linecap="round"/>
-      <path d="M212,340 Q208,280 212,220 Q215,180 210,155" stroke="${d.stroke}" stroke-width="14" fill="none" opacity="0.5" stroke-linecap="round"/>
-      <!-- Bark texture lines -->
-      <path d="M102,280 Q108,275 114,280" stroke="${d.acc}" stroke-width="0.8" fill="none" opacity="0.4"/>
-      <path d="M104,255 Q110,250 116,255" stroke="${d.acc}" stroke-width="0.8" fill="none" opacity="0.4"/>
-      <path d="M206,280 Q212,275 218,280" stroke="${d.acc}" stroke-width="0.8" fill="none" opacity="0.4"/>
-      <path d="M204,255 Q210,250 216,255" stroke="${d.acc}" stroke-width="0.8" fill="none" opacity="0.4"/>
-      <!-- Forest depth shadow -->
-      <path d="M0,340 L320,340 L320,400 L0,400 Z" fill="${d.stroke}" opacity="0.08"/>
-      <!-- Honey drip -->
-      <path d="M155,190 Q156,210 155,225 Q154,238 155,250" stroke="${d.mid}" stroke-width="2.5" fill="none" opacity="0.45" stroke-linecap="round"/>
-      <ellipse cx="155" cy="256" rx="5" ry="7" fill="${d.mid}" opacity="0.5"/>
-      <text x="160" y="330" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="9.5" fill="${d.cream||'#FAF6EE'}" letter-spacing="3.5" opacity="0.7">VIII · BLACKBUTT</text>`
+    // ━━━━ REWAREWA ── 朝×濃厚×A ── 土 ─ Pentagon Growth ━━━━
+    rewarewa: (() => {
+      let s = '';
+      s += RING(cx,cy,104,0.4,0.2);
+      // 3 concentric pentagons (up = growth)
+      [84,55,26].forEach((r,i)=>{
+        s += `<polygon points="${P(cx,cy,r,5,0)}" fill="none" stroke="${e.md}" stroke-width="${i===0?0.7:0.55}" opacity="${0.45-i*0.05}"/>`;
+      });
+      // Pentagram at r=84
+      s += `<polygon points="${ST(cx,cy,84,32,5,0)}" fill="${e.lt}" fill-opacity="0.12" stroke="${e.md}" stroke-width="0.7" opacity="0.7"/>`;
+      // 5 upward-pointing small triangles at pentagon vertices (r=84)
+      for(let i=0;i<5;i++){
+        const a=(i/5*Math.PI*2)-Math.PI/2;
+        const tx=cx+84*Math.cos(a), ty=cy+84*Math.sin(a);
+        // Small equilateral triangle pointing away from center
+        const ang=(Math.atan2(ty-cy,tx-cx)*180/Math.PI)+90;
+        const tp=[
+          [(tx+12*Math.cos((ang-90-0)*Math.PI/180)).toFixed(2),(ty+12*Math.sin((ang-90-0)*Math.PI/180)).toFixed(2)],
+          [(tx+12*Math.cos((ang-90+120)*Math.PI/180)).toFixed(2),(ty+12*Math.sin((ang-90+120)*Math.PI/180)).toFixed(2)],
+          [(tx+12*Math.cos((ang-90+240)*Math.PI/180)).toFixed(2),(ty+12*Math.sin((ang-90+240)*Math.PI/180)).toFixed(2)]
+        ];
+        s+=`<polygon points="${tp.map(p=>p.join(',')).join(' ')}" fill="${e.lt}" fill-opacity="0.2" stroke="${e.md}" stroke-width="0.55" opacity="0.6"/>`;
+      }
+      // Growth spokes (5 lines from center to pentagon vertices)
+      s += SPOKES(cx,cy,4,82,5,0,0.5,0.2);
+      // Inner pentagram small
+      s += `<polygon points="${ST(cx,cy,26,10,5,0)}" fill="${e.lt}" fill-opacity="0.25" stroke="${e.md}" stroke-width="0.6" opacity="0.75"/>`;
+      // 5 dots at inner pentagon
+      for(let i=0;i<5;i++){const p=XY(cx,cy,55,i*72);s+=DOT(+p.x,+p.y,2.5,0.4);}
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="8" fill="${e.lt}" opacity="0.38"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="3" fill="${e.dk}" opacity="0.65"/>`;
+      return s;
+    })(),
+
+    // ━━━━ WANDOO ── 夜×濃厚×B ── 土 ─ Ancient Octagon Mandala ━━━━
+    wandoo: (() => {
+      let s = '';
+      // 4 concentric octagons
+      [90,68,46,24].forEach((r,i)=>{
+        s += `<polygon points="${P(cx,cy,r,8,0)}" fill="${i===0?e.lt:'none'}" fill-opacity="0.07" stroke="${e.md}" stroke-width="${i===0?0.7:0.55}" opacity="${0.45-i*0.04}"/>`;
+      });
+      // 8-pointed star at r=68 (two squares)
+      s += `<polygon points="${P(cx,cy,68,4,0)}"  fill="none" stroke="${e.md}" stroke-width="0.5" opacity="0.45"/>`;
+      s += `<polygon points="${P(cx,cy,68,4,45)}" fill="none" stroke="${e.md}" stroke-width="0.5" opacity="0.45"/>`;
+      // 8-pointed star solid
+      s += `<polygon points="${ST(cx,cy,68,28,8,0)}" fill="${e.lt}" fill-opacity="0.14" stroke="${e.md}" stroke-width="0.7" opacity="0.7"/>`;
+      // 8 diamond ornaments between outer octagon and circle
+      for(let i=0;i<8;i++){
+        const p=XY(cx,cy,90,i*45);
+        // Small diamond (4-pointed star, squished)
+        const q=XY(cx,cy,90+8,i*45), q2=XY(cx,cy,90-8,i*45);
+        const r=XY(cx,cy+0,90,(i*45)+90),r2=XY(cx,cy,90,(i*45)-90);
+        const a=(i*45-90)*Math.PI/180;
+        const ddx=cx+90*Math.cos(a), ddy=cy+90*Math.sin(a);
+        const perp=a+Math.PI/2;
+        const d=[
+          [(ddx+7*Math.cos(a)).toFixed(2),(ddy+7*Math.sin(a)).toFixed(2)],
+          [(ddx+4*Math.cos(perp)).toFixed(2),(ddy+4*Math.sin(perp)).toFixed(2)],
+          [(ddx-7*Math.cos(a)).toFixed(2),(ddy-7*Math.sin(a)).toFixed(2)],
+          [(ddx-4*Math.cos(perp)).toFixed(2),(ddy-4*Math.sin(perp)).toFixed(2)]
+        ];
+        s+=`<polygon points="${d.map(pp=>pp.join(',')).join(' ')}" fill="${e.lt}" fill-opacity="0.25" stroke="${e.md}" stroke-width="0.5" opacity="0.6"/>`;
+      }
+      // 8 tick lines (outer ring ornament)
+      s += SPOKES(cx,cy,94,106,8,0,0.6,0.3);
+      s += RING(cx,cy,106,0.4,0.22);
+      // 8 spokes to octagon vertices
+      s += SPOKES(cx,cy,4,88,8,0,0.4,0.18);
+      // Inner downward triangle (ancient, deep)
+      s += `<polygon points="${P(cx,cy,24,3,180)}" fill="${e.lt}" fill-opacity="0.28" stroke="${e.md}" stroke-width="0.6" opacity="0.75"/>`;
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="9" fill="${e.lt}" opacity="0.32"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="3.5" fill="${e.dk}" opacity="0.7"/>`;
+      return s;
+    })()
+
   };
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 340" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <linearGradient id="card-bg-${key}" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="${d.bg1}"/>
-        <stop offset="100%" stop-color="${d.bg2}"/>
-      </linearGradient>
-    </defs>
-    <rect width="320" height="340" fill="url(#card-bg-${key})"/>
-    ${motifs[key] || ''}
-  </svg>`;
+  const nameRow = RESULTS[key].nameEn;
+  const elemRow = RESULTS[key].element;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 340">
+  <rect width="320" height="340" fill="${e.bg}"/>
+  ${frame}
+  ${motifs[key]||''}
+  <line x1="26" y1="308" x2="294" y2="308" stroke="${e.md}" stroke-width="0.4" opacity="0.35"/>
+  <text x="160" y="324" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11.5" font-style="italic" fill="${e.dk}" letter-spacing="2.5" opacity="0.8">${nameRow}</text>
+  <text x="160" y="336" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="8.5" fill="${e.md}" letter-spacing="4" opacity="0.6">${elemRow}</text>
+</svg>`;
 }
+
 
 /* ═══════════════════════════════════════════════════
    STATE
@@ -1246,8 +1317,10 @@ function renderQuestion(q) {
         <button class="choice-btn" data-id="${c.id}" ${c.result ? `data-result="${c.result}"` : ''}>
           <div class="choice-inner">
             <span class="choice-label">${c.label}</span>
-            <span class="choice-main">${c.main}</span>
-            <span class="choice-sub">${c.sub}</span>
+            ${q.step === 3
+              ? `<span class="choice-main choice-main--single">${c.main}${c.sub ? `、${c.sub}` : ''}</span>`
+              : `<span class="choice-main">${c.main}</span><span class="choice-sub">${c.sub}</span>`
+            }
           </div>
         </button>
       `).join('')}
