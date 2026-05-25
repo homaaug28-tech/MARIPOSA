@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>MARIPOSA — Scottish Heather Honey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+JP:wght@200;300;400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══════════════════════════════════════
+       DESIGN TOKENS
+    ══════════════════════════════════════ */
+    :root {
+      --bg-morning : #EAF0F6;
+      --bg-cream   : #FAF6EE;
+      --bg-deep    : #658296;
+      --text-main  : #1F1A17;
+      --text-muted : #535B62;
+      --amber      : #A67035;
+      --green      : #223528;
+      --line-thin  : rgba(83,91,98,0.12);
+
+      --ff-en : 'Cormorant Garamond', 'Georgia', serif;
+      --ff-jp : 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+
+      --pad : clamp(24px, 6.5vw, 38px);
+      --max : 480px;
+    }
+
+    /* ══════════════════════════════════════
+       RESET
+    ══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      background: #b8c4cc;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: var(--ff-jp);
+      color: var(--text-main);
+    }
+
+    /* Centred page column */
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      background: var(--bg-morning);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 80px rgba(0,0,0,0.18);
+    }
+
+    @media (min-width: 520px) {
+      html { padding: 56px 0 80px; }
+      .page { outline: 1px solid rgba(83,91,98,0.12); }
+    }
+    @media (max-width: 519px) {
+      html { background: var(--bg-morning); }
+    }
+
+    /* ══════════════════════════════════════
+       GRAIN OVERLAY
+    ══════════════════════════════════════ */
+    .grain {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 9000;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23f)'/%3E%3C/svg%3E");
+      background-size: 240px;
+    }
+
+    /* ══════════════════════════════════════
+       SCROLL REVEAL
+    ══════════════════════════════════════ */
+    .rv { opacity:0; transform:translateY(20px);
+      transition: opacity .85s cubic-bezier(.22,1,.36,1),
+                  transform .85s cubic-bezier(.22,1,.36,1); }
+    .rv.in { opacity:1; transform:translateY(0); }
+    .d1{transition-delay:.1s} .d2{transition-delay:.22s}
+    .d3{transition-delay:.36s} .d4{transition-delay:.52s}
+    .d5{transition-delay:.68s}
+
+    /* ══════════════════════════════════════
+       SHARED UTILITIES
+    ══════════════════════════════════════ */
+    .eyebrow {
+      font-family: var(--ff-en);
+      font-weight: 300;
+      font-size: 0.58rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--amber);
+      opacity: .8;
+    }
+    .rule {
+      width: 100%; height: 1px;
+      background: var(--line-thin);
+      border: none;
+    }
+    .rule-short {
+      width: 32px; height: 1px;
+      background: var(--line-thin);
+      display: block;
+    }
+    .ornament {
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; margin: 0 auto;
+    }
+    .ornament::before, .ornament::after {
+      content: ''; flex: 1; max-width: 52px; height: 1px;
+      background: var(--line-thin);
+    }
+    .ornament span {
+      font-family: var(--ff-en); font-size: .6rem;
+      color: var(--amber); opacity: .5; letter-spacing: .2em;
+    }
+
+    /* ══════════════════════════════════════
+       §1  HERO
+    ══════════════════════════════════════ */
+    .hero { background: var(--bg-morning); padding-bottom: 64px; }
+
+    .hero-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 26px var(--pad) 0;
+    }
+    .hero-logo {
+      display: block;
+      height: 18px;
+      width: auto;
+      max-width: 160px;
+      object-fit: contain;
+      opacity: .72;
+    }
+    .hero-tag {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .56rem; letter-spacing: .34em;
+      text-transform: uppercase; color: var(--amber); opacity: .75;
+    }
+
+    .hero-copy { padding: 44px var(--pad) 0; }
+    .hero-en {
+      font-family: var(--ff-en); font-weight: 300; font-style: italic;
+      font-size: clamp(1.62rem, 6.8vw, 2rem);
+      line-height: 1.48; letter-spacing: .04em;
+      color: var(--text-main); margin-bottom: 18px;
+    }
+    .hero-en .dim { color: var(--text-muted); }
+    .hero-jp {
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .72rem; line-height: 2.2;
+      letter-spacing: .06em; color: var(--text-muted);
+    }
+
+    /* Video */
+    .video-wrap {
+      margin: 38px var(--pad) 0;
+      position: relative; aspect-ratio: 9/16;
+      overflow: hidden; background: #1c262e;
+    }
+    .video-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      box-shadow: inset 0 0 0 1px rgba(83,91,98,.16);
+      pointer-events: none; z-index: 2;
+    }
+    .video-wrap video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .video-ph {
+      position: absolute; inset: 0; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px;
+      background: linear-gradient(160deg,#1d2d38 0%,#263844 60%,#1a2630 100%);
+    }
+    .video-ph svg { opacity: .4; }
+    .video-ph p {
+      font-family: var(--ff-en); font-weight: 300; font-style: italic;
+      font-size: .65rem; letter-spacing: .3em;
+      color: rgba(234,240,246,.45); text-transform: uppercase;
+    }
+
+    .video-meta {
+      padding: 16px var(--pad) 0;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .video-meta .amber-tick {
+      width: 28px; height: 1px; background: var(--amber); opacity: .5;
+      flex-shrink: 0;
+    }
+    .video-meta span {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .56rem; letter-spacing: .32em;
+      color: var(--text-muted); text-transform: uppercase; opacity: .65;
+    }
+
+    /* ══════════════════════════════════════
+       §2  STORY
+    ══════════════════════════════════════ */
+    .story {
+      background: var(--bg-cream);
+      border-top: 1px solid var(--line-thin);
+      border-bottom: 1px solid var(--line-thin);
+      padding: 80px var(--pad);
+      text-align: center;
+    }
+    .story .eyebrow { display: block; margin-bottom: 40px; }
+    .story-text {
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .8rem; line-height: 2.4;
+      letter-spacing: .06em; color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+    .story-text:last-of-type { margin-bottom: 0; }
+    .story-text strong { font-weight: 300; color: #7A5535; }
+    .story .ornament { margin-top: 52px; }
+
+    /* ══════════════════════════════════════
+       §3  PRODUCT IDENTITY
+    ══════════════════════════════════════ */
+    .product-info {
+      background: var(--bg-morning);
+      border-bottom: 1px solid var(--line-thin);
+      padding: 72px var(--pad) 80px;
+    }
+
+    /* Product image slot */
+    .product-img-wrap {
+      width: 100%; aspect-ratio: 4/3;
+      overflow: hidden; margin-bottom: 52px;
+      position: relative;
+      border: 1px solid var(--line-thin);
+    }
+    .product-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    /* Placeholder when no image */
+    .product-img-ph {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px;
+      background: rgba(83,91,98,0.04);
+    }
+    .product-img-ph svg { opacity: .25; }
+    .product-img-ph p {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .58rem; letter-spacing: .36em;
+      color: var(--text-muted); text-transform: uppercase; opacity: .6;
+    }
+
+    .pi-element {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .58rem; letter-spacing: .5em;
+      text-transform: uppercase; color: var(--amber);
+      border: 1px solid rgba(166,112,53,.3);
+      display: inline-block; padding: 6px 16px;
+      margin-bottom: 32px;
+    }
+    .pi-name-en {
+      font-family: var(--ff-en); font-weight: 300; font-style: italic;
+      font-size: clamp(1.9rem, 7.5vw, 2.4rem);
+      line-height: 1.15; letter-spacing: .03em;
+      color: var(--text-main); margin-bottom: 10px;
+    }
+    .pi-name-jp {
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .72rem; letter-spacing: .22em;
+      color: var(--text-muted); margin-bottom: 36px;
+    }
+    .pi-lead {
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .82rem; line-height: 2.2;
+      letter-spacing: .06em; color: var(--text-muted);
+    }
+    .pi-lead strong { font-weight: 300; color: #7A5535; }
+
+    /* Thixotropy note */
+    .thixo {
+      margin-top: 48px;
+      border: 1px solid var(--line-thin);
+      padding: 28px 24px 30px;
+      position: relative;
+    }
+    .thixo-label {
+      position: absolute; top: -9px; left: 20px;
+      background: var(--bg-morning);
+      padding: 0 8px;
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .54rem; letter-spacing: .38em;
+      text-transform: uppercase; color: var(--amber); opacity: .8;
+    }
+    .thixo-visual {
+      display: flex; align-items: center;
+      justify-content: center; gap: 16px;
+      margin-bottom: 20px;
+    }
+    .thixo-state {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+    }
+    .thixo-oval {
+      width: 56px; height: 72px;
+      border: 1px solid rgba(166,112,53,.45);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .thixo-oval.gel::before {
+      content: ''; position: absolute;
+      width: 34px; height: 42px;
+      background: rgba(166,112,53,.18);
+      border-radius: 50%;
+    }
+    .thixo-oval.liq::before {
+      content: '';
+      position: absolute;
+      width: 28px; height: 14px;
+      background: rgba(166,112,53,.22);
+      border-radius: 50%;
+      bottom: 18px;
+    }
+    .thixo-oval.liq::after {
+      content: '';
+      position: absolute;
+      width: 3px; height: 16px;
+      background: rgba(166,112,53,.35);
+      border-radius: 2px;
+      top: 10px;
+    }
+    .thixo-state-label {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .54rem; letter-spacing: .24em;
+      text-transform: uppercase; color: var(--text-muted); opacity: .7;
+    }
+    .thixo-arrow {
+      font-family: var(--ff-en); font-size: 1rem;
+      color: var(--amber); opacity: .5; margin-top: -8px;
+    }
+    .thixo-body {
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .72rem; line-height: 2.0;
+      letter-spacing: .05em; color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* ══════════════════════════════════════
+       §4  CHECKLIST
+    ══════════════════════════════════════ */
+    .checklist {
+      background: var(--bg-cream);
+      border-bottom: 1px solid var(--line-thin);
+      padding: 72px var(--pad) 80px;
+    }
+    .checklist .eyebrow { display: block; margin-bottom: 12px; }
+    .check-heading {
+      font-family: var(--ff-en); font-weight: 300; font-style: italic;
+      font-size: 1.3rem; letter-spacing: .06em;
+      color: var(--text-main); margin-bottom: 44px;
+    }
+    .check-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .check-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line-thin);
+    }
+    .check-item:first-child { border-top: 1px solid var(--line-thin); }
+    .check-dash {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .8rem; color: var(--amber); opacity: .6;
+      flex-shrink: 0; margin-top: 1px; letter-spacing: .1em;
+    }
+    .check-text {
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .78rem; line-height: 1.95;
+      letter-spacing: .05em; color: var(--text-muted);
+    }
+
+    /* ══════════════════════════════════════
+       §5  JOURNAL (OWNER MESSAGE)
+    ══════════════════════════════════════ */
+    .journal {
+      background: var(--bg-deep);
+      padding: 84px var(--pad) 92px;
+      position: relative; overflow: hidden;
+    }
+    .journal::before {
+      content: '';
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(250,246,238,.055) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .journal-eyebrow {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .56rem; letter-spacing: .5em;
+      text-transform: uppercase;
+      color: rgba(250,246,238,.45);
+      margin-bottom: 12px; display: block;
+    }
+    .journal-title {
+      font-family: var(--ff-en); font-weight: 300; font-style: italic;
+      font-size: clamp(1.3rem, 5.5vw, 1.7rem);
+      line-height: 1.35; letter-spacing: .04em;
+      color: var(--bg-cream);
+      margin-bottom: 44px;
+    }
+    .journal-rule {
+      width: 100%; height: 1px;
+      background: rgba(250,246,238,.14);
+      margin-bottom: 44px;
+    }
+    .journal-body {
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .8rem; line-height: 2.35;
+      letter-spacing: .06em;
+      color: rgba(234,240,246,.75);
+      margin-bottom: 28px;
+    }
+    .journal-body:last-of-type { margin-bottom: 0; }
+    .journal-body strong {
+      font-weight: 300; color: rgba(250,246,238,.88);
+    }
+    .journal-sig {
+      margin-top: 48px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .journal-sig::before {
+      content: ''; width: 22px; height: 1px;
+      background: rgba(166,112,53,.55);
+    }
+    .journal-sig span {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .58rem; letter-spacing: .36em;
+      text-transform: uppercase; color: rgba(166,112,53,.7);
+    }
+
+    /* ══════════════════════════════════════
+       §6  HOW TO & QUALITY
+    ══════════════════════════════════════ */
+    .howto {
+      background: var(--bg-morning);
+      padding: 72px var(--pad) 80px;
+      border-bottom: 1px solid var(--line-thin);
+    }
+    .howto .eyebrow { display: block; margin-bottom: 40px; }
+    .howto-cards {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .howto-card {
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line-thin);
+      display: flex; align-items: flex-start; gap: 18px;
+    }
+    .howto-card:first-child { border-top: 1px solid var(--line-thin); }
+    .howto-num {
+      font-family: var(--ff-en); font-weight: 300; font-style: italic;
+      font-size: 1.6rem; line-height: 1; color: var(--amber); opacity: .45;
+      flex-shrink: 0; min-width: 28px; margin-top: 2px;
+    }
+    .howto-content {}
+    .howto-title {
+      font-family: var(--ff-en); font-weight: 300; font-style: italic;
+      font-size: .95rem; letter-spacing: .08em;
+      color: var(--text-main); margin-bottom: 8px;
+    }
+    .howto-body {
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .74rem; line-height: 2.0;
+      letter-spacing: .05em; color: var(--text-muted);
+    }
+
+    /* Quality badges */
+    .quality {
+      margin-top: 56px;
+    }
+    .quality-label {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .56rem; letter-spacing: .42em;
+      text-transform: uppercase; color: var(--text-muted);
+      opacity: .6; margin-bottom: 20px; display: block;
+    }
+    .quality-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line-thin);
+      border: 1px solid var(--line-thin);
+    }
+    .quality-cell {
+      background: var(--bg-morning);
+      padding: 14px 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .quality-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--amber); opacity: .6; flex-shrink: 0;
+    }
+    .quality-text {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .6rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ══════════════════════════════════════
+       §7  REVIEWS
+    ══════════════════════════════════════ */
+    .reviews {
+      background: var(--bg-cream);
+      border-top: 1px solid var(--line-thin);
+      border-bottom: 1px solid var(--line-thin);
+      padding: 72px var(--pad) 80px;
+    }
+    .reviews .eyebrow { display: block; margin-bottom: 12px; }
+    .reviews-heading {
+      font-family: var(--ff-en); font-weight: 300; font-style: italic;
+      font-size: 1.25rem; letter-spacing: .06em;
+      color: var(--text-main); margin-bottom: 48px;
+    }
+    .review-list { display: flex; flex-direction: column; gap: 0; }
+    .review-card {
+      padding: 32px 0;
+      border-bottom: 1px solid var(--line-thin);
+    }
+    .review-card:first-child { border-top: 1px solid var(--line-thin); }
+    .review-meta {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .review-author {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .6rem; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--amber); opacity: .75;
+    }
+    .review-mark {
+      font-family: var(--ff-en); font-style: italic; font-weight: 300;
+      font-size: .65rem; color: var(--text-muted); opacity: .45;
+      letter-spacing: .15em;
+    }
+    .review-text {
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .78rem; line-height: 2.2;
+      letter-spacing: .05em; color: var(--text-muted);
+    }
+    .review-text strong { font-weight: 300; color: #7A5535; }
+
+    /* ══════════════════════════════════════
+       §8  CTA
+    ══════════════════════════════════════ */
+    .cta {
+      background: var(--bg-cream);
+      padding: 72px var(--pad) 80px;
+      text-align: center;
+    }
+    .cta .eyebrow { margin-bottom: 48px; display: block; }
+    .cta-name-en {
+      font-family: var(--ff-en); font-weight: 300; font-style: italic;
+      font-size: clamp(1.5rem, 5.8vw, 1.85rem);
+      letter-spacing: .04em; color: var(--text-main); margin-bottom: 6px;
+    }
+    .cta-name-jp {
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .72rem; letter-spacing: .2em;
+      color: var(--text-muted); margin-bottom: 48px;
+    }
+    .cta-price-block { margin-bottom: 52px; }
+    .cta-price {
+      display: block; font-family: var(--ff-en); font-weight: 300;
+      font-size: 2.4rem; letter-spacing: .03em;
+      color: var(--text-main); margin-bottom: 4px;
+    }
+    .cta-price-note {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .58rem; letter-spacing: .38em;
+      text-transform: uppercase; color: var(--text-muted); opacity: .55;
+    }
+
+    /* Primary buy button */
+    .btn-buy {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; padding: 20px 24px; gap: 12px;
+      background: var(--green);
+      color: var(--bg-cream);
+      border: none; cursor: pointer; text-decoration: none;
+      font-family: var(--ff-jp); font-weight: 300;
+      font-size: .84rem; letter-spacing: .18em;
+      transition: background .55s cubic-bezier(.22,1,.36,1);
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+    }
+    .btn-buy:hover, .btn-buy:active { background: var(--amber); }
+    .btn-buy-arrow {
+      font-family: var(--ff-en); font-size: .9rem; opacity: .55;
+      position: absolute; right: 22px;
+    }
+
+    /* Notes */
+    .cta-notes {
+      margin-top: 52px;
+      padding-top: 36px;
+      border-top: 1px solid var(--line-thin);
+      text-align: left;
+    }
+    .cta-notes-label {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .54rem; letter-spacing: .38em;
+      text-transform: uppercase; color: var(--text-muted); opacity: .55;
+      margin-bottom: 16px; display: block;
+    }
+    .cta-notes ul {
+      list-style: none; display: flex; flex-direction: column; gap: 10px;
+    }
+    .cta-notes li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-family: var(--ff-jp); font-weight: 200;
+      font-size: .68rem; line-height: 1.85;
+      letter-spacing: .04em; color: var(--text-muted);
+    }
+    .cta-notes li::before {
+      content: '–'; font-family: var(--ff-en); font-weight: 300;
+      color: var(--line-thin); flex-shrink: 0;
+      color: rgba(83,91,98,0.45); margin-top: 1px;
+    }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    .footer {
+      background: var(--bg-morning);
+      border-top: 1px solid var(--line-thin);
+      padding: 32px var(--pad);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo {
+      display: block;
+      height: 16px;
+      width: auto;
+      max-width: 140px;
+      object-fit: contain;
+      opacity: .55;
+    }
+
+    /* ロゴ画像 共通 */
+    .logo-img {
+      display: block;
+      height: 18px;
+      width: auto;
+      max-width: 160px;
+      object-fit: contain;
+    }
+    /* ダーク背景（journal）用：画像を明るく反転 */
+    .logo-img--light {
+      filter: brightness(0) invert(1);
+      opacity: .65;
+    }
+    /* journal署名エリアのロゴサイズ */
+    .journal-sig .logo-img {
+      height: 15px;
+    }
+    .footer-copy {
+      font-family: var(--ff-en); font-weight: 300;
+      font-size: .5rem; letter-spacing: .22em;
+      color: var(--text-muted); opacity: .35;
+    }
+    /* ══════════════════════════════════════
+       PORTRAIT IMAGE SLOT (9:16 共通)
+    ══════════════════════════════════════ */
+    .portrait-img-wrap {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+      position: relative;
+    }
+    .portrait-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .portrait-img-ph {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px;
+    }
+    .portrait-img-ph svg { opacity: .28; }
+    .portrait-img-ph p {
+      font-family: var(--ff-en); font-weight: 300; font-style: italic;
+      font-size: .6rem; letter-spacing: .34em;
+      text-transform: uppercase; opacity: .55;
+    }
+    /* Section-specific tints for the placeholder */
+    .story    .portrait-img-ph { background: rgba(196,170,148,0.08); }
+    .story    .portrait-img-ph p { color: var(--text-muted); }
+    .story    .portrait-img-ph svg path,
+    .story    .portrait-img-ph svg rect,
+    .story    .portrait-img-ph svg polygon { stroke: var(--text-muted); fill: none; }
+    .journal  .portrait-img-ph { background: rgba(30,50,40,0.35); }
+    .journal  .portrait-img-ph p { color: rgba(234,240,246,.45); }
+    .journal  .portrait-img-ph svg path,
+    .journal  .portrait-img-ph svg rect,
+    .journal  .portrait-img-ph svg polygon { stroke: rgba(234,240,246,.3); fill: none; }
+    .cta      .portrait-img-ph { background: rgba(196,170,148,0.08); }
+    .cta      .portrait-img-ph p { color: var(--text-muted); }
+    .cta      .portrait-img-ph svg path,
+    .cta      .portrait-img-ph svg rect,
+    .cta      .portrait-img-ph svg polygon { stroke: var(--text-muted); fill: none; }
+    /* Story: thin border, margin outside padding area */
+    .story .portrait-img-wrap {
+      margin: 52px calc(-1 * var(--pad));
+      width: calc(100% + var(--pad) * 2);
+      border-top: 1px solid var(--line-thin);
+      border-bottom: 1px solid var(--line-thin);
+    }
+    /* Journal: full-bleed, no side margin */
+    .journal .portrait-img-wrap {
+      margin: 44px calc(-1 * var(--pad)) 48px;
+      width: calc(100% + var(--pad) * 2);
+    }
+    /* CTA: contained with thin border */
+    .cta .portrait-img-wrap {
+      margin-bottom: 44px;
+      border: 1px solid var(--line-thin);
+    }
+  </style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<div class="page">
+
+  <!-- ══════════════════════════════════════
+       §1  HERO
+  ══════════════════════════════════════ -->
+  <section class="hero">
+
+    <nav class="hero-nav rv">
+      <!--
+        ▼ ロゴ画像スロット（ヘッダー）
+            src="" にロゴ画像のパスまたはURLを入力してください。
+            推奨：横長PNG（透過背景）、高さ基準 36〜54px 以上の実寸
+      -->
+      <img
+        src="logo.png"
+        alt="Mariposa organic store"
+        class="hero-logo logo-img"
+        id="logo-header"
+      >
+      <span class="hero-tag">Scottish Heather</span>
+    </nav>
+
+    <div class="hero-copy">
+      <p class="hero-en rv d1">
+        Rain-washed morning.<br>
+        <span class="dim">Coffee, honey,<br>and a quiet moment.</span>
+      </p>
+      <p class="hero-jp rv d2">
+        雨に洗われた、ひんやりとした青い光に包まれる草木。<br>
+        静かにお湯を沸かし、一日をゆっくりと始める。
+      </p>
+    </div>
+
+    <div class="video-wrap rv d3">
+      <!--
+        ▼ 動画を差し替える場合は src="" に MP4 のパスまたはURLを入力
+            例: <source src="heather_morning.mp4" type="video/mp4">
+      -->
+      <video autoplay loop muted playsinline preload="auto" aria-label="MARIPOSA Scottish Heather Honey">
+        <source src="" type="video/mp4">
+      </video>
+      <div class="video-ph" id="video-ph">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x=".5" y=".5" width="31" height="31" stroke="rgba(234,240,246,.32)" stroke-width=".7"/>
+          <polygon points="12,9 24,16 12,23" fill="rgba(166,112,53,.5)"/>
+        </svg>
+        <p>Video &ensp;9 : 16</p>
+      </div>
+    </div>
+
+    <div class="video-meta rv d4">
+      <span class="amber-tick"></span>
+      <span>MARIPOSA &times; Amalight Coffee &mdash; 2025</span>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       §2  STORY
+  ══════════════════════════════════════ -->
+  <section class="story">
+
+    <span class="eyebrow rv">A Quiet Morning Ritual</span>
+
+    <p class="story-text rv d1">
+      カップの中で揺れる、ディップスタイルの瑞々しいコーヒー。<br>
+      産地にこだわった<strong>スペシャルティコーヒー</strong>なのに、<br>
+      ティーバッグのようにパックにお湯を注いで、揺らすだけでできる忙しい朝の強い味方。<br>
+    </p>
+
+    <p class="story-text rv d2">
+      そこへそっと寄り添うのは、<br>
+      スコットランドの大自然が育んだ<br>
+      <strong>「スコティッシュヘザーハニー」</strong>の黒いはちみつ。
+    </p>
+
+    <p class="story-text rv d3">
+      時間がなくても、自分を労る気持ちと<br>ほんの少しの工夫があれば、<br>
+      それだけで毎日は、こんなにも豊かで<br>心地よいものに変わっていきます。
+    </p>
+
+    <!--
+      ▼ ストーリーセクション 縦長画像スロット（9:16）
+          src="" にファイルパスまたはURLを入力してください。
+          空のままにするとプレースホルダーが表示されます。
+    -->
+    <div class="portrait-img-wrap rv d4">
+      <img src="" alt="A Quiet Morning Ritual" id="story-img">
+      <div class="portrait-img-ph" id="story-img-ph">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x=".5" y=".5" width="31" height="31" stroke-width=".7"/>
+          <polygon points="13,10 22,16 13,22" fill="rgba(166,112,53,.35)"/>
+        </svg>
+        <p>Image &ensp;9 : 16</p>
+      </div>
+    </div>
+
+    <div class="ornament rv d5"><span>✦</span></div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       §3  PRODUCT IDENTITY
+  ══════════════════════════════════════ -->
+  <section class="product-info">
+
+    <!--
+      ▼ 商品画像スロット
+          差し替え方法：以下の <img> タグの src="" にファイルパスまたは URL を入力してください。
+          画像が設定されていない場合、プレースホルダーが表示されます。
+          推奨比率：4:3 または 1:1（正方形）
+    -->
+    <div class="product-img-wrap rv">
+      <img src="https://baseec-img-mng.akamaized.net/images/item/origin/37baf2ac3464eeaa01cc6018fd86eb13.png" alt="Scottish Heather Honey — MARIPOSA" id="product-img">
+      <div class="product-img-ph" id="product-img-ph">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <rect x=".5" y=".5" width="43" height="43" stroke="rgba(83,91,98,.25)" stroke-width=".8"/>
+          <circle cx="22" cy="18" r="5" stroke="rgba(83,91,98,.3)" stroke-width=".8" fill="none"/>
+          <path d="M6 38 L16 26 L22 32 L30 22 L38 34" stroke="rgba(83,91,98,.3)" stroke-width=".8" fill="none"/>
+        </svg>
+        <p>Product Image</p>
+      </div>
+    </div>
+
+    <span class="pi-element rv">Fire Element</span>
+
+    <h2 class="pi-name-en rv d1">Scottish<br>Heather Honey</h2>
+    <p class="pi-name-jp rv d1">スコティッシュヘザーハニー &ensp;/&ensp; 1kg</p>
+
+    <p class="pi-lead rv d2">
+      頑張りすぎなあなたの心身を、力強くバックアップ。<br>
+      ヨーロッパで古くから<strong>「北のマヌカ」</strong>と呼ばれる、<br>
+      野生の生命力が詰まった黒い蜜。
+    </p>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       §4  CHECKLIST
+  ══════════════════════════════════════ -->
+  <section class="checklist">
+
+    <span class="eyebrow rv">こんな方におすすめ</span>
+    <p class="check-heading rv d1">For Those Who Push<br>Through Every Day.</p>
+
+    <ul class="check-list">
+      <li class="check-item rv d1">
+        <span class="check-dash">—</span>
+        <span class="check-text">仕事や家事で常に忙しく、ハードワークが続いている方</span>
+      </li>
+      <li class="check-item rv d2">
+        <span class="check-dash">—</span>
+        <span class="check-text">ストレスや緊張状態が続き、交感神経が優位になりやすい方</span>
+      </li>
+      <li class="check-item rv d2">
+        <span class="check-dash">—</span>
+        <span class="check-text">慢性的な疲れがあり、朝から「重だるさ」を感じている方</span>
+      </li>
+      <li class="check-item rv d3">
+        <span class="check-dash">—</span>
+        <span class="check-text">お酒やタバコを頻繁に摂取し、内臓への負担が気になる方</span>
+      </li>
+      <li class="check-item rv d3">
+        <span class="check-dash">—</span>
+        <span class="check-text">外食が多く、ミネラル不足や栄養バランスの乱れを感じている方</span>
+      </li>
+      <li class="check-item rv d4">
+        <span class="check-dash">—</span>
+        <span class="check-text">コーヒーに合わせて、美味しくエネルギー代謝を上げたい方</span>
+      </li>
+    </ul>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       §5  JOURNAL
+  ══════════════════════════════════════ -->
+  <section class="journal">
+
+    <span class="journal-eyebrow rv">From the Shop Owner</span>
+    <h2 class="journal-title rv d1">
+      戦う現代人のための、<br>
+      パワフルな<br>リカバリーハニー。
+    </h2>
+    <hr class="journal-rule rv d1">
+
+    <!--
+      ▼ ジャーナルセクション 縦長画像スロット（9:16）
+          src="" にファイルパスまたはURLを入力してください。
+          空のままにするとプレースホルダーが表示されます。
+    -->
+    <div class="portrait-img-wrap rv d2">
+      <img src="" alt="戦う現代人のための、パワフルなリカバリーハニー" id="journal-img">
+      <div class="portrait-img-ph" id="journal-img-ph">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x=".5" y=".5" width="31" height="31" stroke-width=".7"/>
+          <polygon points="13,10 22,16 13,22" fill="rgba(250,246,238,.25)"/>
+        </svg>
+        <p>Image &ensp;9 : 16</p>
+      </div>
+    </div>
+
+    <p class="journal-body rv d3">
+      ヘザーはちみつを一口食べると、その独特な強さに驚かれるかもしれません。スコットランドの厳しい自然の中で育つヘザーは、非常に生命力が強く、その蜜には他のハチミツを凌ぐほどの<strong>豊富なミネラルと抗酸化物質</strong>が含まれているといわれています。
+    </p>
+
+    <p class="journal-body rv d3">
+      お酒やタバコ、ストレスなどで体内に溜まったダメージをリセットしつつ、即座にエネルギーを回してくれる。まさに、<strong>ハードな日々を乗りこなすためのパワフルなガソリン</strong>のような存在です。
+    </p>
+
+    <p class="journal-body rv d4">
+      特筆すべきは、コーヒーとの相性。ヘザー特有の芳醇でほろ苦いコクが、コーヒーのロースト感と<strong>最高のマリアージュ</strong>を奏でます。午後のもうひと踏ん張りが必要な時、コーヒーにたっぷり溶かして、至福のパワーチャージを楽しんでください。
+    </p>
+
+    <div class="journal-sig rv d5">
+      <!--
+        ▼ ロゴ画像スロット（ジャーナル署名 / 濃色背景のため自動で白く反転）
+            src="" にロゴ画像のパスまたはURLを入力してください。
+      -->
+      <img
+        src=""
+        alt="Mariposa organic store"
+        class="logo-img logo-img--light"
+        id="logo-journal"
+      >
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       §6  HOW TO & QUALITY
+  ══════════════════════════════════════ -->
+  <section class="howto">
+
+    <span class="eyebrow rv">おすすめの食べ方</span>
+
+    <div class="howto-cards">
+
+      <div class="howto-card rv d1">
+        <span class="howto-num">i</span>
+        <div class="howto-content">
+          <p class="howto-title">コーヒーに溶かして</p>
+          <p class="howto-body">スモーキーな香りがコーヒーの風味を格上げし、代謝をブーストする最強の仕事のお供に。</p>
+        </div>
+      </div>
+
+      <div class="howto-card rv d2">
+        <span class="howto-num">ii</span>
+        <div class="howto-content">
+          <p class="howto-title">おやつ代わりにそのまま</p>
+          <p class="howto-body">ハードワークの合間にスプーン一杯。脳と身体に即効性のエネルギーを届けます。</p>
+        </div>
+      </div>
+
+      <div class="howto-card rv d3">
+        <span class="howto-num">iii</span>
+        <div class="howto-content">
+          <p class="howto-title">夜のデトックスに</p>
+          <p class="howto-body">お酒を飲んだ後や、1日の終わりのリラックスタイムに。内側のメンテナンスをサポートします。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quality grid -->
+    <div class="quality rv d4">
+      <span class="quality-label">Quality Assurance</span>
+      <div class="quality-grid">
+        <div class="quality-cell"><span class="quality-dot"></span><span class="quality-text">農薬フリー</span></div>
+        <div class="quality-cell"><span class="quality-dot"></span><span class="quality-text">グリホサートフリー</span></div>
+        <div class="quality-cell"><span class="quality-dot"></span><span class="quality-text">抗生剤フリー</span></div>
+        <div class="quality-cell"><span class="quality-dot"></span><span class="quality-text">シロップフリー</span></div>
+        <div class="quality-cell"><span class="quality-dot"></span><span class="quality-text">放射能フリー</span></div>
+        <div class="quality-cell"><span class="quality-dot"></span><span class="quality-text">環境ホルモンフリー</span></div>
+        <div class="quality-cell" style="grid-column: 1 / -1;">
+          <span class="quality-dot"></span>
+          <span class="quality-text">完全非加熱 — Raw &amp; Unpasteurised</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       §7  REVIEWS
+  ══════════════════════════════════════ -->
+  <section class="reviews">
+
+    <span class="eyebrow rv">Customer Voices</span>
+    <p class="reviews-heading rv d1">お客様の声</p>
+
+    <div class="review-list">
+
+      <div class="review-card rv d1">
+        <div class="review-meta">
+          <span class="review-author">30s · Creative</span>
+          <span class="review-mark">Verified</span>
+        </div>
+        <p class="review-text">
+          動画を見てコーヒーとのペアリングが気になり購入しました。ディップスタイルのコーヒーに一匙落とすと、スモーキーな香りが引き立ち毎朝の至福の時間に。驚いたのは、朝の重だるさがすっきり抜けて、一日をポジティブに始められるようになったこと。まさに私の<strong>「火」のエネルギー</strong>です。
+        </p>
+      </div>
+
+      <div class="review-card rv d2">
+        <div class="review-meta">
+          <span class="review-author">40s · Executive</span>
+          <span class="review-mark">Verified</span>
+        </div>
+        <p class="review-text">
+          仕事が忙しく交感神経が優位になりがちでしたが、このハチミツを食べ始めてから内側から立て直されるような感覚があります。ゼリー状の濃厚な蜜が口の中でとろける瞬間、疲れがほどけていくよう。クセの強さが本物の証だと感じます。<strong>1kgの大容量にして大正解</strong>でした。
+        </p>
+      </div>
+
+      <div class="review-card rv d3">
+        <div class="review-meta">
+          <span class="review-author">30s · Office</span>
+          <span class="review-mark">Verified</span>
+        </div>
+        <p class="review-text">
+          エレメント診断で「火」と出ておすすめされたのがこちらでした。キャラメルのような深みの中に、どこか梅のような爽やかな酸味もあり、他にはない美味しさでスプーンが止まりません。neemスプーンですくう時間も含めて、<strong>自分を労る大切なルーティン</strong>になっています。
+        </p>
+      </div>
+
+      <div class="review-card rv d3">
+        <div class="review-meta">
+          <span class="review-author">30s · Therapist</span>
+          <span class="review-mark">Verified</span>
+        </div>
+        <p class="review-text">
+          外食やお酒を飲む機会が多く、内臓の負担が気になって夜寝る前のデトックスとして取り入れました。翌朝の身体の軽さが全然違います。農薬や環境汚染フリー、非加熱という<strong>圧倒的な安心感</strong>もMARIPOSAさんだからこそ。お守りのような一瓶です。
+        </p>
+      </div>
+
+      <div class="review-card rv d4">
+        <div class="review-meta">
+          <span class="review-author">50s · Homemaker</span>
+          <span class="review-mark">Verified</span>
+        </div>
+        <p class="review-text">
+          今まで体調管理にマヌカハニーを食べていましたが、このスコティッシュヘザーの芳醇な香りと美味しさに<strong>完全にノックアウト</strong>されました。「北のマヌカ」と呼ばれる理由がよく分かります。パッケージもミニマルで美しく、キッチンに置いておくだけで満たされます。
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       §8  CTA
+  ══════════════════════════════════════ -->
+  <section class="cta">
+
+    <span class="eyebrow rv">Order Now</span>
+
+    <!--
+      ▼ CTAセクション 縦長画像スロット（9:16）
+          src="" にファイルパスまたはURLを入力してください。
+          空のままにするとプレースホルダーが表示されます。
+    -->
+    <div class="portrait-img-wrap rv d1">
+      <img src="https://baseec-img-mng.akamaized.net/images/item/origin/37adc73875802b4e640aa963389dff3e.jpg?imformat=generic" alt="Scottish Heather Honey — MARIPOSA" id="cta-img">
+      <div class="portrait-img-ph" id="cta-img-ph">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x=".5" y=".5" width="31" height="31" stroke-width=".7"/>
+          <polygon points="13,10 22,16 13,22" fill="rgba(166,112,53,.35)"/>
+        </svg>
+        <p>Image &ensp;9 : 16</p>
+      </div>
+    </div>
+
+    <p class="cta-name-en rv d2">Scottish Heather Honey</p>
+    <p class="cta-name-jp rv d2">スコティッシュヘザーハニー</p>
+
+    <div class="cta-price-block rv d3">
+      <span class="cta-price">¥10,300</span>
+      <span class="cta-price-note">Tax Included &ensp;/&ensp; 1 kg</span>
+    </div>
+
+    <a
+      href="https://mariposa8.theshop.jp/items/71820954"
+      target="_blank"
+      rel="noopener"
+      class="btn-buy rv d4"
+    >
+      購入する &mdash; Official Shop
+      <span class="btn-buy-arrow">→</span>
+    </a>
+
+    <!-- Notes -->
+    <div class="cta-notes rv d5">
+      <span class="cta-notes-label">Notes &amp; Information</span>
+      <ul>
+        <li>1歳未満の乳児には与えないでください。</li>
+        <li>天然のハチミツは白く結晶化することがありますが、品質に問題はありません。収穫時期により色や風味が多少異なる場合があります。</li>
+        <li>ラベル切れについて：元々つなぎ目部分に切れ目が入っており、配送中の衝撃や摩擦で切れる場合がございます。出荷時にシールの無事を確認しておりますのでご安心ください（ラベル切れによる交換はできかねます）。</li>
+      </ul>
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <!--
+      ▼ ロゴ画像スロット（フッター）
+          src="" にロゴ画像のパスまたはURLを入力してください。
+    -->
+    <img
+      src=""
+      alt="Mariposa organic store"
+      class="footer-logo logo-img"
+      id="logo-footer"
+    >
+    <span class="footer-copy">&copy; 2025</span>
+  </footer>
+
+</div><!-- /.page -->
+
+<script>
+/* ─── Scroll Reveal ─────────────────────── */
+(function(){
+  const els = document.querySelectorAll('.rv');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -24px 0px' });
+  els.forEach(el => io.observe(el));
+})();
+
+/* ─── Video placeholder ─────────────────── */
+(function(){
+  const vid = document.querySelector('.video-wrap video');
+  const ph  = document.getElementById('video-ph');
+  if (!vid || !ph) return;
+  const src = vid.querySelector('source')?.getAttribute('src') || '';
+  if (src) { ph.style.display = 'none'; }
+  vid.addEventListener('error', () => { ph.style.display = 'flex'; });
+})();
+
+/* ─── Logo image fallback ────────────────── */
+(function(){
+  const logos = [
+    { id: 'logo-header',  fallbackClass: 'hero-logo',   light: false },
+    { id: 'logo-journal', fallbackClass: 'logo-img--light', light: true  },
+    { id: 'logo-footer',  fallbackClass: 'footer-logo', light: false },
+  ];
+  logos.forEach(({ id, light }) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const src = el.getAttribute('src') || '';
+    const showFallback = () => {
+      const span = document.createElement('span');
+      span.textContent = 'Mariposa organic store';
+      span.style.cssText = [
+        "font-family:'Cormorant Garamond',serif",
+        'font-weight:300',
+        'font-size:.6rem',
+        'letter-spacing:.42em',
+        'text-transform:uppercase',
+        light
+          ? 'color:rgba(250,246,238,.55)'
+          : 'color:var(--text-muted)',
+        'opacity:.8',
+        'white-space:nowrap',
+      ].join(';');
+      el.replaceWith(span);
+    };
+    if (!src) { showFallback(); return; }
+    el.addEventListener('error', showFallback);
+  });
+})();
+(function(){
+  const slots = [
+    { imgId: 'story-img',   phId: 'story-img-ph'   },
+    { imgId: 'journal-img', phId: 'journal-img-ph'  },
+    { imgId: 'cta-img',     phId: 'cta-img-ph'      },
+  ];
+  slots.forEach(({ imgId, phId }) => {
+    const img = document.getElementById(imgId);
+    const ph  = document.getElementById(phId);
+    if (!img || !ph) return;
+    const src = img.getAttribute('src') || '';
+    if (src) {
+      ph.style.display = 'none';
+    }
+    img.addEventListener('error', () => {
+      img.style.display = 'none';
+      ph.style.display  = 'flex';
+    });
+    img.addEventListener('load', () => {
+      ph.style.display = 'none';
+    });
+  });
+})();
+</script>
+</body>
+</html>
