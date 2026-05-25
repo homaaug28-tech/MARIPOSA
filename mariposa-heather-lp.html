@@ -125,23 +125,28 @@
     ══════════════════════════════════════ */
     .hero { background: var(--bg-morning); padding-bottom: 64px; }
 
-    .hero-nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 26px var(--pad) 0;
-    }
-    .hero-logo {
-      display: block;
-      height: 18px;
-      width: auto;
-      max-width: 160px;
-      object-fit: contain;
-      opacity: .72;
-    }
-    .hero-tag {
-      font-family: var(--ff-en); font-weight: 300;
-      font-size: .56rem; letter-spacing: .34em;
-      text-transform: uppercase; color: var(--amber); opacity: .75;
-    }
+.hero-nav {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px;
+  padding: 26px var(--pad) 0;
+}
+.hero-logo {
+  font-family: var(--ff-en); font-weight: 300;
+  font-size: .6rem; letter-spacing: .44em;
+  text-transform: uppercase; color: var(--text-muted);
+  flex-shrink: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hero-tag {
+  font-family: var(--ff-en); font-weight: 300;
+  font-size: .56rem; letter-spacing: .34em;
+  text-transform: uppercase; color: var(--amber); opacity: .75;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
 
     .hero-copy { padding: 44px var(--pad) 0; }
     .hero-en {
