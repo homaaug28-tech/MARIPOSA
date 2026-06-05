@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<title>父の日ギフト | softly, naturally, every day</title>
+<meta name="description" content="父の日に、父を、そしてからだを想う一匙を。大切なお父さんの毎日に、そっと溶け込む本物のはちみつの贈りもの。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+  /* =========================================================
+     Design Tokens  —  生成り / ハニーゴールド / ダークセピア
+     ========================================================= */
+  :root{
+    --kinari:        #f7f2e7;   /* 生成り（ベース背景） */
+    --kinari-deep:   #efe7d6;   /* 一段深い生成り */
+    --paper:         #fcf9f2;   /* 紙のような明色面 */
+    --honey:         #c79a3f;   /* ハニーゴールド */
+    --honey-deep:    #a9772a;   /* 深いハニー */
+    --honey-soft:    #e7c987;   /* 淡いハニー */
+    --sepia:         #2f2820;   /* ダークセピア（主要テキスト） */
+    --sepia-soft:    #5c5043;   /* やわらかいセピア */
+    --sepia-faint:   #8c8071;   /* 補助テキスト */
+    --line:          #d8cdb8;   /* ヘアライン */
+    --line-faint:    #e6dcc8;
+
+    --serif-jp: "Shippori Mincho", serif;
+    --sans-jp:  "Zen Kaku Gothic New", sans-serif;
+    --serif-en: "Cormorant Garamond", serif;
+
+    --maxw: 1180px;
+    --gutter: clamp(20px, 5vw, 64px);
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:var(--kinari);
+    color:var(--sepia);
+    font-family:var(--sans-jp);
+    font-weight:400;
+    font-size:16px;
+    line-height:1.95;
+    letter-spacing:.02em;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--honey-soft); color:var(--sepia); }
+
+  /* subtle paper grain */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply; opacity:.6;
+  }
+
+  .wrap{ max-width:var(--maxw); margin-inline:auto; padding-inline:var(--gutter); position:relative; z-index:1; }
+
+  /* small caps Latin label */
+  .eyebrow{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:500;
+    letter-spacing:.14em;
+    color:var(--honey-deep);
+    font-size:clamp(15px,2.4vw,19px);
+  }
+  .kicker{
+    font-family:var(--sans-jp);
+    font-weight:500;
+    font-size:12px;
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:var(--sepia-faint);
+  }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity 1.1s var(--ease), transform 1.1s var(--ease); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; transition:none; } html{ scroll-behavior:auto; } }
+
+  /* =========================================================
+     Header
+     ========================================================= */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, var(--kinari) 88%, transparent);
+    backdrop-filter:saturate(120%) blur(8px);
+    border-bottom:1px solid var(--line-faint);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    height:74px;
+  }
+  .brand{ display:flex; flex-direction:column; line-height:1.15; }
+  .brand b{ font-family:var(--serif-en); font-weight:600; font-size:21px; letter-spacing:.1em; white-space:nowrap; }
+  .brand span{ font-family:var(--serif-en); font-style:italic; font-size:12px; color:var(--honey-deep); letter-spacing:.06em; }
+  .nav-links{ display:flex; gap:34px; align-items:center; }
+  .nav-links a{ font-size:13.5px; letter-spacing:.16em; color:var(--sepia-soft); position:relative; padding-bottom:3px; transition:color .4s; }
+  .nav-links a::after{ content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--honey-deep); transition:width .45s var(--ease); }
+  .nav-links a:hover{ color:var(--sepia); } .nav-links a:hover::after{ width:100%; }
+  .nav-toggle{ display:none; background:none; border:0; cursor:pointer; padding:8px; }
+  .nav-toggle span{ display:block; width:26px; height:1.5px; background:var(--sepia); margin:6px 0; transition:.4s; }
+
+  @media(max-width:860px){
+    .nav-links{
+      position:fixed; inset:74px 0 auto 0; flex-direction:column; gap:0;
+      background:var(--paper); border-bottom:1px solid var(--line);
+      max-height:0; overflow:hidden; transition:max-height .5s var(--ease);
+    }
+    .nav-links.open{ max-height:60vh; }
+    .nav-links a{ width:100%; text-align:center; padding:18px; border-top:1px solid var(--line-faint); }
+    .nav-toggle{ display:block; }
+    .nav-toggle.open span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2){ opacity:0; }
+    .nav-toggle.open span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
+  }
+
+  /* =========================================================
+     ① Hero
+     ========================================================= */
+  .hero{ position:relative; min-height:100svh; display:flex; align-items:flex-end; overflow:hidden; }
+  /* full-bleed background image placeholder */
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+    background-color:var(--kinari-deep);
+    background-size:cover; background-position:center; background-repeat:no-repeat;
+  }
+  /* legibility scrim */
+  .hero-scrim{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:linear-gradient(180deg, transparent 28%, color-mix(in srgb,var(--sepia) 10%, transparent) 58%, color-mix(in srgb,var(--sepia) 66%, transparent) 100%);
+  }
+  .hero-copy{
+    position:relative; z-index:2; width:100%;
+    padding-bottom:clamp(72px,11vh,128px); color:var(--kinari);
+    text-shadow:0 1px 26px color-mix(in srgb,var(--sepia) 45%, transparent);
+  }
+  .hero-copy .kicker{ display:block; margin-bottom:24px; color:color-mix(in srgb,var(--kinari) 84%, transparent); }
+  .hero h1{
+    font-family:var(--serif-jp); font-weight:600;
+    font-size:clamp(31px,5.8vw,60px); line-height:1.5; letter-spacing:.06em;
+    margin:0 0 26px; color:var(--kinari);
+  }
+  .hero h1 em{ font-style:normal; color:var(--honey-soft); }
+  .hero-sub{ font-size:clamp(15px,2.2vw,18px); color:color-mix(in srgb,var(--kinari) 90%, transparent); max-width:34em; line-height:2.05; }
+  .hero-sub .date{ font-family:var(--serif-en); font-style:italic; font-size:1.3em; color:var(--honey-soft); letter-spacing:.04em; }
+  .hero-cta{ margin-top:38px; display:flex; gap:16px; flex-wrap:wrap; }
+  /* scroll cue */
+  .scroll-cue{ position:absolute; left:50%; bottom:20px; z-index:2; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:9px; color:color-mix(in srgb,var(--kinari) 72%, transparent); }
+  .scroll-cue span{ font-family:var(--serif-en); font-style:italic; font-size:12px; letter-spacing:.1em; }
+  .scroll-cue i{ display:block; width:1px; height:44px; background:linear-gradient(color-mix(in srgb,var(--kinari) 70%, transparent), transparent); animation:cue 2.6s var(--ease) infinite; transform-origin:top; }
+  @keyframes cue{ 0%{ transform:scaleY(0); opacity:0; } 30%{ opacity:1; } 100%{ transform:scaleY(1); opacity:0; } }
+
+  .btn{
+    --bg:var(--sepia); --fg:var(--paper); --bd:var(--sepia);
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--sans-jp); font-size:13.5px; font-weight:500; letter-spacing:.14em;
+    padding:15px 30px; border:1px solid var(--bd); background:var(--bg); color:var(--fg);
+    cursor:pointer; transition:.45s var(--ease); border-radius:1px;
+  }
+  .btn .arr{ transition:transform .45s var(--ease); }
+  .btn:hover{ --bg:var(--honey-deep); --bd:var(--honey-deep); }
+  .btn:hover .arr{ transform:translateX(5px); }
+  .btn.ghost{ --bg:transparent; --fg:var(--sepia); --bd:var(--line); }
+  .btn.ghost:hover{ --bg:transparent; --fg:var(--honey-deep); --bd:var(--honey-deep); }
+
+  /* shared image placeholder */
+  .ph{
+    position:relative; height:100%; width:100%;
+    background:
+      radial-gradient(120% 90% at 70% 18%, color-mix(in srgb,var(--honey-soft) 55%, transparent), transparent 60%),
+      linear-gradient(160deg, var(--kinari-deep), var(--paper));
+    border:1px solid var(--line);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:10px; color:var(--sepia-faint); overflow:hidden;
+  }
+  .ph::after{ /* honey drip motif */
+    content:""; position:absolute; top:0; right:18%; width:2px; height:46%;
+    background:linear-gradient(var(--honey), transparent);
+    opacity:.5;
+  }
+  .ph .ph-mark{ font-family:var(--serif-en); font-style:italic; font-size:30px; color:var(--honey); opacity:.6; }
+  .ph .ph-cap{ font-size:11.5px; letter-spacing:.22em; }
+
+  /* =========================================================
+     Section frame
+     ========================================================= */
+  .section{ padding-block:clamp(64px,9vw,116px); }
+  .section-head{ text-align:center; margin-bottom:clamp(44px,6vw,72px); }
+  .section-head .eyebrow{ display:block; margin-bottom:14px; }
+  .section-head h2{
+    font-family:var(--serif-jp); font-weight:600;
+    font-size:clamp(23px,4vw,33px); letter-spacing:.1em; margin:0; line-height:1.55;
+  }
+  .rule{ width:46px; height:1px; background:var(--honey-deep); margin:22px auto 0; }
+
+  /* ② Story */
+  .story{ background:var(--paper); position:relative; }
+  .story .wrap{ max-width:900px; }
+  .story-lead{
+    font-family:var(--serif-jp); font-weight:500;
+    font-size:clamp(19px,3vw,26px); line-height:2.1; letter-spacing:.08em;
+    text-align:center; color:var(--sepia); margin:0 0 48px;
+  }
+  .story-body{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,56px); align-items:start; }
+  .story-body p{ margin:0 0 1.4em; color:var(--sepia-soft); font-size:15.5px; }
+  .story-figure{ position:relative; }
+  .story-figure .ph{ aspect-ratio:1/1; }
+  .story-figure video, .story-figure img{ width:100%; aspect-ratio:1/1; object-fit:cover; display:block; border:1px solid var(--line); }
+  .pull{
+    font-family:var(--serif-jp); font-weight:500; color:var(--honey-deep);
+    font-size:clamp(17px,2.6vw,21px); line-height:2; letter-spacing:.06em;
+    border-left:2px solid var(--honey-soft); padding-left:22px; margin:0 0 1.4em;
+  }
+  @media(max-width:760px){ .story-body{ grid-template-columns:1fr; } .story-figure{ order:-1; max-width:420px; margin-inline:auto; } }
+
+  /* ③ Product grid */
+  .products .wrap{ max-width:var(--maxw); }
+  .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(22px,2.6vw,38px); }
+  .card{
+    background:var(--paper); border:1px solid var(--line-faint);
+    display:flex; flex-direction:column; transition:transform .55s var(--ease), box-shadow .55s var(--ease);
+  }
+  .card:hover{ transform:translateY(-6px); box-shadow:0 26px 50px -30px rgba(47,40,32,.4); }
+  .card-media{ position:relative; aspect-ratio:4/5; }
+  .card-media img{ width:100%; height:100%; object-fit:cover; display:block; border-bottom:1px solid var(--line-faint); }
+  .card-media .ph{ border:0; border-bottom:1px solid var(--line-faint); }
+  .badge{
+    position:absolute; top:14px; left:14px; z-index:2;
+    font-family:var(--serif-en); font-style:italic; font-size:12px; letter-spacing:.08em;
+    background:var(--sepia); color:var(--paper); padding:5px 12px; border-radius:1px;
+  }
+  .badge.hfl{ left:auto; right:14px; background:transparent; color:var(--honey-deep); border:1px solid var(--honey-deep); font-family:var(--sans-jp); font-style:normal; font-size:10.5px; letter-spacing:.18em; }
+  .card-body{ padding:26px 24px 28px; display:flex; flex-direction:column; flex:1; }
+  .card-name{ font-family:var(--serif-jp); font-weight:600; font-size:20px; letter-spacing:.06em; margin:0 0 2px; }
+  .card-name small{ font-family:var(--serif-en); font-style:italic; font-weight:500; font-size:14px; color:var(--honey-deep); margin-left:8px; letter-spacing:.04em; }
+  .card-meta{ font-size:12.5px; letter-spacing:.16em; color:var(--sepia-faint); margin-bottom:16px; }
+  .card-price{ font-family:var(--serif-en); font-size:27px; font-weight:600; color:var(--sepia); margin-bottom:16px; line-height:1; }
+  .card-price small{ font-family:var(--sans-jp); font-size:12px; letter-spacing:.1em; color:var(--sepia-faint); margin-left:4px; }
+  .card-desc{ font-size:14px; line-height:1.95; color:var(--sepia-soft); margin:0 0 20px; flex:1; }
+  .variants{ border-top:1px solid var(--line-faint); padding-top:14px; margin-bottom:18px; display:flex; flex-direction:column; gap:9px; }
+  .variants .vt{ font-size:11px; letter-spacing:.18em; color:var(--sepia-faint); }
+  .variant-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-size:12.5px; letter-spacing:.04em; padding:7px 13px; border:1px solid var(--line);
+    color:var(--sepia-soft); transition:.4s; display:inline-flex; gap:7px; align-items:baseline;
+  }
+  .chip:hover{ border-color:var(--honey-deep); color:var(--honey-deep); }
+  .chip b{ font-family:var(--serif-en); font-weight:600; }
+  .video-link{
+    display:inline-flex; align-items:center; gap:9px; font-size:12.5px; letter-spacing:.1em;
+    color:var(--sepia-soft); margin-bottom:18px; cursor:pointer; transition:.4s; background:none; border:0; padding:0; font-family:var(--sans-jp);
+  }
+  .video-link:hover{ color:var(--honey-deep); }
+  .video-link .play{ width:26px; height:26px; border:1px solid currentColor; border-radius:50%; display:grid; place-items:center; }
+  .video-link .play::before{ content:""; border-left:7px solid currentColor; border-block:5px solid transparent; margin-left:2px; }
+  .card .btn{ width:100%; justify-content:center; margin-top:auto; }
+
+  @media(max-width:880px){ .grid-3{ grid-template-columns:1fr 1fr; } }
+  @media(max-width:600px){ .grid-3{ grid-template-columns:1fr; max-width:420px; margin-inline:auto; } }
+
+  /* ④ Gift boxes */
+  .boxes{ background:var(--kinari-deep); }
+  .grid-4{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(16px,2vw,26px); }
+  .box{
+    background:var(--paper); border:1px solid var(--line-faint); padding:0;
+    display:flex; flex-direction:column; transition:transform .5s var(--ease), box-shadow .5s var(--ease);
+  }
+  .box:hover{ transform:translateY(-5px); box-shadow:0 22px 44px -28px rgba(47,40,32,.45); }
+  .box-media{ aspect-ratio:1/1; }
+  .box-media img{ width:100%; height:100%; object-fit:cover; display:block; border-bottom:1px solid var(--line-faint); }
+  .box-media .ph{ border:0; border-bottom:1px solid var(--line-faint); }
+  .box-body{ padding:20px 18px 22px; display:flex; flex-direction:column; flex:1; }
+  .box-name{ font-family:var(--serif-jp); font-weight:600; font-size:16px; letter-spacing:.04em; margin:0 0 4px; line-height:1.5; }
+  .box-spec{ font-size:11.5px; letter-spacing:.12em; color:var(--sepia-faint); margin-bottom:14px; }
+  .box-price{ font-family:var(--serif-en); font-size:22px; font-weight:600; margin-bottom:14px; line-height:1; }
+  .box-price small{ font-family:var(--sans-jp); font-size:11px; letter-spacing:.1em; color:var(--sepia-faint); margin-left:3px; }
+  .box-desc{ font-size:12.5px; line-height:1.85; color:var(--sepia-soft); letter-spacing:.02em; margin:0 0 14px; }
+  .box-gift{ font-size:11px; line-height:1.7; letter-spacing:.03em; color:var(--honey-deep); margin:0 0 16px; padding-top:10px; border-top:1px dashed var(--line-faint); display:flex; gap:7px; align-items:baseline; }
+  .box-gift::before{ content:"＋"; font-family:var(--serif-en); }
+  .box-flavors{ list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column; gap:7px; flex:1; }
+  .box-flavors li{ font-size:12.5px; color:var(--sepia-soft); letter-spacing:.03em; display:flex; gap:9px; align-items:baseline; }
+  .box-flavors li::before{ content:""; width:5px; height:5px; border-radius:50%; background:var(--honey-soft); flex:none; transform:translateY(-2px); }
+  .box .btn{ width:100%; justify-content:center; padding:12px; font-size:12px; margin-top:auto; }
+  .box-video{
+    display:inline-flex; align-items:center; gap:8px; width:100%;
+    font-family:var(--sans-jp); font-size:11.5px; letter-spacing:.08em; color:var(--sepia-soft);
+    background:none; border:0; padding:0 0 14px; margin-top:auto; cursor:pointer; transition:color .4s;
+  }
+  .box-video:hover{ color:var(--honey-deep); }
+  .box-video .play{ width:22px; height:22px; border:1px solid currentColor; border-radius:50%; display:grid; place-items:center; flex:none; }
+  .box-video .play::before{ content:""; border-left:6px solid currentColor; border-block:4px solid transparent; margin-left:2px; }
+  .box-video + .btn{ margin-top:0; }
+
+  @media(max-width:900px){ .grid-4{ grid-template-columns:1fr 1fr; } }
+  @media(max-width:480px){ .grid-4{ grid-template-columns:1fr; max-width:380px; margin-inline:auto; } }
+
+  /* ⑤ Closing + footer */
+  .closing{ background:var(--sepia); color:var(--kinari); position:relative; }
+  .closing::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(80% 60% at 50% 0%, color-mix(in srgb,var(--honey) 22%, transparent), transparent 70%);
+  }
+  .closing .wrap{ max-width:760px; text-align:center; position:relative; }
+  .closing .eyebrow{ color:var(--honey-soft); }
+  .closing-msg{
+    font-family:var(--serif-jp); font-weight:500;
+    font-size:clamp(18px,3vw,25px); line-height:2.2; letter-spacing:.07em; margin:20px 0 16px;
+  }
+  .closing-msg em{ font-style:normal; color:var(--honey-soft); }
+  .closing-note{ color:color-mix(in srgb,var(--kinari) 72%, transparent); font-size:14.5px; max-width:30em; margin:0 auto 40px; }
+
+  .ship-info{
+    border:1px solid color-mix(in srgb,var(--honey-soft) 40%, transparent);
+    padding:clamp(24px,4vw,38px); margin:0 auto 44px; max-width:560px; text-align:left;
+  }
+  .ship-info h3{ font-family:var(--serif-jp); font-weight:600; font-size:15px; letter-spacing:.2em; margin:0 0 18px; color:var(--honey-soft); text-align:center; }
+  .ship-row{ display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-bottom:1px dashed color-mix(in srgb,var(--kinari) 30%, transparent); font-size:14px; }
+  .ship-row:last-child{ border-bottom:0; }
+  .ship-row span:first-child{ color:color-mix(in srgb,var(--kinari) 70%, transparent); letter-spacing:.08em; }
+  .ship-row span:last-child{ font-family:var(--serif-en); font-size:1.05em; color:var(--kinari); }
+  .ship-row .em{ color:var(--honey-soft); font-weight:600; }
+
+  footer.site{ background:var(--sepia); color:var(--kinari); border-top:1px solid color-mix(in srgb,var(--kinari) 14%, transparent); }
+  .foot{ display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap; padding-block:34px; }
+  .foot .brand b{ color:var(--kinari); } .foot .brand span{ color:var(--honey-soft); }
+  .foot-slogan{ font-family:var(--serif-en); font-style:italic; font-size:15px; color:var(--honey-soft); letter-spacing:.04em; }
+  .copy{ width:100%; text-align:center; font-size:11px; letter-spacing:.18em; color:color-mix(in srgb,var(--kinari) 50%, transparent); padding-bottom:26px; }
+
+  /* video modal */
+  .modal{ position:fixed; inset:0; z-index:100; display:none; place-items:center; padding:24px;
+    background:color-mix(in srgb,var(--sepia) 78%, transparent); backdrop-filter:blur(4px); }
+  .modal.open{ display:grid; }
+  .modal-box{ width:min(420px,100%); }
+  .modal-frame{ position:relative; height:min(78vh,720px); aspect-ratio:9/16; margin-inline:auto; background:var(--sepia); border:1px solid var(--honey-soft); overflow:hidden; }
+  .modal-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .modal-close{ display:block; margin:0 0 12px auto; background:none; border:1px solid var(--kinari); color:var(--kinari);
+    width:40px; height:40px; border-radius:50%; cursor:pointer; font-size:18px; transition:.4s; }
+  .modal-close:hover{ background:var(--kinari); color:var(--sepia); }
+  .modal-cap{ color:var(--kinari); text-align:center; margin-top:14px; font-size:13px; letter-spacing:.1em; }
+</style>
+</head>
+<body>
+
+<!-- ===================== Header (共通レイアウト) ===================== -->
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="https://mariposa8.theshop.jp/" target="_blank" rel="noopener noreferrer" aria-label="MARIPOSA organic store トップページ（別タブで開く）">
+      <b>MARIPOSA organic store</b>
+      <span>softly, naturally, every day</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#story">ストーリー</a>
+      <a href="#products">ギフトを選ぶ</a>
+      <a href="#boxes">アソート</a>
+      <a href="#closing">配送について</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== ① Hero (full screen) ===================== -->
+  <section class="hero">
+    <!-- 背景イメージ（同フォルダの hero-fathersday.webp を参照） -->
+    <div class="hero-bg" style="background-image:url('hero-fathersday.webp');"></div>
+    <div class="hero-scrim"></div>
+    <div class="wrap hero-copy reveal">
+      <span class="kicker">Father's Day Gift Selection</span>
+      <h1>父の日に、父を、<br>そして<em>からだ</em>を想う一匙を。</h1>
+      <p class="hero-sub">
+        <span class="date">6.21</span> Father's Day —<br>
+        大切なお父さんの毎日に、すっと溶け込む「本物のはちみつ」の贈りもの。
+      </p>
+      <div class="hero-cta">
+        <a class="btn" href="#products">ギフトを選ぶ <span class="arr">→</span></a>
+        <a class="btn ghost" href="#story" style="--fg:var(--kinari);--bd:color-mix(in srgb,var(--kinari) 55%, transparent);">店主の話を読む</a>
+      </div>
+    </div>
+    <a class="scroll-cue" href="#story" aria-label="下へスクロール">
+      <span>scroll</span><i></i>
+    </a>
+  </section>
+
+  <!-- ===================== ② Story ===================== -->
+  <section class="section story" id="story">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Our Story</span>
+        <h2>贈りものが、暮らしにすっと入っていく</h2>
+        <div class="rule"></div>
+      </div>
+      <p class="story-lead reveal">
+        がんばりすぎない。<br>心地よく続けられる、はちみつのある暮らし。
+      </p>
+      <div class="story-body">
+        <div class="reveal">
+          <p class="pull">我が家の父にも、少し前にはちみつを贈りました。</p>
+          <p>
+            特別な日のためだけのものではなく、朝のパンに、ヨーグルトに、そして一杯のコーヒーに少しだけ。
+            父は、日々の中でごく自然にはちみつを楽しんでくれていました。
+          </p>
+          <p>
+            派手な感謝の言葉はなくても、いつもの食卓にそっと溶け込んでいく——
+            その姿を見て、贈りものというのは「相手の暮らしに無理なく入っていけること」が
+            何より大切なのだと、あらためて感じたのです。
+          </p>
+        </div>
+        <div class="reveal">
+          <p>
+            大切なお父さんに、いつまでも元気でいてほしい。
+            そんな気持ちを、重たくなりすぎず、でもきちんと伝えてくれる贈りものとして、今年の父の日にMARIPOSAのはちみつを選んでいただけたら嬉しいです。
+          </p>
+          <p>
+             父の日に、父を、そしてからだを想う一匙を。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ③ Gift Selection ===================== -->
+  <section class="section products" id="products">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Gift Selection</span>
+        <h2>父の日に贈る、三つのはちみつ</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="grid-3">
+
+        <!-- No.1 Jarrah -->
+        <article class="card reveal">
+          <div class="card-media">
+            <span class="badge">No.1</span>
+            <span class="badge hfl">HFL</span>
+            <img src="product-jarrah.webp" alt="ジャラ Jarrah 260g" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-name">ジャラ<small>Jarrah</small></h3>
+            <p class="card-meta">260g ／ 高活性はちみつ</p>
+            <p class="card-price">¥5,800<small>税込</small></p>
+            <p class="card-desc">
+              高い抗菌性と活性力をもつ一品。よく比較されるマヌカは薬草の香りが高く少し人を選ぶお味ですが、ジャラは濃密で深みのあるダークチョコレートのような万人受けする味わい。
+            </p>
+            <button class="video-link" data-modal="open" data-vid="4_28Kf3OC9c" data-vtitle="マヌカ × ジャラ 比較動画">
+              <span class="play"></span>マヌカとジャラを比較した動画を見る
+            </button>
+            <a class="btn" href="https://mariposa8.theshop.jp/items/81132563">詳細・ご購入はこちら <span class="arr">→</span></a>
+          </div>
+        </article>
+
+        <!-- No.2 Scottish Heather -->
+        <article class="card reveal">
+          <div class="card-media">
+            <span class="badge">No.2</span>
+            <img src="product-heather.webp" alt="スコティッシュヘザーハニー 1kg" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-name">スコティッシュヘザー<small>Heather</small></h3>
+            <p class="card-meta">1kg ／ 大容量タイプ</p>
+            <p class="card-price">¥10,300<small>税込</small></p>
+            <p class="card-desc">
+            珈琲との相性がとても良い、焦げ茶色の濃厚な火のエレメントのはちみつ。
+            ミネラルを含み、しっかりとしたコクがあり、甘いだけではない大人の味わいが魅力です。
+            1kgというと少し量が多いように感じますが、毎日、コーヒーに大さじ一杯加えていると圧倒言う間になくなります。
+            コーヒー好きのお父さんの毎日のルーティーンに溶け込み、無理なくはちみつで元気になれます。
+            </p>
+            <a class="btn" href="https://mariposa8.theshop.jp/items/71820954">詳細・ご購入はこちら <span class="arr">→</span></a>
+          </div>
+        </article>
+
+        <!-- No.3 Karri -->
+        <article class="card reveal">
+          <div class="card-media">
+            <span class="badge">No.3</span>
+            <span class="badge hfl">HFL</span>
+            <img src="product-karri.webp" alt="カリ Karri 260g" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-name">カリ<small>Karri</small></h3>
+            <p class="card-meta">260g ／ やさしい甘み</p>
+            <p class="card-price">¥4,500<small>税込</small></p>
+            <p class="card-desc">
+              癖のない、まろやかな甘み。はちみつに慣れていない方にも贈りやすく、
+              心をふんわりとゆるめてくれる、風のエレメントのやさしい味わいです。
+            </p>
+            <a class="btn" href="https://mariposa8.theshop.jp/items/81131963">詳細・ご購入はこちら <span class="arr">→</span></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ④ Gift Box Collection ===================== -->
+  <section class="section boxes" id="boxes">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Gift Box Collection</span>
+        <h2>小瓶で愉しむ、アソートボックス</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="grid-4">
+
+        <article class="box reveal">
+          <div class="box-media"><img src="box-giftpack-260g.webp" alt="ギフトパック 260g×2" loading="lazy" /></div>
+          <div class="box-body">
+            <h3 class="box-name">ギフトパック<br>260g×2</h3>
+            <p class="box-spec">HFL ／ 2 種</p>
+            <p class="box-price">¥10,900<small>税込</small></p>
+            <p class="box-desc">修復力を高めたい時に。ここぞの時に力を発揮する、頼もしい2種のセット。</p>
+            <ul class="box-flavors"><li>ジャラ</li><li>ブラックバット</li></ul>
+            <p class="box-gift">「HFLオリジナルギフト袋」1袋プレゼント</p>
+            <button class="box-video" data-modal="open" data-vid="fepYNXw-svM" data-vtitle="ギフトボックス 比較動画">
+              <span class="play"></span>ギフトボックスの比較動画を見る
+            </button>
+            <a class="btn" href="https://mariposa8.theshop.jp/items/106657304">ご購入はこちら →</a>
+          </div>
+        </article>
+
+        <article class="box reveal">
+          <div class="box-media"><img src="box-giftpack-65g.webp" alt="ギフトパック 65g×4" loading="lazy" /></div>
+          <div class="box-body">
+            <h3 class="box-name">ギフトパック<br>65g×4</h3>
+            <p class="box-spec">HFL ／ 4 種</p>
+            <p class="box-price">¥8,560<small>税込</small></p>
+            <p class="box-desc">ストレスが多い現代の方におすすめの、ミニボトル4本セット。</p>
+            <ul class="box-flavors"><li>デザートマリ</li><li>スーパージャラ</li><li>ワイルドフラワー</li><li>サザンィエイト</li></ul>
+            <p class="box-gift">「HFLオリジナルギフト袋」1袋プレゼント</p>
+            <button class="box-video" data-modal="open" data-vid="fepYNXw-svM" data-vtitle="ギフトボックス 比較動画">
+              <span class="play"></span>ギフトボックスの比較動画を見る
+            </button>
+            <a class="btn" href="https://mariposa8.theshop.jp/items/106656856">ご購入はこちら →</a>
+          </div>
+        </article>
+
+        <article class="box reveal">
+          <div class="box-media"><img src="box-gourmet-75g.webp" alt="グルメギフトボックス 75g×4" loading="lazy" /></div>
+          <div class="box-body">
+            <h3 class="box-name">グルメギフト<br>ボックス 75g×4</h3>
+            <p class="box-spec">HIG ／ 4 種</p>
+            <p class="box-price">¥5,000<small>税込</small></p>
+            <p class="box-desc">エレメントハニーのミニボトル4本セット。</p>
+            <ul class="box-flavors"><li>シナモン</li><li>ワイルドフラワー</li><li>バニラビーン</li><li>レモンマートル</li></ul>
+            <a class="btn" href="https://mariposa8.theshop.jp/items/97539552">ご購入はこちら →</a>
+          </div>
+        </article>
+
+        <article class="box reveal">
+          <div class="box-media"><img src="box-classic-75g.webp" alt="クラシックギフトボックス 75g×4" loading="lazy" /></div>
+          <div class="box-body">
+            <h3 class="box-name">クラシックギフト<br>ボックス 75g×4</h3>
+            <p class="box-spec">HIG ／ 4 種</p>
+            <p class="box-price">¥5,600<small>税込</small></p>
+            <p class="box-desc">HIGの人気はちみつ4種類の、ミニサイズセット。</p>
+            <ul class="box-flavors"><li>ワンドゥ</li><li>マリ</li><li>ジャラ</li><li>ブラックバット</li></ul>
+            <a class="btn" href="https://mariposa8.theshop.jp/items/97539403">ご購入はこちら →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ⑤ Closing ===================== -->
+  <section class="section closing" id="closing">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">Message from the Owner</span>
+        <p class="closing-msg">
+          美味しいから、食べる。<br>
+          けれど、<em>からだにもやさしい</em>。<br>
+          その「ちょうどよさ」が、<br>父の日の贈りものに向いていると思うのです。
+        </p>
+        <p class="closing-note">
+          重たくなりすぎず、でも、きちんと気持ちを伝えてくれる。
+          そんな一匙を、お父さまへ。
+        </p>
+      </div>
+
+      <div class="ship-info reveal">
+        <h3>配送スケジュール</h3>
+        <div class="ship-row">
+          <span>父の日</span><span class="em">6.21 (日)</span></span>
+        </div>
+        <div class="ship-row">
+          <span>当日着のご注文締切</span><span class="em">6.17 (水) 12:00</span>
+        </div>
+        <div class="ship-row">
+          <span>お届け日指定</span><span>ご注文時に選択可</span>
+        </div>
+      </div>
+
+      <a class="btn ghost" href="#top" style="--fg:var(--kinari);--bd:var(--honey-soft);">ページトップへ戻る ↑</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== Footer (共通レイアウト) ===================== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot">
+      <a class="brand" href="https://mariposa8.theshop.jp/" target="_blank" rel="noopener noreferrer">
+        <b>MARIPOSA organic store</b>
+        <span>softly, naturally, every day</span>
+      </a>
+      <span class="foot-slogan">- softly, naturally, every day -</span>
+    </div>
+  </div>
+  <div class="copy">PUFA-FREE &nbsp;・&nbsp; HONEY LIFE &nbsp;・&nbsp; © MARIPOSA organic store</div>
+</footer>
+
+<!-- ===================== Video Modal ===================== -->
+<div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="比較動画">
+  <div class="modal-box">
+    <button class="modal-close" data-modal="close" aria-label="閉じる">×</button>
+    <div class="modal-frame" id="modalFrame"></div>
+    <p class="modal-cap" id="modalCap"></p>
+  </div>
+</div>
+
+<script>
+  // mobile nav
+  const tgl = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  tgl.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    tgl.classList.toggle('open', open);
+    tgl.setAttribute('aria-expanded', open);
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open'); tgl.classList.remove('open'); tgl.setAttribute('aria-expanded', false);
+  }));
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.12, rootMargin:'0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal').forEach((el,i) => {
+    el.style.transitionDelay = (i % 4 * 90) + 'ms';
+    io.observe(el);
+  });
+
+  // video modal — 開いたら YouTube iframe を生成、閉じたら破棄して再生停止
+  const modal = document.getElementById('videoModal');
+  const frame = document.getElementById('modalFrame');
+  const cap   = document.getElementById('modalCap');
+  const closeModal = () => { modal.classList.remove('open'); frame.innerHTML = ''; };
+  document.querySelectorAll('[data-modal="open"]').forEach(b => b.addEventListener('click', () => {
+    const vid = b.dataset.vid;
+    if (!vid) return;
+    frame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + vid +
+      '?autoplay=1&rel=0&playsinline=1" title="' + (b.dataset.vtitle || '') +
+      '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"' +
+      ' referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+    cap.textContent = b.dataset.vtitle || '';
+    modal.classList.add('open');
+  }));
+  document.querySelectorAll('[data-modal="close"]').forEach(b => b.addEventListener('click', closeModal));
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
