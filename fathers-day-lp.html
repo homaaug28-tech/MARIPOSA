@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<title>父の日ギフト | softly, naturally, every day</title>
+<title>MARIPOSA organic store父の日ギフト特集</title>
 <meta name="description" content="父の日に、父を、そしてからだを想う一匙を。大切なお父さんの毎日に、そっと溶け込む本物のはちみつの贈りもの。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -310,6 +310,13 @@
     background:radial-gradient(80% 60% at 50% 0%, color-mix(in srgb,var(--honey) 22%, transparent), transparent 70%);
   }
   .closing .wrap{ max-width:760px; text-align:center; position:relative; }
+  .closing-banner{
+  position:relative; z-index:1; width:100%;
+  margin-top:calc(-1 * clamp(64px,9vw,116px));   /* セクション上パディングを相殺 */
+  margin-bottom:clamp(40px,6vw,72px);
+  height:clamp(200px,30vw,400px); overflow:hidden;
+}
+.closing-banner img{ width:100%; height:100%; object-fit:cover; display:block; }
   .closing .eyebrow{ color:var(--honey-soft); }
   .closing-msg{
     font-family:var(--serif-jp); font-weight:500;
@@ -580,6 +587,9 @@
 
   <!-- ===================== ⑤ Closing ===================== -->
   <section class="section closing" id="closing">
+    <div class="closing-banner reveal">
+  <img src="owner-message.webp" alt="MARIPOSA organic store からのメッセージ" loading="lazy" />
+</div>
     <div class="wrap">
       <div class="reveal">
         <span class="eyebrow">Message from the Owner</span>
