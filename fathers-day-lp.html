@@ -324,7 +324,24 @@
   }
   .closing-msg em{ font-style:normal; color:var(--honey-soft); }
   .closing-note{ color:color-mix(in srgb,var(--kinari) 72%, transparent); font-size:14.5px; max-width:30em; margin:0 auto 40px; }
-
+/* 店主からの長文メッセージ（PC・スマホ両対応の読みやすいエッセイ組み） */
+.owner-essay{ max-width:34em; margin:26px auto 44px; text-align:left; }
+.owner-essay p{
+  font-family:var(--serif-jp); font-weight:400;
+  font-size:clamp(15px,1.05rem + .2vw,17px); line-height:2.2; letter-spacing:.04em;
+  color:color-mix(in srgb,var(--kinari) 88%, transparent);
+  margin:0 0 1.7em; text-wrap:pretty;
+}
+.owner-essay p:last-child{ margin-bottom:0; }
+.owner-essay .stanza{ line-height:2.35; }
+.owner-essay .closing-line{
+  margin-top:2em; padding-top:1.8em; border-top:1px solid color-mix(in srgb,var(--honey-soft) 32%, transparent);
+  color:var(--honey-soft); text-align:center; letter-spacing:.06em;
+}
+@media(max-width:560px){
+  .owner-essay{ text-align:left; }
+  .owner-essay .stanza br{ display:inline; }
+}
   .ship-info{
     border:1px solid color-mix(in srgb,var(--honey-soft) 40%, transparent);
     padding:clamp(24px,4vw,38px); margin:0 auto 44px; max-width:560px; text-align:left;
@@ -593,41 +610,26 @@
     <div class="wrap">
       <div class="reveal">
         <span class="eyebrow">Message from the Owner</span>
-        <p class="closing-msg">
-          美味しいから、食べる。<br>
-          けれど、<em>からだにもやさしい</em>。<br>
-          その「ちょうどよさ」が、<br>父の日の贈りものに向いていると思うのです。
-        </p>
-        <p class="closing-note">
-大人になってからの親子関係は、少し不思議なものだなと思います。<br>
-⁡
-子どもの頃は、父はいつも「大人」で、自分はずっと「子ども」でした。<br>
-⁡
-けれど、こちらも年齢を重ね、仕事をし、家庭を持ち、
-日々の責任を引き受けるようになると、
-父もまた一人の人間だったのだと、少しずつ見え方が変わってきます。<br>
-⁡
-強く見えていた背中にも、きっと迷いや疲れがあったこと。<br>
-何も言わずにしてくれていたことの中に、たくさんの配慮があったこと。<br>
-当たり前だと思っていた日々が、実は当たり前ではなかったこと。<br>
-⁡
-そういうことに、随分あとになって気づくことがあります。<br>
-⁡
-とはいえ、大人になった今さら、改まって何かを伝えるのは少し照れくさいものです。<br>
-「ありがとう」と言えば済む話なのに、
-その一言がなぜか妙に大げさに感じられる。<br>
-⁡
-父の日は、そんな不器用な気持ちに、ちょうどよい口実をくれる日なのかもしれません。<br>
-立派な言葉でなくても、大きな贈りものでなくても。<br>
-少し気にかけていること。<br>
-元気でいてほしいと思っていること。<br>
-これまでの日々に、ちゃんと感謝していること。<br>
-⁡
-そうした気持ちを、無理のない形で渡せる一日。<br>
-⁡
-今年の父の日が、皆さまにとっても、そんな静かなやりとりのきっかけになりましたら嬉しいです。<br>
-        </p>
-      </div>
+<div class="owner-essay">
+  <p>大人になってからの親子関係は、少し不思議なものだなと思います。</p>
+  <p>子どもの頃は、父はいつも「大人」で、自分はずっと「子ども」でした。</p>
+  <p>けれど、こちらも年齢を重ね、仕事をし、家庭を持ち、日々の責任を引き受けるようになると、父もまた一人の人間だったのだと、少しずつ見え方が変わってきます。</p>
+  <p class="stanza">
+    強く見えていた背中にも、きっと迷いや疲れがあったこと。<br>
+    何も言わずにしてくれていたことの中に、たくさんの配慮があったこと。<br>
+    当たり前だと思っていた日々が、実は当たり前ではなかったこと。
+  </p>
+  <p>そういうことに、随分あとになって気づくことがあります。</p>
+  <p>とはいえ、大人になった今さら、改まって何かを伝えるのは少し照れくさいものです。「ありがとう」と言えば済む話なのに、その一言がなぜか妙に大げさに感じられる。</p>
+  <p>父の日は、そんな不器用な気持ちに、ちょうどよい口実をくれる日なのかもしれません。立派な言葉でなくても、大きな贈りものでなくても。</p>
+  <p class="stanza">
+    少し気にかけていること。<br>
+    元気でいてほしいと思っていること。<br>
+    これまでの日々に、ちゃんと感謝していること。
+  </p>
+  <p>そうした気持ちを、無理のない形で渡せる一日。</p>
+  <p class="closing-line">今年の父の日が、皆さまにとっても、そんな静かなやりとりのきっかけになりましたら嬉しいです。</p>
+</div>
 
       <a class="btn ghost" href="#top" style="--fg:var(--kinari);--bd:var(--honey-soft);">ページトップへ戻る ↑</a>
     </div>
