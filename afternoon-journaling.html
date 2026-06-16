@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>午後に、風を通す。｜午後の風通しジャーナリングset</title>
+<meta name="description" content="カリ蜂蜜とオーガニックカモミールティーでつくる、書く・飲む・整える午後のジャーナリング習慣。数量限定500円OFF。" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="product" />
+<meta property="og:title" content="午後に、風を通す。午後の風通しジャーナリングset" />
+<meta property="og:description" content="カリはちみつ × カモミールティー × ジャーナリング。あたたかい一杯を淹れて、ノートを開く。午後に自分へ戻るための小さな習慣を。" />
+<!-- TODO: 配置 /public/images/lp/afternoon-journaling/ogp.jpg （未配置でも表示自体は壊れません） -->
+<meta property="og:image" content="/images/lp/afternoon-journaling/ogp.jpg" />
+<meta property="og:url" content="https://mariposa8.theshop.jp/items/146800471" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Fonts: 既存フォントが無い前提の方向性指定（見出し=明朝/セリフ, 本文=ゴシック, 英字=上品なセリフ） -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Noto+Sans+JP:wght@300;400;500&family=Zen+Old+Mincho:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* =======================================================================
+     MARIPOSA / 午後の風通しジャーナリングset  LP
+     Design tokens — リールの続きとしての「暗→明」のトーン移ろい
+     ======================================================================= */
+  :root{
+    /* ベース（木目〜生成り） */
+    --ink:    #1f1712;   /* 最暗の木 */
+    --bark:   #2a2019;   /* 木目 */
+    --cream:  #f6efe5;   /* 生成り */
+    --milk:   #fffaf2;   /* ほぼ白 */
+    --wheat:  #e7d3ad;   /* 淡いはちみつ/カモミール */
+
+    /* 差し色（琥珀） */
+    --honey:      #c8861f;  /* はちみつの琥珀 */
+    --honey-deep: #9a5d0c;  /* 深めのゴールド（文字・ボーダー用） */
+    --honey-glow: #e0a437;  /* 暗背景上の発光 */
+    --chamomile:  #ead38a;  /* カモミールの淡い黄 */
+
+    /* テキスト */
+    --text-dark:  #2a2019;  /* 明背景上の本文 */
+    --text-mute:  #6f6353;  /* 補助 */
+    --text-light: #f6efe5;  /* 暗背景上の本文 */
+    --text-light-mute: #cbb7a0;
+
+    /* ボタン */
+    --btn-bg:   #9a5d0c;
+    --btn-bg-2: #b97615;
+    --btn-text: #fff8ec;
+
+    --maxw: 64rem;
+    --readw: 40rem;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+  body{
+    margin:0;
+    background:var(--milk);
+    color:var(--text-dark);
+    font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-weight:400;
+    line-height:1.95;
+    letter-spacing:.02em;
+    font-feature-settings:"palt" 1;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  img{ max-width:100%; display:block; }
+
+  a{ color:inherit; }
+
+  /* 明朝見出し */
+  .mincho{
+    font-family:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+    font-weight:500;
+    letter-spacing:.06em;
+    line-height:1.5;
+  }
+  /* 英字コピー */
+  .serif-en{
+    font-family:"Cormorant Garamond","Times New Roman",serif;
+    font-style:italic;
+    font-weight:500;
+    letter-spacing:.01em;
+  }
+
+  /* ---------- Layout helpers ---------- */
+  .wrap{ width:min(100% - 2.5rem, var(--maxw)); margin-inline:auto; }
+  .read{ width:min(100% - 2.5rem, var(--readw)); margin-inline:auto; }
+
+  .section{ padding-block:clamp(4.5rem,11vw,8rem); position:relative; }
+  .section--dark{ background:var(--ink); color:var(--text-light); }
+  .section--bark{ background:var(--bark); color:var(--text-light); }
+  .section--cream{ background:var(--cream); }
+  .section--milk{ background:var(--milk); }
+
+  .eyebrow{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    font-size:clamp(1rem,3.4vw,1.25rem);
+    letter-spacing:.04em;
+    color:var(--honey-deep);
+    margin:0 0 1.1rem;
+  }
+  .section--dark .eyebrow,.section--bark .eyebrow{ color:var(--honey-glow); }
+
+  h1,h2,h3{ margin:0; }
+  .h2{
+    font-size:clamp(1.45rem,5.2vw,2.15rem);
+    line-height:1.62;
+    margin:0 0 1.6rem;
+  }
+  .lead{
+    font-size:clamp(.97rem,3.6vw,1.05rem);
+    color:var(--text-mute);
+    margin:0 0 1.2rem;
+  }
+  .section--dark .lead,.section--bark .lead{ color:var(--text-light-mute); }
+  .lead:last-child{ margin-bottom:0; }
+  .lead b,.lead strong{ color:var(--text-dark); font-weight:500; }
+  .section--dark .lead b{ color:var(--text-light); }
+
+  /* small caps english interstitial */
+  .breath-line{
+    text-align:center;
+    padding-block:clamp(2.4rem,7vw,3.6rem);
+    background:var(--cream);
+  }
+  .breath-line p{
+    margin:0;
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    font-size:clamp(1.25rem,4.6vw,1.8rem);
+    color:var(--honey-deep);
+    letter-spacing:.06em;
+  }
+  .breath-line span{
+    display:block;
+    margin-top:.4rem;
+    font-family:"Noto Sans JP",sans-serif;
+    font-style:normal;
+    font-size:.72rem;
+    letter-spacing:.34em;
+    color:var(--text-mute);
+    text-transform:none;
+  }
+
+  /* ======================= CTA button ======================= */
+  .cta{
+    display:inline-flex; align-items:center; gap:.6em;
+    padding:1.05rem 2.1rem;
+    background:linear-gradient(135deg,var(--btn-bg) 0%,var(--btn-bg-2) 100%);
+    color:var(--btn-text);
+    font-family:"Noto Sans JP",sans-serif;
+    font-size:1.02rem;
+    font-weight:500;
+    letter-spacing:.08em;
+    text-decoration:none;
+    border-radius:999px;
+    border:1px solid rgba(255,248,236,.18);
+    box-shadow:0 10px 26px -12px rgba(122,72,8,.7);
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease), filter .25s var(--ease);
+    cursor:pointer;
+    line-height:1.3;
+    text-align:center;
+  }
+  .cta .arrow{ transition:transform .25s var(--ease); }
+  .cta:hover{ filter:brightness(1.06); box-shadow:0 16px 34px -12px rgba(122,72,8,.78); transform:translateY(-2px); }
+  .cta:hover .arrow{ transform:translateX(4px); }
+  .cta:active{ transform:translateY(0); filter:brightness(.97); }
+  .cta:focus-visible{ outline:3px solid var(--honey-glow); outline-offset:3px; }
+  @media (prefers-reduced-motion: reduce){
+    .cta,.cta .arrow{ transition:none; }
+    .cta:hover{ transform:none; }
+  }
+
+  /* generic focus ring */
+  a:focus-visible, summary:focus-visible, button:focus-visible{
+    outline:3px solid var(--honey-deep);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+  .section--dark a:focus-visible, .section--dark summary:focus-visible{ outline-color:var(--honey-glow); }
+
+  /* ======================= Media / placeholder ======================= */
+  /* 画像未配置でも自然に見えるよう、figure側に温かいグラデを敷く。
+     img読み込み失敗時は onerror で .is-missing を付与し img を除去 → グラデが残る。 */
+  .media{
+    position:relative;
+    border-radius:14px;
+    overflow:hidden;
+    background:
+      radial-gradient(120% 90% at 25% 18%, rgba(224,164,55,.32), transparent 60%),
+      radial-gradient(130% 110% at 85% 95%, rgba(154,93,12,.30), transparent 55%),
+      linear-gradient(135deg,#2a2019 0%,#3a2c20 50%,#4a3a28 100%);
+    box-shadow:0 18px 40px -24px rgba(31,23,18,.6);
+    aspect-ratio:4/3;
+  }
+  .media img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .media.is-missing::after{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(60% 50% at 30% 30%, rgba(234,211,138,.18), transparent 60%);
+    mix-blend-mode:screen;
+  }
+  .media--tall{ aspect-ratio:3/4; }
+  .media--wide{ aspect-ratio:16/10; }
+
+  /* ======================= HERO ======================= */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex; align-items:flex-end;
+    color:var(--text-light);
+    background:
+      radial-gradient(120% 80% at 70% 10%, rgba(224,164,55,.22), transparent 55%),
+      radial-gradient(100% 70% at 20% 90%, rgba(154,93,12,.30), transparent 55%),
+      linear-gradient(180deg,#241a14 0%,#1f1712 55%,#1a130e 100%);
+    overflow:hidden;
+  }
+  .hero__video{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; z-index:0;
+  }
+  /* 動画/poster未配置でも下のグラデ背景が残るため白画面にならない */
+  .hero__scrim{
+    position:absolute; inset:0; z-index:1;
+    background:
+      linear-gradient(180deg, rgba(20,14,10,.30) 0%, rgba(20,14,10,.12) 38%, rgba(20,14,10,.72) 100%);
+  }
+  .hero__inner{
+    position:relative; z-index:2;
+    width:min(100% - 2.5rem, var(--maxw));
+    margin-inline:auto;
+    padding-block:clamp(2.5rem,8vw,5rem) clamp(3rem,9vw,5.5rem);
+  }
+  .hero__en{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    font-size:clamp(1.6rem,7vw,3.4rem);
+    line-height:1.1;
+    color:var(--chamomile);
+    margin:0 0 .9rem;
+    letter-spacing:.01em;
+    text-shadow:0 2px 30px rgba(0,0,0,.45);
+  }
+  .hero h1{
+    font-family:"Zen Old Mincho",serif;
+    font-weight:600;
+    font-size:clamp(2rem,8.5vw,3.4rem);
+    line-height:1.45;
+    letter-spacing:.08em;
+    margin:0 0 1.4rem;
+    text-shadow:0 2px 24px rgba(0,0,0,.5);
+  }
+  .hero__pair{
+    font-family:"Zen Old Mincho",serif;
+    font-size:clamp(.98rem,3.9vw,1.2rem);
+    letter-spacing:.08em;
+    color:var(--wheat);
+    margin:0 0 1.3rem;
+  }
+  .hero__body{
+    max-width:34rem;
+    font-size:clamp(.92rem,3.6vw,1rem);
+    line-height:1.95;
+    color:var(--text-light-mute);
+    margin:0 0 1.9rem;
+  }
+  .hero__price{
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem .9rem;
+    margin:0 0 1.7rem;
+  }
+  .hero__price .pname{
+    flex-basis:100%;
+    font-family:"Zen Old Mincho",serif;
+    font-size:1rem; letter-spacing:.08em; color:var(--wheat);
+    margin-bottom:.2rem;
+  }
+
+  /* ======================= Price block ======================= */
+  .price-was{
+    font-size:.92rem; color:var(--text-light-mute);
+    text-decoration:line-through; text-decoration-color:rgba(203,183,160,.7);
+  }
+  .price-now{
+    font-family:"Zen Old Mincho",serif;
+    font-size:clamp(1.5rem,6vw,2rem);
+    font-weight:600; color:var(--chamomile);
+    letter-spacing:.04em;
+  }
+  .price-now .yen{ font-size:.6em; margin-left:.1em; }
+  .badge-off{
+    display:inline-block;
+    background:var(--honey-glow); color:#2a1a05;
+    font-weight:600; font-size:.82rem; letter-spacing:.06em;
+    padding:.3em .85em; border-radius:999px;
+    box-shadow:0 6px 16px -8px rgba(224,164,55,.8);
+  }
+
+  /* scroll hint */
+  .scroll-hint{
+    position:absolute; left:50%; bottom:1.1rem; transform:translateX(-50%);
+    z-index:2; color:var(--text-light-mute);
+    font-family:"Cormorant Garamond",serif; font-style:italic; font-size:.85rem;
+    letter-spacing:.18em; display:flex; flex-direction:column; align-items:center; gap:.4rem;
+  }
+  .scroll-hint .bar{
+    width:1px; height:34px;
+    background:linear-gradient(var(--honey-glow),transparent);
+    animation:breathe 3.4s var(--ease) infinite;
+  }
+  @keyframes breathe{
+    0%,100%{ transform:scaleY(.5); opacity:.5; transform-origin:top; }
+    50%{ transform:scaleY(1); opacity:1; transform-origin:top; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .scroll-hint .bar{ animation:none; }
+  }
+  /* モバイル/低い画面ではHeroのCTAと干渉しうるため非表示（装飾要素） */
+  @media (max-width:767px), (max-height:740px){
+    .scroll-hint{ display:none; }
+  }
+
+  /* ======================= Steps ======================= */
+  .steps{
+    display:grid; gap:1.6rem;
+    grid-template-columns:1fr;
+    margin-top:2.6rem;
+  }
+  .step{
+    background:var(--milk);
+    border:1px solid rgba(154,93,12,.16);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 16px 40px -30px rgba(31,23,18,.5);
+  }
+  .step__num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:2.4rem; height:2.4rem; border-radius:50%;
+    background:linear-gradient(135deg,var(--honey),var(--honey-deep));
+    color:var(--milk); font-family:"Cormorant Garamond",serif; font-style:italic;
+    font-size:1.3rem; font-weight:600;
+  }
+  .step__body{ padding:1.5rem 1.5rem 1.8rem; }
+  .step h3{
+    font-family:"Zen Old Mincho",serif; font-weight:600;
+    font-size:1.2rem; letter-spacing:.06em; margin:.9rem 0 .6rem;
+  }
+  .step p{ margin:0; font-size:.95rem; color:var(--text-mute); }
+  .step .media{ border-radius:0; aspect-ratio:5/3; box-shadow:none; }
+
+  /* ======================= Product set ======================= */
+  .split{ display:grid; gap:2.2rem; align-items:center; }
+  .prod-list{ list-style:none; margin:1.8rem 0 0; padding:0; display:grid; gap:1.4rem; }
+  .prod-list li{ padding-left:1.1rem; border-left:2px solid var(--honey); }
+  .prod-list h3{
+    font-family:"Zen Old Mincho",serif; font-weight:600;
+    font-size:1.1rem; letter-spacing:.05em; margin:0 0 .35rem;
+  }
+  .prod-list p{ margin:0; font-size:.93rem; color:var(--text-mute); }
+
+  /* ======================= Journaling prompts ======================= */
+  .prompts{ list-style:none; margin:2.2rem 0 0; padding:0; display:grid; gap:1rem; }
+  .prompts li{
+    background:var(--milk);
+    border:1px solid rgba(154,93,12,.14);
+    border-radius:12px;
+    padding:1.15rem 1.3rem;
+    font-family:"Zen Old Mincho",serif;
+    font-size:1.02rem; letter-spacing:.04em;
+    color:var(--text-dark);
+    position:relative; padding-left:2.6rem;
+  }
+  .prompts li::before{
+    content:"—"; position:absolute; left:1.1rem; top:1.1rem;
+    color:var(--honey-deep);
+  }
+
+  /* ======================= Owner comment ======================= */
+  .owner{ display:grid; gap:2rem; }
+  .owner blockquote{
+    margin:0; font-size:1rem; line-height:2.05; color:var(--text-light-mute);
+  }
+  .owner blockquote p{ margin:0 0 1.1rem; }
+  .owner blockquote p:last-child{ margin-bottom:0; }
+  .owner__sign{
+    margin-top:1.4rem; font-family:"Zen Old Mincho",serif;
+    color:var(--wheat); letter-spacing:.1em; font-size:.95rem;
+  }
+
+  /* ======================= Quality chips ======================= */
+  .chips{
+    display:grid; gap:.8rem;
+    grid-template-columns:repeat(2,1fr);
+    margin-top:2.2rem;
+  }
+  .chip{
+    display:flex; align-items:center; gap:.7rem;
+    background:var(--milk);
+    border:1px solid rgba(154,93,12,.16);
+    border-radius:12px;
+    padding:.95rem 1rem;
+    font-size:.9rem; letter-spacing:.03em;
+  }
+  .chip .dot{
+    flex:0 0 auto; width:.7rem; height:.7rem; border-radius:50%;
+    background:radial-gradient(circle at 30% 30%,var(--honey-glow),var(--honey-deep));
+    box-shadow:0 0 0 4px rgba(200,134,31,.12);
+  }
+
+  /* ======================= Offer ======================= */
+  .offer-card{
+    background:
+      radial-gradient(120% 80% at 80% 0%, rgba(224,164,55,.16), transparent 60%),
+      linear-gradient(160deg,#2a2019,#1f1712);
+    border:1px solid rgba(224,164,55,.28);
+    border-radius:22px;
+    padding:clamp(2rem,7vw,3.4rem);
+    color:var(--text-light);
+    text-align:center;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.7);
+  }
+  .offer-card .badge-off{ margin-bottom:1.2rem; }
+  .offer-card h2{
+    font-family:"Zen Old Mincho",serif; font-weight:600;
+    font-size:clamp(1.5rem,6vw,2.1rem); letter-spacing:.07em; margin:0 0 1.4rem;
+  }
+  .offer-card .set{
+    font-family:"Zen Old Mincho",serif; color:var(--wheat);
+    font-size:1rem; letter-spacing:.06em; line-height:1.9; margin:0 0 1.6rem;
+  }
+  .offer-card .set .plus{ color:var(--honey-glow); display:block; margin:.2rem 0; }
+  .offer-price{
+    display:flex; flex-direction:column; align-items:center; gap:.3rem; margin-bottom:1.8rem;
+  }
+  .offer-note{ color:var(--text-light-mute); font-size:.95rem; line-height:1.95; margin:0 0 2rem; }
+
+  /* ======================= FAQ ======================= */
+  .faq{ margin-top:2.4rem; border-top:1px solid rgba(154,93,12,.2); }
+  .faq details{
+    border-bottom:1px solid rgba(154,93,12,.2);
+  }
+  .faq summary{
+    list-style:none; cursor:pointer;
+    padding:1.25rem .4rem;
+    display:flex; gap:.9rem; align-items:flex-start;
+    font-family:"Zen Old Mincho",serif; font-weight:500;
+    font-size:1.02rem; letter-spacing:.04em; color:var(--text-dark);
+  }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary .q{
+    color:var(--honey-deep); font-family:"Cormorant Garamond",serif; font-style:italic;
+    font-size:1.2rem; line-height:1.4; flex:0 0 auto;
+  }
+  .faq summary .plus{
+    margin-left:auto; flex:0 0 auto; position:relative; width:1rem; height:1rem; margin-top:.35rem;
+    transition:transform .3s var(--ease);
+  }
+  .faq summary .plus::before,.faq summary .plus::after{
+    content:""; position:absolute; background:var(--honey-deep); border-radius:2px;
+    top:50%; left:50%; transform:translate(-50%,-50%);
+  }
+  .faq summary .plus::before{ width:1rem; height:2px; }
+  .faq summary .plus::after{ width:2px; height:1rem; }
+  .faq details[open] summary .plus{ transform:rotate(135deg); }
+  .faq .a{
+    padding:0 .4rem 1.4rem 2.6rem;
+    font-size:.94rem; color:var(--text-mute); line-height:1.95;
+  }
+  @media (prefers-reduced-motion: reduce){ .faq summary .plus{ transition:none; } }
+
+  /* ======================= Final CTA ======================= */
+  .final{ text-align:center; }
+  .final h2{
+    font-family:"Zen Old Mincho",serif; font-weight:600;
+    font-size:clamp(1.6rem,6.5vw,2.4rem); letter-spacing:.08em; margin:0 0 1.6rem;
+    line-height:1.55;
+  }
+
+  /* ======================= Floating mobile CTA ======================= */
+  .floating{
+    position:fixed; left:0; right:0; bottom:0; z-index:50;
+    padding:.7rem max(env(safe-area-inset-left),.9rem) calc(.7rem + env(safe-area-inset-bottom)) max(env(safe-area-inset-right),.9rem);
+    background:linear-gradient(180deg, rgba(31,23,18,0), rgba(31,23,18,.92) 38%);
+    transform:translateY(120%);
+    transition:transform .4s var(--ease);
+    pointer-events:none;
+  }
+  .floating.is-visible{ transform:translateY(0); pointer-events:auto; }
+  .floating .cta{ display:flex; width:100%; justify-content:center; }
+  @media (prefers-reduced-motion: reduce){ .floating{ transition:none; } }
+  @media (min-width:768px){ .floating{ display:none; } }
+
+  /* spacer so floating CTA never hides final content on mobile */
+  .floating-spacer{ height:5rem; }
+  @media (min-width:768px){ .floating-spacer{ display:none; } }
+
+  /* ======================= Reveal animation (JS + motion-allowed only) ======================= */
+  .js-anim .reveal{ opacity:0; transform:translateY(18px); }
+  .js-anim .reveal.is-in{
+    opacity:1; transform:none;
+    transition:opacity .8s var(--ease), transform .8s var(--ease);
+  }
+
+  /* ======================= Responsive up ======================= */
+  @media (min-width:768px){
+    .steps{ grid-template-columns:repeat(3,1fr); }
+    .chips{ grid-template-columns:repeat(4,1fr); }
+    .split{ grid-template-columns:1.05fr .95fr; gap:3rem; }
+    .split.reverse > .split__media{ order:2; }
+    .owner{ grid-template-columns:.9fr 1.1fr; align-items:center; }
+  }
+  @media (min-width:1024px){
+    .hero__inner{ padding-bottom:6rem; }
+  }
+
+  /* footer */
+  .foot{
+    background:var(--ink); color:var(--text-light-mute);
+    text-align:center; padding:2.6rem 1rem 3rem; font-size:.8rem; letter-spacing:.05em;
+  }
+  .foot a{ color:var(--wheat); }
+
+  .visually-hidden{
+    position:absolute!important; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     1. HERO / ファーストビュー
+     ============================================================ -->
+<header class="hero">
+  <!-- TODO: 動画素材 /public/videos/afternoon-breathe-reel.mp4 を配置（未配置でも下のCSS背景が残ります）
+       TODO: poster画像 /public/images/lp/afternoon-journaling/hero-poster.jpg を配置 -->
+  <video
+    class="hero__video"
+    autoplay muted loop playsinline preload="metadata"
+    poster="/images/lp/afternoon-journaling/hero-poster.jpg"
+    aria-hidden="true"
+    onerror="this.style.display='none'">
+    <source src="/videos/afternoon-breathe-reel.mp4" type="video/mp4" />
+  </video>
+  <div class="hero__scrim"></div>
+
+  <div class="hero__inner">
+    <p class="hero__en">Let the afternoon&nbsp;breathe.</p>
+    <h1>午後に、風を通す。</h1>
+    <p class="hero__pair">カリはちみつ × カモミールティー × ジャーナリング</p>
+    <p class="hero__body">
+      あたたかい一杯を淹れて、ノートを開く。<br />
+      カリのやさしい甘さと、カモミールの花の香りで、<br />
+      一日の途中に少しだけ自分へ戻る時間を。
+    </p>
+
+    <div class="hero__price">
+      <span class="pname">午後の風通しジャーナリングset</span>
+      <span class="price-was">通常セット価格 10,769円</span>
+      <span class="price-now">数量限定 10,269<span class="yen">円</span></span>
+      <span class="badge-off">500円OFF</span>
+    </div>
+
+    <a class="cta" href="https://mariposa8.theshop.jp/items/146800471"
+       data-cta data-cta-location="hero" data-product="afternoon-journaling-set"
+       aria-label="数量限定セットの購入ページを見る（午後の風通しジャーナリングset）">
+      数量限定セットを見る <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span>scroll</span>
+    <span class="bar"></span>
+  </div>
+</header>
+
+<!-- ============================================================
+     2. リールの続きを3ステップ化
+     ============================================================ -->
+<section class="section section--cream" aria-labelledby="steps-h">
+  <div class="read">
+    <p class="eyebrow reveal">Write. Sip. Center.</p>
+    <h2 class="h2 mincho reveal" id="steps-h">書く、飲む、整える。</h2>
+    <p class="lead reveal">
+      忙しい一日の途中に、少しだけ手を止める。お湯を注ぎ、はちみつをひと匙。そして、今の自分の中にあるものをノートへ。
+    </p>
+    <p class="lead reveal">
+      特別な準備はいりません。必要なのは、あたたかい一杯と、書くための余白だけ。
+    </p>
+  </div>
+
+  <div class="wrap">
+    <div class="steps">
+      <!-- TODO: 画像 /public/images/lp/afternoon-journaling/brew-tea.jpg -->
+      <article class="step reveal">
+        <figure class="media" style="aspect-ratio:5/3;border-radius:0;box-shadow:none">
+          <img src="/images/lp/afternoon-journaling/brew-tea.jpg"
+               alt="カモミールティーにお湯を注ぐ手元"
+               loading="lazy" decoding="async"
+               onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
+        </figure>
+        <div class="step__body">
+          <span class="step__num" aria-hidden="true">1</span>
+          <h3>淹れる</h3>
+          <p>カモミールティーを200〜300mlのお湯でゆっくり淹れる。</p>
+        </div>
+      </article>
+
+      <!-- TODO: 画像 /public/images/lp/afternoon-journaling/honey-spoon.jpg -->
+      <article class="step reveal">
+        <figure class="media" style="aspect-ratio:5/3;border-radius:0;box-shadow:none">
+          <img src="/images/lp/afternoon-journaling/honey-spoon.jpg"
+               alt="スプーンですくったカリ蜂蜜"
+               loading="lazy" decoding="async"
+               onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
+        </figure>
+        <div class="step__body">
+          <span class="step__num" aria-hidden="true">2</span>
+          <h3>溶かす</h3>
+          <p>少し冷めたタイミングで、カリをひと匙。花の香りに、やさしい甘さが重なります。</p>
+        </div>
+      </article>
+
+      <!-- TODO: 画像 /public/images/lp/afternoon-journaling/write-note.jpg -->
+      <article class="step reveal">
+        <figure class="media" style="aspect-ratio:5/3;border-radius:0;box-shadow:none">
+          <img src="/images/lp/afternoon-journaling/write-note.jpg"
+               alt="ノートにジャーナリングを書く手元"
+               loading="lazy" decoding="async"
+               onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
+        </figure>
+        <div class="step__body">
+          <span class="step__num" aria-hidden="true">3</span>
+          <h3>書く</h3>
+          <p>ノートに、今思っていることをそのまま書き出す。きれいな文章にしなくて大丈夫。ただ、自分の中にあるものを紙の上に置いていく時間です。</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 英字インタールード -->
+<div class="breath-line" aria-hidden="true">
+  <p>A small ritual for the afternoon.</p>
+  <span>午後に、風を通す</span>
+</div>
+
+<!-- ============================================================
+     3. 商品理解
+     ============================================================ -->
+<section class="section section--milk" aria-labelledby="prod-h">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <p class="eyebrow reveal">The Set</p>
+        <h2 class="h2 mincho reveal" id="prod-h">届くのは、午後の習慣をつくる2つのセット。</h2>
+        <ul class="prod-list reveal">
+          <li>
+            <h3>カリ Karri 750g</h3>
+            <p>西オーストラリアから届く、軽やかでやさしい甘さのはちみつ。</p>
+          </li>
+          <li>
+            <h3>北欧茶園 オーガニック カモミールティー</h3>
+            <p>0.8g × 10包。ほんのり甘い香りと、フルーティーな風味が広がるオーガニックハーブティー。</p>
+          </li>
+        </ul>
+        <p class="lead reveal" style="margin-top:1.6rem">
+          この2つを合わせることで、カモミールの花の香りに、カリのまろやかな甘さが重なります。
+        </p>
+      </div>
+      <!-- TODO: 画像 /public/images/lp/afternoon-journaling/product-set.jpg（ラベルが読める明るめの正面写真） -->
+      <div class="split__media reveal">
+        <figure class="media">
+          <img src="/images/lp/afternoon-journaling/product-set.jpg"
+               alt="カリ蜂蜜とオーガニックカモミールティーの商品セット"
+               loading="lazy" decoding="async"
+               onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     4. なぜカリ × カモミールなのか
+     ============================================================ -->
+<section class="section section--cream" aria-labelledby="pair-h">
+  <div class="wrap">
+    <div class="split reverse">
+      <!-- TODO: 画像 /public/images/lp/afternoon-journaling/honey-in-tea.jpg -->
+      <div class="split__media reveal">
+        <figure class="media media--tall">
+          <img src="/images/lp/afternoon-journaling/honey-in-tea.jpg"
+               alt="カモミールティーにカリ蜂蜜を加える様子"
+               loading="lazy" decoding="async"
+               onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
+        </figure>
+      </div>
+      <div>
+        <p class="eyebrow reveal">Pairing</p>
+        <h2 class="h2 mincho reveal" id="pair-h">カモミールの花の香りを、カリの甘さがふわっと包む。</h2>
+        <p class="lead reveal">
+          カモミールティーだけでも、やさしい香りの一杯。そこにカリをひと匙加えると、花の香りにまろやかな甘さが重なり、より満足感のある午後の一杯になります。
+        </p>
+        <p class="lead reveal">
+          カリは、重たく残りすぎない、軽やかな甘さが魅力。ハーブティーの香りを邪魔せず、むしろやさしく引き立ててくれます。
+        </p>
+        <p class="lead reveal">
+          だからこのセットは、夜に深く休むためというより、午後に気分を軽やかに切り替えたい時間におすすめです。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5. カリ蜂蜜の価値
+     ============================================================ -->
+<section class="section section--bark" aria-labelledby="karri-h">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <p class="eyebrow reveal">Karri Honey · 750g</p>
+        <h2 class="h2 mincho reveal" id="karri-h">風のエレメントを象徴するはちみつ</h2>
+        <p class="lead reveal">
+          カリは、西オーストラリアの原生林にそびえる巨木から届くはちみつ。その木は時に80mを超えるともいわれ、開花は7〜10年に一度ともいわれています。
+        </p>
+        <p class="lead reveal">
+          味わいのバランスがよく、すっきりとした透明感のある甘みが魅力のはちみつです。</br>
+湿気で気分が重たくなりやすい季節や、頭の中を少し整理したい午後におすすめです。カモミールティーに合わせた後も、紅茶、ヨーグルト、パン、チーズ、コーヒーなど、日々の中で長く楽しめます。
+        </p>
+        <p class="lead reveal">
+          毎日のひと匙が、午後の小さな習慣になっていく。それがこのセットの魅力です。
+        </p>
+      </div>
+      <!-- TODO: 画像 /public/images/lp/afternoon-journaling/karri-honey-texture.jpg -->
+      <div class="split__media reveal">
+        <figure class="media media--tall">
+          <img src="/images/lp/afternoon-journaling/karri-honey-texture.jpg"
+               alt="カリ蜂蜜のなめらかな質感"
+               loading="lazy" decoding="async"
+               onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     6. ジャーナリング提案
+     ============================================================ -->
+<section class="section section--milk" aria-labelledby="journal-h">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <p class="eyebrow reveal">Journaling</p>
+        <h2 class="h2 mincho reveal" id="journal-h">何を書けばいいかわからない日にも。</h2>
+        <p class="lead reveal">
+          ジャーナリングは、誰かに見せるものでも、正しくまとめるものでもありません。
+        </p>
+        <p class="lead reveal">
+          あたたかいカモミールティーをそばに置いて、カリの甘さをゆっくり味わいながら、今の自分にあるものをそのまま書いてみる。たとえば、こんな一行から。
+        </p>
+        <ul class="prompts reveal" aria-label="ジャーナリングの問いの例">
+          <li>いま、頭の中にあることは？</li>
+          <li>今日、少し手放したいことは？</li>
+          <li>このあと大切にしたいことは？</li>
+          <li>自分にかけたい一言は？</li>
+        </ul>
+      </div>
+      <!-- TODO: 画像 /public/images/lp/afternoon-journaling/journaling-note.jpg -->
+      <div class="split__media reveal">
+        <figure class="media media--tall">
+          <img src="/images/lp/afternoon-journaling/journaling-note.jpg"
+               alt="ジャーナリングの問いを書いたノート"
+               loading="lazy" decoding="async"
+               onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     7. 店主コメント
+     ============================================================ -->
+<section class="section section--dark" aria-labelledby="owner-h">
+  <div class="wrap">
+    <div class="owner">
+      <!-- TODO: 画像 /public/images/lp/afternoon-journaling/window-journaling.jpg -->
+      <div class="reveal">
+        <figure class="media media--tall">
+          <img src="/images/lp/afternoon-journaling/window-journaling.jpg"
+               alt="窓辺でノートを書く午後の時間"
+               loading="lazy" decoding="async"
+               onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
+        </figure>
+      </div>
+      <div class="reveal">
+        <p class="eyebrow">From the owner</p>
+        <h2 class="h2 mincho" id="owner-h">店主より</h2>
+        <blockquote>
+          <p>カリは、「風」のエレメントのはちみつ。風というと、香り、流れ、軽やかさ、リフレッシュ。カリはまさに、内側にこもったものを少し外へ流し、心と身体に風通しをつくってくれるようなはちみつです。</p>
+          <p>カリの甘さは軽やかで、カモミールの花の香りを邪魔しません。むしろ、香りをふわっと広げてくれるような一杯になります。</p>
+          <p>午後3時から5時頃。夕方以降の家族時間や、仕事の後半に入る前に。</p>
+          <p>ノートを開いて、今の自分にあるものを書き出しながら、ゆっくり味わっていただきたいセットです。</p>
+        </blockquote>
+        <p class="owner__sign">— MARIPOSA 店主</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     8. 品質・安心感
+     ============================================================ -->
+<section class="section section--cream" aria-labelledby="quality-h">
+  <div class="read">
+    <p class="eyebrow reveal">Quality</p>
+    <h2 class="h2 mincho reveal" id="quality-h">毎日のひと匙だから、品質にもこだわって。</h2>
+    <p class="lead reveal">
+      カリ蜂蜜は、自然のままの姿で瓶詰めされた、非加熱・完全天然のはちみつ。農薬フリー、グリホサートフリー、抗生剤フリー、シロップフリー。
+    </p>
+    <p class="lead reveal">
+      カモミールティーは、有機JAS認証のオーガニックハーブティー。100%自社農園栽培、農薬・化学肥料不使用、有機カモミール使用。ティーバッグには、プラスチックフリーな紙製パックが使われています。
+    </p>
+    <p class="lead reveal">自分のための時間に、心地よく選べるセットです。</p>
+  </div>
+
+  <div class="wrap">
+    <ul class="chips reveal" aria-label="品質に関するこだわり">
+      <li class="chip"><span class="dot" aria-hidden="true"></span>非加熱・完全天然</li>
+      <li class="chip"><span class="dot" aria-hidden="true"></span>農薬フリー</li>
+      <li class="chip"><span class="dot" aria-hidden="true"></span>グリホサートフリー</li>
+      <li class="chip"><span class="dot" aria-hidden="true"></span>抗生剤フリー</li>
+      <li class="chip"><span class="dot" aria-hidden="true"></span>シロップフリー</li>
+      <li class="chip"><span class="dot" aria-hidden="true"></span>有機JAS認証</li>
+      <li class="chip"><span class="dot" aria-hidden="true"></span>農薬・化学肥料不使用</li>
+      <li class="chip"><span class="dot" aria-hidden="true"></span>プラスチックフリー紙製パック</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     9. オファー
+     ============================================================ -->
+<section class="section section--milk" aria-labelledby="offer-h">
+  <div class="read">
+    <div class="offer-card reveal">
+      <span class="badge-off">数量限定 500円OFF</span>
+      <h2 class="mincho" id="offer-h">午後の風通しジャーナリングset</h2>
+      <p class="set">
+        カリ Karri 750g
+        <span class="plus" aria-hidden="true">＋</span>
+        北欧茶園 オーガニック カモミールティー 10包
+      </p>
+      <div class="offer-price">
+        <span class="price-was">通常セット価格 10,769円</span>
+        <span class="price-now">数量限定 10,269<span class="yen">円</span></span>
+      </div>
+      <p class="offer-note">あたたかい一杯を淹れて、ノートを開く。<br />午後に、風が通るような時間を。</p>
+      <a class="cta" href="https://mariposa8.theshop.jp/items/146800471"
+         data-cta data-cta-location="offer" data-product="afternoon-journaling-set"
+         aria-label="数量限定セットを購入する（午後の風通しジャーナリングset・500円OFF）">
+        数量限定セットを購入する <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     10. FAQ
+     ============================================================ -->
+<section class="section section--cream" aria-labelledby="faq-h">
+  <div class="read">
+    <p class="eyebrow reveal">FAQ</p>
+    <h2 class="h2 mincho reveal" id="faq-h">よくあるご質問</h2>
+
+    <div class="faq reveal">
+      <details>
+        <summary><span class="q" aria-hidden="true">Q.</span><span>いつ飲むのがおすすめですか？</span><span class="plus" aria-hidden="true"></span></summary>
+        <p class="a">午後のひと息、手帳時間、夕方前に少し気分を切り替えたい時間におすすめです。</p>
+      </details>
+      <details>
+        <summary><span class="q" aria-hidden="true">Q.</span><span>はちみつはどのくらい入れますか？</span><span class="plus" aria-hidden="true"></span></summary>
+        <p class="a">カモミールティーを淹れて少し冷めたタイミングで、カリをひと匙。甘さがほしい時は少し多めもおすすめです。</p>
+      </details>
+      <details>
+        <summary><span class="q" aria-hidden="true">Q.</span><span>カモミールティーがなくなった後も使えますか？</span><span class="plus" aria-hidden="true"></span></summary>
+        <p class="a">はい。カリは750g入りなので、紅茶、ヨーグルト、パン、チーズ、コーヒーなどにも合わせて長く楽しめます。</p>
+      </details>
+      <details>
+        <summary><span class="q" aria-hidden="true">Q.</span><span>はちみつが白く固まることはありますか？</span><span class="plus" aria-hidden="true"></span></summary>
+        <p class="a">天然のはちみつは結晶化することがありますが、品質には問題ありません。</p>
+      </details>
+      <details>
+        <summary><span class="q" aria-hidden="true">Q.</span><span>子どもにも使えますか？</span><span class="plus" aria-hidden="true"></span></summary>
+        <p class="a">1歳未満の乳児には、はちみつを与えないでください。</p>
+      </details>
+      <details>
+        <summary><span class="q" aria-hidden="true">Q.</span><span>ギフトにも向いていますか？</span><span class="plus" aria-hidden="true"></span></summary>
+        <p class="a">ジャーナリングや手帳時間が好きな方、ハーブティーやはちみつが好きな方へのギフトにもおすすめです。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     11. 最後のCTA
+     ============================================================ -->
+<section class="section section--dark final" aria-labelledby="final-h">
+  <div class="read">
+    <p class="eyebrow reveal">Let the afternoon breathe.</p>
+    <h2 class="reveal" id="final-h">午後に、風が通るような時間を。</h2>
+    <p class="lead reveal">
+      忙しさの中で、自分のことを後回しにしがちな日にも。あたたかいカモミールティーと、カリのやさしい甘さ。そして、ノートに向かう数分。
+    </p>
+    <p class="lead reveal">
+      大きく生活を変えなくても、小さな習慣がひとつあるだけで、日々の流れは少しやさしくなります。
+    </p>
+    <p class="lead reveal" style="margin-bottom:2rem">
+      <b>午後の風通しジャーナリングset</b><br />数量限定 500円OFF
+    </p>
+    <a class="cta reveal" href="https://mariposa8.theshop.jp/items/146800471"
+       data-cta data-cta-location="final" data-product="afternoon-journaling-set"
+       aria-label="このセットで午後の習慣をはじめる（購入ページへ）">
+      このセットで午後の習慣をはじめる <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<div class="floating-spacer" aria-hidden="true"></div>
+
+<footer class="foot">
+  <p>MARIPOSA ／ 午後の風通しジャーナリングset</p>
+  <p style="margin-top:.4rem">ご購入は <a href="https://mariposa8.theshop.jp/items/146800471" data-cta data-cta-location="footer" data-product="afternoon-journaling-set">こちらの商品ページ</a> から。</p>
+</footer>
+
+<!-- ============================================================
+     Floating mobile CTA
+     ============================================================ -->
+<div class="floating" id="floatingCta" aria-hidden="true">
+  <a class="cta" href="https://mariposa8.theshop.jp/items/146800471"
+     data-cta data-cta-location="floating" data-product="afternoon-journaling-set"
+     tabindex="-1"
+     aria-label="数量限定セットを見る（購入ページへ）">
+    数量限定セットを見る <span class="arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- UTM / クエリパラメータの引き継ぎ ----------
+     LP流入URLのクエリを各CTAの遷移先へマージする。
+     既存パラメータは商品URL側を優先せず、LP側で上書き（広告計測を確実にするため）。 */
+  try {
+    var incoming = new URLSearchParams(window.location.search);
+    if (incoming.toString()) {
+      document.querySelectorAll("a[data-cta]").forEach(function (a) {
+        try {
+          var url = new URL(a.getAttribute("href"), window.location.origin);
+          incoming.forEach(function (v, k) { url.searchParams.set(k, v); });
+          a.setAttribute("href", url.toString());
+        } catch (e) { /* 個別CTAの失敗は無視（他CTAに影響させない） */ }
+      });
+    }
+  } catch (e) { /* URLSearchParams未対応など。通常リンクのままにする */ }
+
+  /* ---------- フローティングCTA：少しスクロールしたら出す ---------- */
+  var floating = document.getElementById("floatingCta");
+  var floatLink = floating ? floating.querySelector("a") : null;
+  if (floating) {
+    var toggleFloating = function () {
+      var show = window.scrollY > window.innerHeight * 0.9;
+      floating.classList.toggle("is-visible", show);
+      floating.setAttribute("aria-hidden", show ? "false" : "true");
+      if (floatLink) floatLink.setAttribute("tabindex", show ? "0" : "-1");
+    };
+    window.addEventListener("scroll", toggleFloating, { passive: true });
+    toggleFloating();
+  }
+
+  /* ---------- 控えめなfade-in（JS有 かつ モーション許可時のみ） ----------
+     取りこぼし防止：要素の上端がビューポート下端付近を過ぎたら表示。
+     高速スクロール／アンカー移動でも非表示のまま残らない。 */
+  if (!reduceMotion) {
+    document.documentElement.classList.add("js-anim");
+    var items = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+    var revealPass = function () {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      for (var i = items.length - 1; i >= 0; i--) {
+        var top = items[i].getBoundingClientRect().top;
+        if (top < vh * 0.9) { items[i].classList.add("is-in"); items.splice(i, 1); }
+      }
+    };
+    var ticking = false;
+    var onScroll = function () {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(function () { revealPass(); ticking = false; });
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    window.addEventListener("load", revealPass);
+    revealPass();
+  }
+
+  /* ---------- reduced-motion時：hero動画を自動再生しない ---------- */
+  if (reduceMotion) {
+    var v = document.querySelector(".hero__video");
+    if (v) { try { v.removeAttribute("autoplay"); v.pause(); } catch (e) {} }
+  }
+})();
+</script>
+
+</body>
+</html>
