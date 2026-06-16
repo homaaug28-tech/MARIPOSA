@@ -10,9 +10,11 @@
 <!-- Open Graph -->
 <meta property="og:type" content="product" />
 <meta property="og:title" content="午後に、風を通す。午後の風通しジャーナリングset" />
-<meta property="og:description" content="カリはちみつ × カモミールティー × ジャーナリング。あたたかい一杯を淹れて、ノートを開く。午後に自分へ戻るための小さな習慣を。" />
-<!-- TODO: 配置 /public/images/lp/afternoon-journaling/ogp.jpg （未配置でも表示自体は壊れません） -->
-<meta property="og:image" content="/images/lp/afternoon-journaling/ogp.jpg" />
+<meta property="og:description" content="カリ蜂蜜 × カモミールティー × ジャーナリング。あたたかい一杯を淹れて、ノートを開く。午後に自分へ戻るための小さな習慣を。" />
+<!-- TODO: ogp.jpg を images/lp/afternoon-journaling/ に配置。
+     ★SNSシェア画像はクローラーが絶対URLを要求するため、公開ドメインのフルURLにしてください。
+     例: https://あなたのドメイン/images/lp/afternoon-journaling/ogp.jpg -->
+<meta property="og:image" content="https://example.com/images/lp/afternoon-journaling/ogp.jpg" />
 <meta property="og:url" content="https://mariposa8.theshop.jp/items/146800471" />
 <meta name="twitter:card" content="summary_large_image" />
 
@@ -32,10 +34,10 @@
     --bark:   #2a2019;   /* 木目 */
     --cream:  #f6efe5;   /* 生成り */
     --milk:   #fffaf2;   /* ほぼ白 */
-    --wheat:  #e7d3ad;   /* 淡いはちみつ/カモミール */
+    --wheat:  #e7d3ad;   /* 淡い蜂蜜/カモミール */
 
     /* 差し色（琥珀） */
-    --honey:      #c8861f;  /* はちみつの琥珀 */
+    --honey:      #c8861f;  /* 蜂蜜の琥珀 */
     --honey-deep: #9a5d0c;  /* 深めのゴールド（文字・ボーダー用） */
     --honey-glow: #e0a437;  /* 暗背景上の発光 */
     --chamomile:  #ead38a;  /* カモミールの淡い黄 */
@@ -553,17 +555,17 @@
   <video
     class="hero__video"
     autoplay muted loop playsinline preload="metadata"
-    poster="/images/lp/afternoon-journaling/hero-poster.jpg"
+    poster="images/lp/afternoon-journaling/hero-poster.jpg"
     aria-hidden="true"
     onerror="this.style.display='none'">
-    <source src="/videos/afternoon-breathe-reel.mp4" type="video/mp4" />
+    <source src="images/lp/afternoon-journaling/videos/afternoon-breathe-reel.mp4" type="video/mp4" />
   </video>
   <div class="hero__scrim"></div>
 
   <div class="hero__inner">
     <p class="hero__en">Let the afternoon&nbsp;breathe.</p>
     <h1>午後に、風を通す。</h1>
-    <p class="hero__pair">カリはちみつ × カモミールティー × ジャーナリング</p>
+    <p class="hero__pair">カリ蜂蜜 × カモミールティー × ジャーナリング</p>
     <p class="hero__body">
       あたたかい一杯を淹れて、ノートを開く。<br />
       カリのやさしい甘さと、カモミールの花の香りで、<br />
@@ -595,10 +597,10 @@
      ============================================================ -->
 <section class="section section--cream" aria-labelledby="steps-h">
   <div class="read">
-    <p class="eyebrow reveal">Write. Sip. Center.</p>
-    <h2 class="h2 mincho reveal" id="steps-h">書く、飲む、整える。</h2>
+    <p class="eyebrow reveal">Brew. Sweeten. Write.</p>
+    <h2 class="h2 mincho reveal" id="steps-h">リールで見たあの時間は、<br />3分から始められます。</h2>
     <p class="lead reveal">
-      忙しい一日の途中に、少しだけ手を止める。お湯を注ぎ、はちみつをひと匙。そして、今の自分の中にあるものをノートへ。
+      忙しい一日の途中に、少しだけ手を止める。お湯を注ぎ、蜂蜜をひと匙。そして、今の自分の中にあるものをノートへ。
     </p>
     <p class="lead reveal">
       特別な準備はいりません。必要なのは、あたたかい一杯と、書くための余白だけ。
@@ -610,7 +612,7 @@
       <!-- TODO: 画像 /public/images/lp/afternoon-journaling/brew-tea.jpg -->
       <article class="step reveal">
         <figure class="media" style="aspect-ratio:5/3;border-radius:0;box-shadow:none">
-          <img src="/images/lp/afternoon-journaling/brew-tea.jpg"
+          <img src="images/lp/afternoon-journaling/brew-tea.jpg"
                alt="カモミールティーにお湯を注ぐ手元"
                loading="lazy" decoding="async"
                onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
@@ -625,7 +627,7 @@
       <!-- TODO: 画像 /public/images/lp/afternoon-journaling/honey-spoon.jpg -->
       <article class="step reveal">
         <figure class="media" style="aspect-ratio:5/3;border-radius:0;box-shadow:none">
-          <img src="/images/lp/afternoon-journaling/honey-spoon.jpg"
+          <img src="images/lp/afternoon-journaling/honey-spoon.jpg"
                alt="スプーンですくったカリ蜂蜜"
                loading="lazy" decoding="async"
                onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
@@ -640,7 +642,7 @@
       <!-- TODO: 画像 /public/images/lp/afternoon-journaling/write-note.jpg -->
       <article class="step reveal">
         <figure class="media" style="aspect-ratio:5/3;border-radius:0;box-shadow:none">
-          <img src="/images/lp/afternoon-journaling/write-note.jpg"
+          <img src="images/lp/afternoon-journaling/write-note.jpg"
                alt="ノートにジャーナリングを書く手元"
                loading="lazy" decoding="async"
                onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
@@ -687,7 +689,7 @@
       <!-- TODO: 画像 /public/images/lp/afternoon-journaling/product-set.jpg（ラベルが読める明るめの正面写真） -->
       <div class="split__media reveal">
         <figure class="media">
-          <img src="/images/lp/afternoon-journaling/product-set.jpg"
+          <img src="images/lp/afternoon-journaling/product-set.jpg"
                alt="カリ蜂蜜とオーガニックカモミールティーの商品セット"
                loading="lazy" decoding="async"
                onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
@@ -706,7 +708,7 @@
       <!-- TODO: 画像 /public/images/lp/afternoon-journaling/honey-in-tea.jpg -->
       <div class="split__media reveal">
         <figure class="media media--tall">
-          <img src="/images/lp/afternoon-journaling/honey-in-tea.jpg"
+          <img src="images/lp/afternoon-journaling/honey-in-tea.jpg"
                alt="カモミールティーにカリ蜂蜜を加える様子"
                loading="lazy" decoding="async"
                onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
@@ -737,13 +739,12 @@
     <div class="split">
       <div>
         <p class="eyebrow reveal">Karri Honey · 750g</p>
-        <h2 class="h2 mincho reveal" id="karri-h">風のエレメントを象徴するはちみつ</h2>
+        <h2 class="h2 mincho reveal" id="karri-h">750gの一瓶に、午後の時間が何度も続いていく。</h2>
         <p class="lead reveal">
           カリは、西オーストラリアの原生林にそびえる巨木から届くはちみつ。その木は時に80mを超えるともいわれ、開花は7〜10年に一度ともいわれています。
         </p>
         <p class="lead reveal">
-          味わいのバランスがよく、すっきりとした透明感のある甘みが魅力のはちみつです。</br>
-湿気で気分が重たくなりやすい季節や、頭の中を少し整理したい午後におすすめです。カモミールティーに合わせた後も、紅茶、ヨーグルト、パン、チーズ、コーヒーなど、日々の中で長く楽しめます。
+          そんな希少なカリを、たっぷり750g。カモミールティーに合わせた後も、紅茶、ヨーグルト、パン、チーズ、コーヒーなど、日々の中で長く楽しめます。
         </p>
         <p class="lead reveal">
           毎日のひと匙が、午後の小さな習慣になっていく。それがこのセットの魅力です。
@@ -752,7 +753,7 @@
       <!-- TODO: 画像 /public/images/lp/afternoon-journaling/karri-honey-texture.jpg -->
       <div class="split__media reveal">
         <figure class="media media--tall">
-          <img src="/images/lp/afternoon-journaling/karri-honey-texture.jpg"
+          <img src="images/lp/afternoon-journaling/karri-honey-texture.jpg"
                alt="カリ蜂蜜のなめらかな質感"
                loading="lazy" decoding="async"
                onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
@@ -772,7 +773,7 @@
         <p class="eyebrow reveal">Journaling</p>
         <h2 class="h2 mincho reveal" id="journal-h">何を書けばいいかわからない日にも。</h2>
         <p class="lead reveal">
-          ジャーナリングは、誰かに見せるものでも、正しくまとめるものでもありません。
+          ジャーナリングは、きれいな文章を書く時間ではありません。誰かに見せるものでも、正しくまとめるものでもありません。
         </p>
         <p class="lead reveal">
           あたたかいカモミールティーをそばに置いて、カリの甘さをゆっくり味わいながら、今の自分にあるものをそのまま書いてみる。たとえば、こんな一行から。
@@ -787,7 +788,7 @@
       <!-- TODO: 画像 /public/images/lp/afternoon-journaling/journaling-note.jpg -->
       <div class="split__media reveal">
         <figure class="media media--tall">
-          <img src="/images/lp/afternoon-journaling/journaling-note.jpg"
+          <img src="images/lp/afternoon-journaling/journaling-note.jpg"
                alt="ジャーナリングの問いを書いたノート"
                loading="lazy" decoding="async"
                onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
@@ -806,7 +807,7 @@
       <!-- TODO: 画像 /public/images/lp/afternoon-journaling/window-journaling.jpg -->
       <div class="reveal">
         <figure class="media media--tall">
-          <img src="/images/lp/afternoon-journaling/window-journaling.jpg"
+          <img src="images/lp/afternoon-journaling/window-journaling.jpg"
                alt="窓辺でノートを書く午後の時間"
                loading="lazy" decoding="async"
                onerror="this.closest('.media').classList.add('is-missing');this.remove();" />
@@ -816,7 +817,7 @@
         <p class="eyebrow">From the owner</p>
         <h2 class="h2 mincho" id="owner-h">店主より</h2>
         <blockquote>
-          <p>カリは、「風」のエレメントのはちみつ。風というと、香り、流れ、軽やかさ、リフレッシュ。カリはまさに、内側にこもったものを少し外へ流し、心と身体に風通しをつくってくれるようなはちみつです。</p>
+          <p>この組み合わせを飲んだ時、最初に感じたのは「これは午後にいい」ということでした。</p>
           <p>カリの甘さは軽やかで、カモミールの花の香りを邪魔しません。むしろ、香りをふわっと広げてくれるような一杯になります。</p>
           <p>午後3時から5時頃。夕方以降の家族時間や、仕事の後半に入る前に。</p>
           <p>ノートを開いて、今の自分にあるものを書き出しながら、ゆっくり味わっていただきたいセットです。</p>
