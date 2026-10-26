@@ -485,10 +485,18 @@
       30%     { transform: translateY(-12px) rotate(4deg); }
       65%     { transform: translateY(-5px) rotate(-3deg); }
     }
-    .bee-wing-l { animation: wingL 0.18s linear infinite alternate; transform-origin: 58px 36px; }
-    .bee-wing-r { animation: wingR 0.18s linear infinite alternate; transform-origin: 32px 36px; }
-    @keyframes wingL { to { transform: scaleY(0.5) rotate(5deg); } }
-    @keyframes wingR { to { transform: scaleY(0.5) rotate(-5deg); } }
+    /* Translate each wing root to the shoulder, then animate around local (0, 0). */
+    .bee-wing-l, .bee-wing-r { transform-box: view-box; transform-origin: 0px 0px; }
+    .bee-wing-l { animation: wingL 0.18s ease-in-out infinite alternate; }
+    .bee-wing-r { animation: wingR 0.18s ease-in-out infinite alternate; }
+    @keyframes wingL {
+      from { transform: rotate(-8deg) scaleY(1); }
+      to   { transform: rotate(12deg) scaleY(0.65); }
+    }
+    @keyframes wingR {
+      from { transform: rotate(8deg) scaleY(1); }
+      to   { transform: rotate(-12deg) scaleY(0.65); }
+    }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        RESULT SCREEN
@@ -812,8 +820,16 @@
       <svg class="loading-bee" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" fill="none">
         <g class="bee-body">
           <!-- Wings -->
-          <ellipse class="bee-wing-l" cx="62" cy="35" rx="18" ry="10" fill="rgba(250,246,238,0.2)" transform="rotate(-20 62 35)"/>
-          <ellipse class="bee-wing-r" cx="28" cy="35" rx="18" ry="10" fill="rgba(250,246,238,0.2)" transform="rotate(20 28 35)"/>
+          <g class="bee-wing-anchor" transform="translate(38 44)">
+            <g class="bee-wing-l">
+              <path d="M0,0 C-8,-16 -25,-24 -28,-13 C-31,-2 -13,5 0,0Z" fill="rgba(255,248,235,0.65)" stroke="rgba(255,248,235,0.8)" stroke-width="0.7"/>
+            </g>
+          </g>
+          <g class="bee-wing-anchor" transform="translate(52 44)">
+            <g class="bee-wing-r">
+              <path d="M0,0 C8,-16 25,-24 28,-13 C31,-2 13,5 0,0Z" fill="rgba(255,248,235,0.65)" stroke="rgba(255,248,235,0.8)" stroke-width="0.7"/>
+            </g>
+          </g>
           <!-- Body segments -->
           <ellipse cx="45" cy="55" rx="13" ry="18" fill="#A66B39" opacity="0.85"/>
           <path d="M32,50 Q45,48 58,50" stroke="#70432B" stroke-width="1.5" fill="none" opacity="0.7"/>
