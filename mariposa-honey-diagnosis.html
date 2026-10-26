@@ -13,19 +13,19 @@
        CSS Custom Properties
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     :root {
-      --bg:        #F5EFE2;
-      --bg-card:   #FCF8F0;
-      --bg-dark:   #EAE0CC;
-      --text:      #261508;
-      --text-mid:  #6A4E35;
-      --text-lt:   #9A7A5E;
-      --green:     #223528;
-      --green-mid: #374F3C;
-      --beige:     #C0965C;
-      --honey:     #C4801A;
-      --sepia:     #7A5235;
-      --cream:     #FAF6EE;
-      --line:      rgba(192,150,92,0.4);
+      --bg:        #F0E2CD;
+      --bg-card:   #FFF8EB;
+      --bg-dark:   #DCC4A5;
+      --text:      #382014;
+      --text-mid:  #65402C;
+      --text-lt:   #76513A;
+      --green:     #653128;
+      --green-mid: #7B3D2D;
+      --beige:     #89512F;
+      --honey:     #875020;
+      --sepia:     #73462F;
+      --cream:     #FFF8EB;
+      --line:      rgba(137,81,47,0.45);
       --serif-jp:  'Noto Serif JP', serif;
       --serif-en:  'Cormorant Garamond', serif;
     }
@@ -61,8 +61,8 @@
       pointer-events: none;
       z-index: 0;
       background:
-        radial-gradient(ellipse 60% 40% at 20% 10%, rgba(192,150,92,0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 50% at 80% 90%, rgba(34,53,40,0.08) 0%, transparent 70%);
+        radial-gradient(ellipse 60% 40% at 20% 10%, rgba(172,101,45,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 90%, rgba(114,50,34,0.08) 0%, transparent 70%);
     }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -131,7 +131,7 @@
     .brand-mark {
       font-family: var(--serif-en);
       font-size: 0.68rem;
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: 0.5em;
       color: var(--sepia);
       text-transform: uppercase;
@@ -154,7 +154,7 @@
 
     .start-catch {
       font-size: 1.02rem;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 2.1;
       letter-spacing: 0.06em;
       text-align: center;
@@ -185,7 +185,7 @@
 
     .start-sub {
       font-size: 0.78rem;
-      font-weight: 200;
+      font-weight: 400;
       letter-spacing: 0.2em;
       color: var(--text-lt);
       text-align: center;
@@ -211,7 +211,7 @@
       border: none;
       font-family: var(--serif-jp);
       font-size: 0.88rem;
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: 0.2em;
       text-align: center;
       cursor: pointer;
@@ -274,7 +274,7 @@
       text-transform: uppercase;
       transition: color 0.25s;
     }
-    .choice-btn.chosen .choice-label { color: rgba(250,246,238,0.65); }
+    .choice-btn.chosen .choice-label { color: var(--cream); }
 
     .choice-main {
       display: block;
@@ -297,12 +297,12 @@
     .choice-sub {
       display: block;
       font-size: 0.73rem;
-      font-weight: 200;
+      font-weight: 400;
       line-height: 1.7;
       color: var(--text-lt);
       transition: color 0.25s;
     }
-    .choice-btn.chosen .choice-sub { color: rgba(250,246,238,0.8); }
+    .choice-btn.chosen .choice-sub { color: var(--cream); }
 
     /* CTA button */
     .btn-cta {
@@ -314,7 +314,7 @@
       color: var(--honey);
       font-family: var(--serif-jp);
       font-size: 0.88rem;
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: 0.15em;
       text-align: center;
       text-decoration: none;
@@ -334,7 +334,7 @@
       color: var(--text-lt);
       font-family: var(--serif-jp);
       font-size: 0.76rem;
-      font-weight: 200;
+      font-weight: 400;
       letter-spacing: 0.12em;
       text-align: center;
       cursor: pointer;
@@ -403,7 +403,7 @@
     }
     .q-text {
       font-size: 0.98rem;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 2.0;
       letter-spacing: 0.06em;
       text-align: center;
@@ -426,7 +426,7 @@
     }
     #screen-loading::before {
       background:
-        radial-gradient(ellipse 60% 50% at 30% 20%, rgba(192,150,92,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 30% 20%, rgba(172,101,45,0.12) 0%, transparent 70%),
         radial-gradient(ellipse 50% 60% at 70% 80%, rgba(0,0,0,0.2) 0%, transparent 70%);
     }
     #screen-loading .screen-inner {
@@ -443,10 +443,10 @@
 
     .loading-text {
       font-size: 0.88rem;
-      font-weight: 200;
+      font-weight: 400;
       line-height: 2.1;
       letter-spacing: 0.1em;
-      color: rgba(250,246,238,0.88);
+      color: var(--cream);
       text-align: center;
     }
 
@@ -510,7 +510,7 @@
     .result-element-badge {
       font-family: var(--serif-en);
       font-size: 0.88rem;
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: 0.25em;
       color: var(--green);
       text-align: center;
@@ -568,7 +568,7 @@
       display: block;
       font-family: var(--serif-en);
       font-size: 1.55rem;
-      font-weight: 300;
+      font-weight: 400;
       font-style: italic;
       color: var(--text);
       letter-spacing: 0.04em;
@@ -577,7 +577,7 @@
     .honey-name-jp {
       display: block;
       font-size: 0.7rem;
-      font-weight: 200;
+      font-weight: 400;
       letter-spacing: 0.28em;
       color: var(--text-lt);
     }
@@ -592,7 +592,7 @@
     }
     .result-desc {
       font-size: 0.88rem;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 2.1;
       letter-spacing: 0.06em;
       text-align: center;
@@ -607,7 +607,7 @@
     }
     .cta-note {
       font-size: 0.68rem;
-      font-weight: 200;
+      font-weight: 400;
       letter-spacing: 0.12em;
       color: var(--text-lt);
       text-align: center;
@@ -651,7 +651,7 @@
     .result-serving {
       margin-top: 1.2rem; padding: 1rem;
       background: var(--bg-card); border: 1px solid var(--line);
-      font-size: 0.8rem; font-weight: 300; line-height: 2; color: var(--text-mid);
+      font-size: 0.8rem; font-weight: 400; line-height: 2; color: var(--text-mid);
     }
     .result-product {
       font-size: 0.75rem; line-height: 1.8; color: var(--text-mid);
@@ -664,7 +664,17 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; }
     }
-  </style>
+  
+    /* 秋冬の配色：栗色の操作部、琥珀色の背景、濃い茶色の本文 */
+    .choice-label, .q-number, .result-top-label { font-size: 0.7rem; }
+    .q-theme { font-size: 0.75rem; opacity: 1; }
+    .honey-name-jp, .cta-note, .season-note, .result-help { font-size: 0.75rem; }
+    .choice-btn { background: rgba(255,248,235,0.55); }
+    .choice-btn:hover { border-color: var(--beige); }
+    .btn-start:hover { background: var(--green-mid); }
+    .btn-cta { background: var(--green); border-color: var(--green); color: var(--cream); }
+    .btn-cta:hover, .btn-cta:active { background: var(--green-mid); border-color: var(--green-mid); color: var(--cream); }
+</style>
 </head>
 <body>
 <div id="app">
@@ -685,30 +695,30 @@
           </radialGradient>
         </defs>
         <!-- Outer ring -->
-        <circle cx="54" cy="54" r="50" stroke="#C0965C" stroke-width="0.6" opacity="0.5"/>
-        <circle cx="54" cy="54" r="44" stroke="#C0965C" stroke-width="0.3" opacity="0.35"/>
+        <circle cx="54" cy="54" r="50" stroke="#A66B39" stroke-width="0.6" opacity="0.5"/>
+        <circle cx="54" cy="54" r="44" stroke="#A66B39" stroke-width="0.3" opacity="0.35"/>
         <!-- Honeycomb hex -->
-        <polygon points="54,22 68,30 68,46 54,54 40,46 40,30" stroke="#7A5235" stroke-width="0.8" opacity="0.5"/>
-        <polygon points="54,54 68,62 68,78 54,86 40,78 40,62" stroke="#7A5235" stroke-width="0.8" opacity="0.5"/>
-        <polygon points="22,38 36,30 36,46 22,54 8,46 8,30" stroke="#C0965C" stroke-width="0.5" opacity="0.25" transform="translate(14,0)"/>
-        <polygon points="70,38 84,30 84,46 70,54 56,46 56,30" stroke="#C0965C" stroke-width="0.5" opacity="0.25" transform="translate(0,0)"/>
+        <polygon points="54,22 68,30 68,46 54,54 40,46 40,30" stroke="#70432B" stroke-width="0.8" opacity="0.5"/>
+        <polygon points="54,54 68,62 68,78 54,86 40,78 40,62" stroke="#70432B" stroke-width="0.8" opacity="0.5"/>
+        <polygon points="22,38 36,30 36,46 22,54 8,46 8,30" stroke="#A66B39" stroke-width="0.5" opacity="0.25" transform="translate(14,0)"/>
+        <polygon points="70,38 84,30 84,46 70,54 56,46 56,30" stroke="#A66B39" stroke-width="0.5" opacity="0.25" transform="translate(0,0)"/>
         <!-- Bee silhouette -->
         <!-- Body -->
-        <ellipse cx="54" cy="48" rx="8" ry="12" fill="#C0965C" opacity="0.7"/>
-        <path d="M46,48 Q54,58 62,48" stroke="#7A5235" stroke-width="0.8" fill="none" opacity="0.6"/>
-        <path d="M46,52 Q54,62 62,52" stroke="#7A5235" stroke-width="0.8" fill="none" opacity="0.5"/>
+        <ellipse cx="54" cy="48" rx="8" ry="12" fill="#A66B39" opacity="0.7"/>
+        <path d="M46,48 Q54,58 62,48" stroke="#70432B" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M46,52 Q54,62 62,52" stroke="#70432B" stroke-width="0.8" fill="none" opacity="0.5"/>
         <!-- Wings -->
-        <ellipse cx="42" cy="43" rx="10" ry="6" fill="#C0965C" opacity="0.25" transform="rotate(-20 42 43)"/>
-        <ellipse cx="66" cy="43" rx="10" ry="6" fill="#C0965C" opacity="0.25" transform="rotate(20 66 43)"/>
+        <ellipse cx="42" cy="43" rx="10" ry="6" fill="#A66B39" opacity="0.25" transform="rotate(-20 42 43)"/>
+        <ellipse cx="66" cy="43" rx="10" ry="6" fill="#A66B39" opacity="0.25" transform="rotate(20 66 43)"/>
         <!-- Head -->
-        <circle cx="54" cy="36" r="5.5" fill="#7A5235" opacity="0.65"/>
+        <circle cx="54" cy="36" r="5.5" fill="#70432B" opacity="0.65"/>
         <!-- Antennae -->
-        <path d="M51,32 Q47,25 43,22" stroke="#7A5235" stroke-width="0.8" fill="none" opacity="0.6"/>
-        <path d="M57,32 Q61,25 65,22" stroke="#7A5235" stroke-width="0.8" fill="none" opacity="0.6"/>
-        <circle cx="43" cy="22" r="1.5" fill="#C0965C" opacity="0.7"/>
-        <circle cx="65" cy="22" r="1.5" fill="#C0965C" opacity="0.7"/>
+        <path d="M51,32 Q47,25 43,22" stroke="#70432B" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M57,32 Q61,25 65,22" stroke="#70432B" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <circle cx="43" cy="22" r="1.5" fill="#A66B39" opacity="0.7"/>
+        <circle cx="65" cy="22" r="1.5" fill="#A66B39" opacity="0.7"/>
         <!-- Honey drop below -->
-        <path d="M54,70 Q60,80 54,88 Q48,80 54,70" fill="#C0965C" opacity="0.55"/>
+        <path d="M54,70 Q60,80 54,88 Q48,80 54,70" fill="#A66B39" opacity="0.55"/>
       </svg>
 
       <p class="start-catch">秋冬のあなたに<br>ぴったりの一匙を。</p>
@@ -746,12 +756,12 @@
           <ellipse class="bee-wing-l" cx="62" cy="35" rx="18" ry="10" fill="rgba(250,246,238,0.2)" transform="rotate(-20 62 35)"/>
           <ellipse class="bee-wing-r" cx="28" cy="35" rx="18" ry="10" fill="rgba(250,246,238,0.2)" transform="rotate(20 28 35)"/>
           <!-- Body segments -->
-          <ellipse cx="45" cy="55" rx="13" ry="18" fill="#C0965C" opacity="0.85"/>
-          <path d="M32,50 Q45,48 58,50" stroke="#7A5235" stroke-width="1.5" fill="none" opacity="0.7"/>
-          <path d="M32,55 Q45,53 58,55" stroke="#7A5235" stroke-width="1.5" fill="none" opacity="0.6"/>
-          <path d="M33,60 Q45,58 57,60" stroke="#7A5235" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <ellipse cx="45" cy="55" rx="13" ry="18" fill="#A66B39" opacity="0.85"/>
+          <path d="M32,50 Q45,48 58,50" stroke="#70432B" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <path d="M32,55 Q45,53 58,55" stroke="#70432B" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <path d="M33,60 Q45,58 57,60" stroke="#70432B" stroke-width="1.5" fill="none" opacity="0.5"/>
           <!-- Stinger -->
-          <path d="M45,73 L45,80" stroke="#7A5235" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          <path d="M45,73 L45,80" stroke="#70432B" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
           <!-- Head -->
           <circle cx="45" cy="34" r="9" fill="#C4801A" opacity="0.9"/>
           <!-- Eyes -->
@@ -1102,10 +1112,10 @@ function productLink(shopUrl, productKey) {
 
 function cardSVG(key) {
   const E = {
-    wind:  {bg:'#EBF5F3', dk:'#195850', md:'#267868', lt:'#58B0A8', vl:'rgba(88,176,168,0.1)'},
-    fire:  {bg:'#F7EDE4', dk:'#782810', md:'#A84226', lt:'#CC6C3C', vl:'rgba(200,100,56,0.1)'},
-    earth: {bg:'#E9F0E3', dk:'#1A3E16', md:'#285C20', lt:'#548038', vl:'rgba(84,128,56,0.1)'},
-    water: {bg:'#E4EEF7', dk:'#10336A', md:'#1A4E94', lt:'#3678BC', vl:'rgba(54,120,188,0.1)'}
+    wind:  {bg:'#F2E7CB', dk:'#55401D', md:'#80612D', lt:'#AA854A', vl:'rgba(170,133,74,0.1)'},
+    fire:  {bg:'#F0D9CF', dk:'#61291F', md:'#8C4031', lt:'#B46549', vl:'rgba(180,101,73,0.1)'},
+    earth: {bg:'#E7DCCD', dk:'#3C3321', md:'#66543A', lt:'#94784F', vl:'rgba(148,120,79,0.1)'},
+    water: {bg:'#EFE0D0', dk:'#583426', md:'#825339', lt:'#AA774E', vl:'rgba(170,119,78,0.1)'}
   };
   const e = E[RESULTS[key].elementKey];
 
@@ -1422,8 +1432,8 @@ function cardSVG(key) {
   ${frame}
   ${motifs[RESULTS[key].illustrationKey]||''}
   <line x1="26" y1="308" x2="294" y2="308" stroke="${e.md}" stroke-width="0.4" opacity="0.35"/>
-  <text x="160" y="324" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11.5" font-style="italic" fill="${e.dk}" letter-spacing="2.5" opacity="0.8">${nameRow}</text>
-  <text x="160" y="336" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="8.5" fill="${e.md}" letter-spacing="4" opacity="0.6">${elemRow}</text>
+  <text x="160" y="324" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="12" font-style="italic" fill="${e.dk}" letter-spacing="2.5" opacity="1">${nameRow}</text>
+  <text x="160" y="336" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${e.dk}" letter-spacing="3" opacity="1">${elemRow}</text>
 </svg>`;
 }
 
