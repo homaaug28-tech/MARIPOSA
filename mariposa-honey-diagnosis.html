@@ -286,12 +286,10 @@
     }
     .choice-btn.chosen .choice-main { color: var(--cream); }
 
-    .choice-main--single {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-size: 0.88rem;
-      margin-bottom: 0;
+    .choice-main, .choice-sub {
+      white-space: normal;
+      overflow-wrap: anywhere;
+      line-height: 1.8;
     }
 
     .choice-sub {
@@ -344,12 +342,14 @@
        QUESTION SCREEN
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     #screen-q {
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 100%;
       padding-top: 2rem;
       padding-bottom: 2rem;
     }
     #screen-q .screen-inner {
+      margin-block: auto;
+      flex-shrink: 0;
       display: flex;
       flex-direction: column;
       gap: 0;
@@ -674,6 +674,27 @@
     .btn-start:hover { background: var(--green-mid); }
     .btn-cta { background: var(--green); border-color: var(--green); color: var(--cream); }
     .btn-cta:hover, .btn-cta:active { background: var(--green-mid); border-color: var(--green-mid); color: var(--cream); }
+    .flavor-map {
+      width: 100%; margin-top: 2rem; padding-top: 1.8rem;
+      border-top: 1px solid var(--line);
+    }
+    .flavor-map-eyebrow {
+      color: var(--sepia); text-align: center; text-transform: uppercase;
+      font-family: var(--serif-en); font-size: 0.7rem; letter-spacing: 0.2em;
+    }
+    .flavor-map h2 {
+      margin: 0.5rem 0 0.8rem; text-align: center;
+      font-size: 1rem; font-weight: 400; color: var(--text);
+    }
+    .flavor-map-intro, .flavor-map figcaption {
+      font-size: 0.75rem; line-height: 1.9; color: var(--text-mid);
+    }
+    .flavor-map-intro { text-align: center; margin-bottom: 1rem; }
+    .flavor-map figure { margin: 0; }
+    .flavor-map a { display: block; border: 1px solid var(--line); color: var(--text); text-decoration: none; background: var(--bg-card); }
+    .flavor-map img { display: block; width: 100%; height: auto; }
+    .flavor-map-zoom { display: block; text-align: center; padding: 0.7rem; font-size: 0.8rem; font-weight: 400; }
+    .flavor-map figcaption { margin-top: 0.7rem; }
 </style>
 </head>
 <body>
@@ -816,6 +837,18 @@
         <p class="result-product" id="result-product"></p>
         <p class="cta-note" id="result-stock-note"></p>
         <a class="btn-cta" id="btn-shop" href="#" target="_blank" rel="noopener">商品を見る</a>
+        <section class="flavor-map" aria-labelledby="flavor-map-title">
+          <p class="flavor-map-eyebrow">Honey Flavor Map</p>
+          <h2 id="flavor-map-title">味わいマップで比べる</h2>
+          <p class="flavor-map-intro">香りと甘みの違いを、ほかのはちみつと見比べてみてください。</p>
+          <figure>
+            <a href="images/honey-flavor-map.jpeg" target="_blank" rel="noopener" aria-label="はちみつ味わいマップを拡大して開く（新しいタブ）">
+              <img src="images/honey-flavor-map.jpeg" width="1080" height="1080" loading="lazy" decoding="async" alt="はちみつの味わいマップ。縦軸は上がすっきり・ライト、下が濃厚・リッチ。横軸は左がフルーティ・フローラル、右がキャラメル・ウッド。">
+              <span class="flavor-map-zoom">タップして拡大する ↗</span>
+            </a>
+            <figcaption>味わいの位置は目安です。掲載商品の在庫は商品ページでご確認ください。</figcaption>
+          </figure>
+        </section>
         <button class="btn-retry" id="btn-retry">もう一度診断する</button>
         <p class="result-help">在庫・価格は商品ページでご確認ください。<br>はちみつは1歳未満の乳児には与えないでください。</p>
       </div>
@@ -1502,10 +1535,8 @@ function renderQuestion(q) {
         <button class="choice-btn" data-id="${c.id}" ${c.result ? `data-result="${c.result}"` : ''}>
           <div class="choice-inner">
             <span class="choice-label">${c.label}</span>
-            ${q.step === 3
-              ? `<span class="choice-main choice-main--single">${c.main}${c.sub ? `、${c.sub}` : ''}</span>`
-              : `<span class="choice-main">${c.main}</span><span class="choice-sub">${c.sub}</span>`
-            }
+            <span class="choice-main">${c.main}</span>
+            <span class="choice-sub">${c.sub || ''}</span>
           </div>
         </button>
       `).join('')}
@@ -1621,3 +1652,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
