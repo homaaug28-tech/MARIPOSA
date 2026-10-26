@@ -2,8 +2,9 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MARIPOSA | はちみつ診断 — 世界の果てから届いた一匙を</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>MARIPOSA | 秋冬のはちみつ診断 — あなたに合うひとさじを</title>
+  <meta name="description" content="3つの質問で、秋冬の食卓に合うはちみつをご紹介。温かいお茶やトースト、焼き芋と楽しむ、あなた好みのひとさじを。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
@@ -640,6 +641,29 @@
     /* Scroll fix for result page */
     #screen-result { overflow-y: auto; }
 
+
+    [hidden] { display: none !important; }
+    .start-sub { line-height: 2; letter-spacing: 0.1em; }
+    .season-note, .result-help {
+      font-size: 0.68rem; line-height: 1.9; text-align: center;
+      color: var(--text-mid); margin-top: 1.2rem;
+    }
+    .result-serving {
+      margin-top: 1.2rem; padding: 1rem;
+      background: var(--bg-card); border: 1px solid var(--line);
+      font-size: 0.8rem; font-weight: 300; line-height: 2; color: var(--text-mid);
+    }
+    .result-product {
+      font-size: 0.75rem; line-height: 1.8; color: var(--text-mid);
+      text-align: center; margin-bottom: 0.6rem;
+    }
+    .cta-note { line-height: 1.9; color: var(--text-mid); }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--honey); outline-offset: 4px; }
+    #screen-start { justify-content: flex-start; }
+    #screen-start .screen-inner { margin-block: auto; padding-block: 2rem; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
@@ -687,13 +711,14 @@
         <path d="M54,70 Q60,80 54,88 Q48,80 54,70" fill="#C0965C" opacity="0.55"/>
       </svg>
 
-      <p class="start-catch">今のあなたに<br>ぴったりの一匙を。</p>
+      <p class="start-catch">秋冬のあなたに<br>ぴったりの一匙を。</p>
 
       <div class="ornament-divider"><span>✦</span></div>
 
-      <p class="start-sub">心と身体をととのえる&emsp;はちみつ診断</p>
+      <p class="start-sub">温かいお茶と、季節のおやつに。<br>秋冬のはちみつ診断</p>
 
       <button class="btn-start" id="btn-start">診断をはじめる</button>
+      <p class="season-note">3つの質問で、好みのはちみつを。</p>
     </div>
   </div>
 
@@ -758,7 +783,7 @@
   ═══════════════════════════════ -->
   <div id="screen-result" class="screen">
     <div class="screen-inner">
-      <p class="result-top-label">Your Element</p>
+      <p class="result-top-label">Your Honey</p>
       <p class="result-element-badge" id="result-element"></p>
       <div class="result-card-wrap">
         <div class="result-card" id="result-card">
@@ -774,12 +799,15 @@
       <div class="result-desc-wrap">
         <div class="line-ornament"><span>✦</span></div>
         <p class="result-desc" id="result-desc"></p>
+        <p class="result-serving" id="result-serving"></p>
         <div class="line-ornament"><span>✦</span></div>
       </div>
       <div class="result-cta-wrap">
-        <p class="cta-note">あなたのエレメントが選んだ一瓶</p>
-        <a class="btn-cta" id="btn-shop" href="#" target="_blank" rel="noopener">このはちみつをお迎えする</a>
+        <p class="result-product" id="result-product"></p>
+        <p class="cta-note" id="result-stock-note"></p>
+        <a class="btn-cta" id="btn-shop" href="#" target="_blank" rel="noopener">商品を見る</a>
         <button class="btn-retry" id="btn-retry">もう一度診断する</button>
+        <p class="result-help">在庫・価格は商品ページでご確認ください。<br>はちみつは1歳未満の乳児には与えないでください。</p>
       </div>
     </div>
   </div>
@@ -791,137 +819,282 @@
    DATA
 ═══════════════════════════════════════════════════ */
 
+// 在庫は自動連携ではありません。確認日: 2026-10-26 (JST)
+// 品切れ時は該当商品の available を false にしてください。
+// 同じ食べ方の代替候補も販売停止の場合、商品を推薦せずストアへ案内します。
+// elementKey はカードの配色。Native Honey にエレメント分類は付けていません。
 const RESULTS = {
-  karri: {
-    nameEn: 'Karri',
-    nameJp: 'カリ',
-    element: '風 — Wind',
-    elementKey: 'wind',
-    desc: '軽やかに心身を巡る「風」のエレメント。日中の緊張をほぐし、静かな休息のひとときをもたらします。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/138397344'
+  "karri": {
+    "nameEn": "Karri",
+    "nameJp": "カリ",
+    "element": "風 — Wind",
+    "elementKey": "wind",
+    "illustrationKey": "karri",
+    "desc": "やさしい甘さと、すっきりとした後味。温かいお茶を片手に、静かな時間を楽しみたいあなたに。クリーミーな口あたりをゆっくり味わう一本です。",
+    "serving": "秋冬の楽しみ方：紅茶やハーブティーに添えて。香ばしいトーストにも。",
+    "productLabel": "750g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/138397344",
+    "available": true,
+    "alternatives": [
+      "lemon_myrtle"
+    ]
   },
-  leatherwood: {
-    nameEn: 'Leatherwood',
-    nameJp: 'レザーウッド',
-    element: '風 — Wind',
-    elementKey: 'wind',
-    desc: '五感を呼び覚ます「風」のエレメント。蓋を開けた瞬間の花の香りが、あなたの感性に新しい風を通し、きらめく朝を始めます。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/65052038p'
+  "cinnamon": {
+    "nameEn": "Cinnamon",
+    "nameJp": "シナモン",
+    "element": "火 — Fire",
+    "elementKey": "fire",
+    "illustrationKey": "scottish_heather",
+    "desc": "シナモンの甘く華やかな香りが好きなあなたに。いつものコーヒーや朝食に少し添えるだけで、秋冬らしいスパイスの風味を楽しめます。",
+    "serving": "秋冬の楽しみ方：朝のコーヒーやミルクティーに少量を。香りを確かめながらどうぞ。",
+    "productLabel": "1kg / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/156924159",
+    "available": true,
+    "alternatives": [
+      "ginger_honey"
+    ]
   },
-  scottish_heather: {
-    nameEn: 'Scottish Heather',
-    nameJp: 'スコティッシュヘザー',
-    element: '火 — Fire',
-    elementKey: 'fire',
-    desc: '穏やかに心に灯る「火」のエレメント。スモーキーな大人の甘みが、今日一日の疲れを優しく燃やし、温かな休息へと導きます。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/71820954'
+  "jarrah": {
+    "nameEn": "Jarrah",
+    "nameJp": "ジャラ",
+    "element": "土 — Earth",
+    "elementKey": "earth",
+    "illustrationKey": "jarrah",
+    "desc": "黒糖やナッツを思わせる、深くまろやかな甘み。しっかりとしたコクを楽しみたいあなたに。なめらかな口あたりで、朝の食卓にもよく合います。",
+    "serving": "秋冬の楽しみ方：バタートーストやチーズに。そのまま少量ずつ味わっても。",
+    "productLabel": "1kg / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/156924847",
+    "available": true,
+    "alternatives": [
+      "native"
+    ]
   },
-  jarrah: {
-    nameEn: 'Jarrah',
-    nameJp: 'ジャラ',
-    element: '土 — Earth',
-    elementKey: 'earth',
-    desc: '包容力に満ちた「土」のエレメント。上質な黒糖のようなまろやかなコクが、夜のあなたを優しくグラウンディング（安定）させます。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/65052125'
+  "ginger_honey": {
+    "nameEn": "Ginger Honey",
+    "nameJp": "ジンジャーハニー",
+    "element": "火 — Fire",
+    "elementKey": "fire",
+    "illustrationKey": "ginger_honey",
+    "desc": "生姜のきりっとした辛みを楽しみたいあなたに。マレーシアのベントンジンジャーとはちみつを合わせた、香り豊かな一本。肌寒い朝の飲み物におすすめです。",
+    "serving": "秋冬の楽しみ方：少量をぬるま湯や紅茶に溶かして。辛みがあるので少しずつ。",
+    "productLabel": "250g / 13Honey",
+    "shopUrl": "https://mariposa8.theshop.jp/items/104752871",
+    "available": true,
+    "alternatives": [
+      "cinnamon"
+    ]
   },
-  ginger_honey: {
-    nameEn: 'Ginger Honey',
-    nameJp: 'ジンジャーハニー',
-    element: '火 — Fire',
-    elementKey: 'fire',
-    desc: '強く燃え上がる「火」のエレメント。貴重なベントンジンジャーがたっぷりと入り、代謝UPを力強くサポートします。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/104752871'
+  "lemon_myrtle": {
+    "nameEn": "Lemon Myrtle",
+    "nameJp": "レモンマートル",
+    "element": "水 — Water",
+    "elementKey": "water",
+    "illustrationKey": "lemon_myrtle",
+    "desc": "レモンを思わせるハーブの香りと、さっぱりとした甘み。夜のひと休みにも軽やかな風味を選びたいあなたに。温かいお茶との組み合わせを楽しめます。",
+    "serving": "秋冬の楽しみ方：紅茶やハーブティーに少量を加えて、爽やかな香りを。",
+    "productLabel": "1kg / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/156923939",
+    "available": true,
+    "alternatives": [
+      "karri"
+    ]
   },
-  lemon_myrtle: {
-    nameEn: 'Lemon Myrtle',
-    nameJp: 'レモンマートル',
-    element: '水 — Water',
-    elementKey: 'water',
-    desc: '清らかな「水」のエレメント。レモンのような爽やかなハーブの風味が頭の使いすぎや張り詰めた心をサラサラと洗い流し、深い「凪」の眠りへと誘います。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/70835155'
+  "native": {
+    "nameEn": "Native Honey",
+    "nameJp": "ネイティブハニー",
+    "element": "ニュージーランドの野生の花々",
+    "elementKey": "earth",
+    "illustrationKey": "rewarewa",
+    "desc": "キャラメルのような甘みを、毎日の食卓でたっぷり楽しみたいあなたに。ニュージーランドの野生の花々から届くはちみつです。朝食やおやつの時間にどうぞ。",
+    "serving": "秋冬の楽しみ方：トーストやパンケーキに。温かいコーヒーのお供にも。",
+    "productLabel": "1kg / The Authentic Honey Co.",
+    "shopUrl": "https://mariposa8.theshop.jp/items/82941591",
+    "available": true,
+    "alternatives": [
+      "jarrah"
+    ]
   },
-  rewarewa: {
-    nameEn: 'Rewarewa',
-    nameJp: 'レワレワ',
-    element: '土 — Earth',
-    elementKey: 'earth',
-    desc: '活力を生み出す「土」のエレメント。モルトを思わせる力強いコクが、ブレない自分の土台を作り、前向きなエネルギーを満たします。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/82941380'
+  "hakea": {
+    "nameEn": "Hakea",
+    "nameJp": "ハケア",
+    "element": "水 — Water",
+    "elementKey": "water",
+    "illustrationKey": "leatherwood",
+    "desc": "バニラを思わせる香りと、キャラメルのような濃厚な甘み。おやつをゆっくり味わいたいあなたに。焼き芋に添えると、秋冬らしいひと皿を楽しめます。",
+    "serving": "秋冬の楽しみ方：温かい焼き芋にとろりとかけて。まずはそのままひとさじ。",
+    "productLabel": "380g / ELIXIR",
+    "shopUrl": "https://mariposa8.theshop.jp/items/91766769",
+    "available": true,
+    "alternatives": [
+      "wandoo"
+    ]
   },
-  wandoo: {
-    nameEn: 'Wandoo',
-    nameJp: 'ワンドゥ',
-    element: '土 — Earth',
-    elementKey: 'earth',
-    desc: '太古の記憶を宿す「土」のエレメント。まろやかな黄金の蜜が、これまでにないディープなヒーリング（癒やし）を心身に与える特別なご褒美。',
-    shopUrl: 'https://mariposa8.theshop.jp/items/97539037'
+  "wandoo": {
+    "nameEn": "Wandoo",
+    "nameJp": "ワンドゥ",
+    "element": "土 — Earth",
+    "elementKey": "earth",
+    "illustrationKey": "wandoo",
+    "desc": "キャラメルのような丸い甘みに、落ち着いた木の香り。濃厚さと軽やかな後味の両方を楽しみたいあなたに。夜のおやつやお茶の時間に寄り添う一本です。",
+    "serving": "秋冬の楽しみ方：スコーンやナッツに添えて。ほうじ茶やミルクティーのお供にも。",
+    "productLabel": "750g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/97539037",
+    "available": true,
+    "alternatives": [
+      "hakea"
+    ]
   }
 };
 
 const QUESTIONS = [
   {
-    id: 'q1',
-    step: 1,
-    number: 'Question  01',
-    theme: '時間のゆらぎ',
-    text: '今のあなたが、はちみつを取り入れたい\n「時間」はどちらですか？',
-    choices: [
-      { id:'A', label:'Morning', main:'朝〜日中', sub:'一日を健やかにスタートしたい、アクティブに過ごしたい' },
-      { id:'B', label:'Evening', main:'夕方〜夜', sub:'今日一日を優しくリセットしたい、心地よい眠りにつきたい' }
+    "id": "q1",
+    "step": 1,
+    "number": "Question  01",
+    "theme": "秋冬のひとさじ",
+    "text": "肌寒い季節、はちみつを楽しみたい\n「時間」はどちらですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Morning",
+        "main": "朝〜日中",
+        "sub": "朝食や仕事の合間に、好きな甘みを楽しみたい"
+      },
+      {
+        "id": "B",
+        "label": "Evening",
+        "main": "夕方〜夜",
+        "sub": "一日の終わりに、ゆっくりお茶やおやつを楽しみたい"
+      }
     ]
   },
   {
-    id: 'q2',
-    step: 2,
-    number: 'Question  02',
-    theme: '味と食感の好み',
-    text: 'あなたの本能が、いま求めている\n「質感」はどちらですか？',
-    choices: [
-      { id:'A', label:'Refreshing', main:'爽やか・華やか', sub:'ハーブや花の香りが広がる、後に残らないスッキリ感' },
-      { id:'B', label:'Rich',       main:'濃厚・まろやか', sub:'キャラメルや黒糖のような、コク深く余韻のある甘み' }
+    "id": "q2",
+    "step": 2,
+    "number": "Question  02",
+    "theme": "秋冬の食べ方",
+    "text": "この秋冬、試してみたい\n「楽しみ方」はどちらですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Warm Drink",
+        "main": "温かい飲み物と",
+        "sub": "紅茶やコーヒーに添えて、香りと甘みを楽しむ"
+      },
+      {
+        "id": "B",
+        "label": "One Spoon",
+        "main": "食べ物に添えて・そのままで",
+        "sub": "トーストや焼き芋に添えて、ひとさじをじっくり味わう"
+      }
     ]
   }
 ];
 
+const Q3_BRANCHES = {
+  "AA": {
+    "theme": "朝の香りの好み",
+    "text": "朝の温かい一杯に、\nどんな香りを添えたいですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Ginger",
+        "main": "きりっとした生姜の辛み",
+        "sub": "甘さの中に、はっきりした刺激がほしい",
+        "result": "ginger_honey"
+      },
+      {
+        "id": "B",
+        "label": "Cinnamon",
+        "main": "甘く華やかなスパイスの香り",
+        "sub": "シナモンの香りをゆっくり楽しみたい",
+        "result": "cinnamon"
+      }
+    ]
+  },
+  "AB": {
+    "theme": "朝の甘みの好み",
+    "text": "トーストや、ひとさじのお供に。\n惹かれる甘みはどちらですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Caramel",
+        "main": "キャラメルのような甘み",
+        "sub": "毎日の朝食やおやつでたっぷり楽しみたい",
+        "result": "native"
+      },
+      {
+        "id": "B",
+        "label": "Deep & Rich",
+        "main": "黒糖やナッツのような深いコク",
+        "sub": "濃厚な甘みを少しずつ味わいたい",
+        "result": "jarrah"
+      }
+    ]
+  },
+  "BA": {
+    "theme": "夜のお茶の好み",
+    "text": "ひと休みの温かいお茶に、\n合わせたい味はどちらですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Herbal",
+        "main": "レモンのようなハーブの香り",
+        "sub": "爽やかな風味でさっぱり楽しみたい",
+        "result": "lemon_myrtle"
+      },
+      {
+        "id": "B",
+        "label": "Mild",
+        "main": "やさしくクリーミーな甘み",
+        "sub": "穏やかな味わいと軽い後味が好き",
+        "result": "karri"
+      }
+    ]
+  },
+  "BB": {
+    "theme": "夜のおやつの好み",
+    "text": "秋冬のおやつ時間に、\n楽しみたい余韻はどちらですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Vanilla",
+        "main": "バニラを思わせる濃厚な甘み",
+        "sub": "焼き芋に、とろりとかけて味わいたい",
+        "result": "hakea"
+      },
+      {
+        "id": "B",
+        "label": "Woody",
+        "main": "落ち着いた木の香りと丸い甘み",
+        "sub": "スコーンやナッツとゆっくり楽しみたい",
+        "result": "wandoo"
+      }
+    ]
+  }
+};
+
 function getQ3(a1, a2) {
-  if (a1==='A' && a2==='A') return {
-    id:'q3', step:3,
-    number:'Question  03', theme:'呼応する自然のエレメント',
-    text:'いま、あなたの心に吹かせたい\n「風」はどちらですか？',
-    choices:[
-      { id:'A', label:'Clarity',  main:'思考をクリアにし',         sub:'新しいインスピレーションを運ぶ風',    result:'leatherwood' },
-      { id:'B', label:'Vitality', main:'エネルギッシュに行動する', sub:'ための、追い風',                      result:'ginger_honey' }
-    ]
-  };
-  if (a1==='A' && a2==='B') return {
-    id:'q3', step:3,
-    number:'Question  03', theme:'呼応する自然のエレメント',
-    text:'今日、あなたが心身にチャージしたい\nエネルギーは？',
-    choices:[
-      { id:'A', label:'Grounding', main:'大地に深く根を張り', sub:'軸を安定させるパワー',  result:'rewarewa' },
-      { id:'B', label:'Passion',   main:'内なる情熱を燃やし', sub:'身体を強く守るパワー', result:'scottish_heather' }
-    ]
-  };
-  if (a1==='B' && a2==='A') return {
-    id:'q3', step:3,
-    number:'Question  03', theme:'呼応する自然のエレメント',
-    text:'眠る前のひととき、あなたの魂が\n還りたい場所は？',
-    choices:[
-      { id:'A', label:'Cleansing', main:'張り詰めた心を洗い流し', sub:'静かに満ちていく場所',              result:'lemon_myrtle' },
-      { id:'B', label:'Rest',      main:'日中の緊張をほぐし',     sub:'穏やかな余白のある場所',            result:'karri' }
-    ]
-  };
-  return { // B-B
-    id:'q3', step:3,
-    number:'Question  03', theme:'呼応する自然のエレメント',
-    text:'大自然の「土」のエネルギー、\n今夜はどう受け取りたい？',
-    choices:[
-      { id:'A', label:'Embrace', main:'母なる大地の包容力で',  sub:'ゆったりとまろやかに包まれたい',         result:'jarrah'  },
-      { id:'B', label:'Release', main:'太古の森の奥深く',      sub:'ディープに自分を解放して癒やされたい',   result:'wandoo'  }
-    ]
-  };
+  const branch = Q3_BRANCHES[a1 + a2];
+  if (!branch) throw new Error('Invalid diagnosis answers');
+  return { id: 'q3', step: 3, number: 'Question  03', ...branch };
 }
 
+function selectProduct(preferredKey) {
+  const preferred = RESULTS[preferredKey];
+  if (!preferred) return null;
+  return [preferredKey, ...preferred.alternatives]
+    .find(key => RESULTS[key] && RESULTS[key].available === true) || null;
+}
+
+function productLink(shopUrl, productKey) {
+  const url = new URL(shopUrl);
+  url.searchParams.set('utm_source', 'honey_diagnosis');
+  url.searchParams.set('utm_medium', 'referral');
+  url.searchParams.set('utm_campaign', 'autumn_winter_2026');
+  url.searchParams.set('utm_content', productKey);
+  return url.href;
+}
 
 /* ═══════════════════════════════════════════════════
    CARD SVG — GEOMETRIC TAROT ILLUSTRATIONS
@@ -1247,7 +1420,7 @@ function cardSVG(key) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 340">
   <rect width="320" height="340" fill="${e.bg}"/>
   ${frame}
-  ${motifs[key]||''}
+  ${motifs[RESULTS[key].illustrationKey]||''}
   <line x1="26" y1="308" x2="294" y2="308" stroke="${e.md}" stroke-width="0.4" opacity="0.35"/>
   <text x="160" y="324" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11.5" font-style="italic" fill="${e.dk}" letter-spacing="2.5" opacity="0.8">${nameRow}</text>
   <text x="160" y="336" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="8.5" fill="${e.md}" letter-spacing="4" opacity="0.6">${elemRow}</text>
@@ -1261,6 +1434,7 @@ function cardSVG(key) {
 
 const state = {
   screen: 'start',
+  busy: false,
   step: 0,           // 1,2,3
   answers: {},       // {q1:'A', q2:'B', q3:'A'}
   result: null,
@@ -1305,6 +1479,7 @@ function renderProgress(step) {
 
 function renderQuestion(q) {
   state.currentQ = q;
+  state.busy = false;
   renderProgress(q.step);
 
   const html = `
@@ -1346,7 +1521,8 @@ function renderQuestion(q) {
 }
 
 function handleChoice(btn) {
-  if (btn.classList.contains('chosen')) return;
+  if (state.busy) return;
+  state.busy = true;
 
   // Disable all choices immediately for visual feedback
   document.querySelectorAll('.choice-btn').forEach(b => b.style.pointerEvents = 'none');
@@ -1384,15 +1560,27 @@ function handleChoice(btn) {
    RESULT RENDERING
 ═══════════════════════════════════════════════════ */
 
-function renderResult(key) {
-  const r = RESULTS[key];
+function renderResult(preferredKey) {
+  const key = selectProduct(preferredKey);
+  const r = key ? RESULTS[key] : null;
+  const card = document.querySelector('.result-card-wrap');
+  const shop = document.getElementById('btn-shop');
+  state.result = key;
+  card.hidden = !r;
 
-  document.getElementById('result-element').textContent   = r.element;
-  document.getElementById('result-name-en').textContent   = r.nameEn;
-  document.getElementById('result-name-jp').textContent   = r.nameJp;
-  document.getElementById('result-desc').textContent      = r.desc;
-  document.getElementById('btn-shop').href                = r.shopUrl;
-  document.getElementById('card-illustration').innerHTML  = cardSVG(key);
+  document.getElementById('result-element').textContent = r ? r.element : '秋冬のはちみつ選び';
+  document.getElementById('result-name-en').textContent = r ? r.nameEn : '';
+  document.getElementById('result-name-jp').textContent = r ? r.nameJp : '';
+  document.getElementById('result-desc').textContent = r ? r.desc
+    : 'お好みに近いはちみつは、ただいまご案内をお休みしています。ストアで販売中の商品をご覧ください。';
+  document.getElementById('result-serving').textContent = r ? r.serving : '';
+  document.getElementById('result-product').textContent = r ? r.productLabel : '';
+  document.getElementById('result-stock-note').textContent = !r ? ''
+    : key === preferredKey ? 'あなたの好みに合わせて選んだ一瓶'
+    : '第一候補はご案内をお休みしているため、同じ楽しみ方に合う別の一瓶をご紹介しています。';
+  shop.href = productLink(r ? r.shopUrl : 'https://mariposa8.theshop.jp/', key || 'store');
+  shop.textContent = r ? 'このはちみつを見る' : 'ストアの商品を見る';
+  document.getElementById('card-illustration').innerHTML = r ? cardSVG(key) : '';
 
   // Reset animations
   ['.result-top-label','.result-element-badge','.result-card-wrap',
@@ -1414,6 +1602,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Retry: result → start (different screens, goTo works normally)
   document.getElementById('btn-retry').addEventListener('click', () => {
+    state.busy = false;
     state.answers = {};
     state.result  = null;
     goTo('start');
