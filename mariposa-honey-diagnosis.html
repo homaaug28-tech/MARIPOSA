@@ -326,16 +326,24 @@
     .btn-retry {
       display: block;
       width: 100%;
-      padding: 0.9rem;
-      background: transparent;
-      border: none;
-      color: var(--text-lt);
+      margin-top: 1.5rem;
+      padding: 1.05rem 1.5rem;
+      background: #4B5638;
+      border: 1px solid #4B5638;
+      color: var(--cream);
       font-family: var(--serif-jp);
-      font-size: 0.76rem;
+      font-size: 0.88rem;
       font-weight: 400;
       letter-spacing: 0.12em;
+      line-height: 1.6;
       text-align: center;
       cursor: pointer;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .btn-retry:hover,
+    .btn-retry:active {
+      background: #3D472D;
+      border-color: #3D472D;
     }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
