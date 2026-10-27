@@ -867,6 +867,35 @@
     .loading-bee [fill="#C4801A"] { fill: #F7D897; opacity: 1; }
     .loading-bee [stroke="#70432B"] { stroke: #4A2A1F; opacity: 1; }
 
+
+    /* Product identity stays legible immediately before the purchase link. */
+    .result-product-summary {
+      padding: 1.5rem 1.25rem; margin-bottom: 1rem;
+      background: #FFF4DE; border: 1px solid #D5A575;
+      box-shadow: 0 8px 24px rgba(49,20,12,0.12); text-align: center;
+    }
+    .result-product-kicker {
+      color: #743C24; font-size: 0.85rem; font-weight: 400;
+      line-height: 1.8; letter-spacing: 0.08em; margin-bottom: 1rem;
+    }
+    .result-product-photo {
+      display: block; width: min(100%, 260px); height: auto; aspect-ratio: 1;
+      object-fit: contain; margin: 0 auto 1.25rem; background: #FFFFFF;
+      border: 1px solid #E2C5A2;
+    }
+    .result-product-name {
+      color: #43271E; font-size: 1.25rem; font-weight: 400; line-height: 1.8;
+      letter-spacing: 0.03em; overflow-wrap: anywhere; margin-bottom: 0.5rem;
+    }
+    .result-product-summary .result-product {
+      color: #593323; font-size: 1rem; font-weight: 400; line-height: 1.9;
+      overflow-wrap: anywhere; margin-bottom: 0.8rem;
+    }
+    .result-product-summary .cta-note {
+      color: #693D2B; font-size: 0.95rem; font-weight: 400;
+      letter-spacing: 0.03em; line-height: 1.9; margin-bottom: 0;
+    }
+
 </style>
 </head>
 <body>
@@ -1016,8 +1045,13 @@
         <div class="line-ornament"><span>✦</span></div>
       </div>
       <div class="result-cta-wrap">
-        <p class="result-product" id="result-product"></p>
-        <p class="cta-note" id="result-stock-note"></p>
+        <section class="result-product-summary" id="result-product-summary" aria-labelledby="result-product-name">
+          <p class="result-product-kicker">選ばれたはちみつ</p>
+          <img class="result-product-photo" id="result-product-photo" width="600" height="600" loading="lazy" decoding="async" alt="" hidden>
+          <h2 class="result-product-name" id="result-product-name"></h2>
+          <p class="result-product" id="result-product"></p>
+          <p class="cta-note" id="result-stock-note"></p>
+        </section>
         <a class="btn-cta" id="btn-shop" href="#" target="_blank" rel="noopener">商品を見る</a>
         <section class="result-comparisons" id="result-comparisons" aria-labelledby="comparison-title" hidden>
           <p class="comparison-eyebrow">Compare the Flavors</p>
@@ -1109,7 +1143,8 @@ const RESULTS = {
     "taste": "やさしくクリーミーな甘みと、すっきりした後味。",
     "elements": [
       "wind"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/f570ba57ca79d5c47590834713c07521.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "cinnamon": {
     "nameEn": "Cinnamon",
@@ -1125,7 +1160,8 @@ const RESULTS = {
     "taste": "シナモンの甘く華やかなスパイスの香り。",
     "elements": [
       "fire"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/1d7679023bbf4ea39b25ac6ca5b5dfe1.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "jarrah": {
     "nameEn": "Jarrah",
@@ -1141,7 +1177,8 @@ const RESULTS = {
     "taste": "黒糖やキャラメルを思わせる深いコク。",
     "elements": [
       "earth"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/1c02e35dcabe5548058258da5147ff1f.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "ginger_honey": {
     "nameEn": "Ginger Honey",
@@ -1158,7 +1195,8 @@ const RESULTS = {
     "elements": [
       "fire",
       "earth"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/79626c4c188bf010740f9e7da8b02d8f.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "lemon_myrtle": {
     "nameEn": "Lemon Myrtle",
@@ -1174,7 +1212,8 @@ const RESULTS = {
     "taste": "レモンを思わせる、爽やかなハーブの香り。",
     "elements": [
       "water"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/1168af0c60b3ec6c65b785ae62e128ec.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "native": {
     "nameEn": "Native Honey",
@@ -1190,7 +1229,8 @@ const RESULTS = {
     "taste": "野生の花々から届く、キャラメルを思わせる甘み。",
     "elements": [
       "earth"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/47b1c18f51fed5f2a42351401566cf3d.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "hakea": {
     "nameEn": "Hakea",
@@ -1206,7 +1246,8 @@ const RESULTS = {
     "taste": "バニラを思わせる香りと、濃厚なキャラメル風味。",
     "elements": [
       "water"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/125db330c9f4a09a84ec4559d11722e9.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "wandoo": {
     "nameEn": "Wandoo",
@@ -1222,7 +1263,8 @@ const RESULTS = {
     "taste": "キャラメルのような丸い甘みと、落ち着いた木の香り。",
     "elements": [
       "earth"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/17276741468c0fb04b8df061fd56d2a2.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "stingless": {
     "nameEn": "Stingless Honey",
@@ -1238,7 +1280,8 @@ const RESULTS = {
     "available": true,
     "elements": [
       "fire"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/b2bb75a89f5be3d0ad74d0dda1b35f19.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "wildflower": {
     "nameEn": "Wildflower",
@@ -1254,7 +1297,8 @@ const RESULTS = {
     "available": true,
     "elements": [
       "earth"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/55558b18bf5eda49bb6da196e6472e28.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "marri": {
     "nameEn": "Marri",
@@ -1270,7 +1314,8 @@ const RESULTS = {
     "available": true,
     "elements": [
       "earth"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/ae8defcc47b6042c59b5eebcb3e3fef0.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "forest": {
     "nameEn": "Forest Honey",
@@ -1284,7 +1329,8 @@ const RESULTS = {
     "shopUrl": "https://mariposa8.theshop.jp/items/121733077",
     "taste": "リンデンのすっきり感と、そばの花の深みを併せ持つ百花蜜。",
     "available": true,
-    "elements": []
+    "elements": [],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/e4a92123371a8ff4c8dc3014844a1333.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "dryandra": {
     "nameEn": "Dryandra",
@@ -1300,7 +1346,8 @@ const RESULTS = {
     "available": true,
     "elements": [
       "water"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/5d09afc577b61e707c384148ebeaaa6b.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "rose_banksia": {
     "nameEn": "Rose Banksia",
@@ -1316,7 +1363,8 @@ const RESULTS = {
     "available": true,
     "elements": [
       "earth"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/587cf91f42365b79776e9542d3a81741.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "blackbutt": {
     "nameEn": "Blackbutt",
@@ -1332,7 +1380,8 @@ const RESULTS = {
     "available": true,
     "elements": [
       "earth"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/c335224f5a56fe8946dfe76830875718.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "murchison": {
     "nameEn": "Murchison",
@@ -1348,7 +1397,8 @@ const RESULTS = {
     "available": true,
     "elements": [
       "earth"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/409a48b2485981827d1a48c12c046b50.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   },
   "beauty": {
     "nameEn": "Beauty Honey",
@@ -1364,7 +1414,8 @@ const RESULTS = {
     "taste": "華やかな花の香りと、すっきり軽やかな後味。",
     "elements": [
       "wind"
-    ]
+    ],
+    "imageUrl": "https://baseec-img-mng.akamaized.net/images/item/origin/a0e2fffeffab57790a47bdd005cb4c73.png?im=Resize%2Cwidth%3D300%2Ctype%3Dnormal&imformat=generic&q=90"
   }
 };
 const PROFILES = {
@@ -2194,10 +2245,22 @@ function renderResult(profileKey) {
   document.getElementById('result-serving').textContent = r
     ? 'あなたへの楽しみ方：' + servingFor(profileKey, key, state.use) : '';
   document.getElementById('result-serving').hidden = !r;
+  document.getElementById('result-product-summary').hidden = !r;
+  document.getElementById('result-product-name').textContent = r ? r.nameJp : '';
+  const photo = document.getElementById('result-product-photo');
+  photo.onerror = () => { photo.hidden = true; };
+  photo.hidden = !r?.imageUrl;
+  if (r?.imageUrl) {
+    photo.alt = r.nameJp + ' ' + r.productLabel + 'の商品写真';
+    photo.src = r.imageUrl;
+  } else {
+    photo.removeAttribute('src');
+    photo.alt = '';
+  }
   document.getElementById('result-product').textContent = r ? r.productLabel : '';
   document.getElementById('result-stock-note').textContent = !r ? ''
     : selection.substituted ? '本命のはちみつはご案内をお休みしているため、比較候補からご紹介しています。'
-    : 'お好みの風味に合わせて選んだ一瓶';
+    : r.taste;
   shop.href = productLink(r ? r.shopUrl : 'https://mariposa8.theshop.jp/', key || 'store');
   shop.textContent = r ? 'このはちみつを見る' : 'ストアの商品を見る';
   document.getElementById('card-illustration').innerHTML = r ? cardSVG(key) : '';
