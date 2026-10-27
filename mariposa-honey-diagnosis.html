@@ -1095,7 +1095,7 @@ const RESULTS = {
     "element": "風 — Wind",
     "elementKey": "wind",
     "illustrationKey": "karri",
-    "desc": "やさしい甘さと、すっきりとした後味。温かいお茶を片手に、静かな時間を楽しみたいあなたに。クリーミーな口あたりをゆっくり味わう一本です。",
+    "desc": "バターを思わせるクリーミーな口あたりと、まろやかな甘み。優しいコクを楽しみながら、後味はすっきり。毎日のトーストやお茶の時間に楽しみたい一本です。",
     "serving": "秋冬の楽しみ方：紅茶やハーブティーに添えて。香ばしいトーストにも。",
     "productLabel": "300g / Honey in the Garden",
     "shopUrl": "https://mariposa8.theshop.jp/items/156925156",
@@ -1343,23 +1343,40 @@ const RESULTS = {
     "elements": [
       "earth"
     ]
+  },
+  "beauty": {
+    "nameEn": "Beauty Honey",
+    "nameJp": "ビューティーハニー",
+    "element": "風 — Wind",
+    "elementKey": "wind",
+    "illustrationKey": "leatherwood",
+    "desc": "華やかな花の香りを楽しみながら、後味はすっきり。軽やかさも香りの豊かさも楽しみたいあなたに。タスマニア産レザーウッドのはちみつです。",
+    "serving": "秋冬の楽しみ方：紅茶やハーブティーのお供に。水や炭酸で割り、レモンを添えても。",
+    "productLabel": "250g / HOLISTETIQUE",
+    "shopUrl": "https://mariposa8.theshop.jp/items/153585727",
+    "available": true,
+    "taste": "華やかな花の香りと、すっきり軽やかな後味。",
+    "elements": [
+      "wind"
+    ]
   }
 };
 const PROFILES = {
-  "karri": {
-    "title": "軽やかで穏やかな甘み",
-    "primary": "karri",
-    "spoon": "クリーミーな口あたりと軽い後味を、少量ずつそのまま楽しんでください。",
-    "food": "香ばしいトーストに添えて、やさしい甘みを。",
-    "warm": "紅茶やハーブティーに添えて、穏やかな甘みを楽しんでください。",
+  "beauty": {
+    "title": "華やかさもある軽やかな甘み",
+    "primary": "beauty",
+    "spoon": "少量ずつそのまま味わい、華やかな花の香りと軽やかな後味を楽しんでください。",
+    "food": "ヨーグルトやトーストに少量を添えて、花の香りと甘みを楽しんでください。",
+    "warm": "紅茶やハーブティーに少量を添えて、香りの組み合わせを楽しんでください。",
+    "cold": "少量のぬるま湯で溶かしてから、水や炭酸に加えて。レモンを添えても楽しめます。",
     "comparisons": [
       {
         "key": "lemon_myrtle",
-        "reason": "ハーブの爽やかな香りを楽しむなら"
+        "reason": "花の香りよりも、ハーブの爽やかな香りなら"
       },
       {
         "key": "wandoo",
-        "reason": "軽やかさを残しつつ、キャラメルや木の香りを楽しむなら"
+        "reason": "キャラメルや木の香りを、軽やかな甘みと楽しむなら"
       }
     ]
   },
@@ -1398,6 +1415,23 @@ const PROFILES = {
       }
     ]
   },
+  "karri": {
+    "title": "優しくまろやかなコク",
+    "primary": "karri",
+    "spoon": "クリーミーな口あたりと軽い後味を、少量ずつそのまま楽しんでください。",
+    "food": "香ばしいトーストに添えて、やさしい甘みを。",
+    "warm": "紅茶やハーブティーに添えて、穏やかな甘みを楽しんでください。",
+    "comparisons": [
+      {
+        "key": "wildflower",
+        "reason": "花々の香りと甘みのバランスを楽しむなら"
+      },
+      {
+        "key": "murchison",
+        "reason": "さらに濃厚な、キャラメル系の満足感を楽しむなら"
+      }
+    ]
+  },
   "native": {
     "title": "日々楽しむキャラメルの甘み",
     "primary": "native",
@@ -1412,23 +1446,6 @@ const PROFILES = {
       {
         "key": "jarrah",
         "reason": "黒糖を思わせる、より深いコクを楽しむなら"
-      }
-    ]
-  },
-  "forest": {
-    "title": "花の香りも、濃厚さも",
-    "primary": "forest",
-    "spoon": "少量ずつそのまま味わい、花々の芳醇な香りとコクを楽しんでください。",
-    "food": "トーストに添えて。煮込み料理やドレッシングの隠し味にも使えます。",
-    "warm": "朝のコーヒーに少量加えて、深みのある香りを楽しんでください。",
-    "comparisons": [
-      {
-        "key": "wildflower",
-        "reason": "もう少し軽やかで、食卓に合わせやすい味なら"
-      },
-      {
-        "key": "murchison",
-        "reason": "さらに濃厚な、キャラメル系の満足感を楽しむなら"
       }
     ]
   },
@@ -1524,10 +1541,10 @@ const Q2_BRANCHES = {
     "choices": [
       {
         "id": "A",
-        "label": "Gentle",
-        "main": "やさしく穏やかな甘み",
-        "sub": "クリーミーな口あたりと、すっきりした後味",
-        "profile": "karri"
+        "label": "Floral & Light",
+        "main": "華やかさもある軽やかな甘み",
+        "sub": "華やかな花の香りと、すっきりした後味",
+        "profile": "beauty"
       },
       {
         "id": "B",
@@ -1540,7 +1557,7 @@ const Q2_BRANCHES = {
   },
   "B": {
     "theme": "花の香りとコク",
-    "text": "花々の風味に、\nどれくらいのコクを合わせたいですか？",
+    "text": "花々の風味に、\nどのようなコクを合わせたいですか？",
     "choices": [
       {
         "id": "A",
@@ -1551,10 +1568,10 @@ const Q2_BRANCHES = {
       },
       {
         "id": "B",
-        "label": "Full & Floral",
-        "main": "芳醇な香りと、しっかりしたコク",
-        "sub": "花々の香りも濃厚さも、じっくり楽しみたい",
-        "profile": "forest"
+        "label": "Gentle & Mellow",
+        "main": "優しくまろやかなコク",
+        "sub": "クリーミーな口あたりと、すっきりした後味",
+        "profile": "karri"
       }
     ]
   },
