@@ -1,0 +1,2268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>確認用 | MARIPOSA | 秋冬のはちみつ診断 — あなたに合うひとさじを</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="3つの質問で、秋冬の食卓に合うはちみつをご紹介。温かいお茶やトースト、焼き芋と楽しむ、あなた好みのひとさじを。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       CSS Custom Properties
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    :root {
+      --bg:        #F7E6CE;
+      --bg-card:   #FFF4DE;
+      --bg-dark:   #E6C29A;
+      --text:      #43271E;
+      --text-mid:  #693D2B;
+      --text-lt:   #774332;
+      --green:     #8C3020;
+      --green-mid: #6D2116;
+      --beige:     #93512F;
+      --honey:     #955414;
+      --sepia:     #7B3B29;
+      --cream:     #FFF2D8;
+      --line:      rgba(123,67,38,0.48);
+      --serif-jp:  'Noto Serif JP', serif;
+      --serif-en:  'Cormorant Garamond', serif;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       Reset & Base
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overscroll-behavior: none; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--serif-jp);
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    /* Grain texture */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+    }
+
+    /* Ambient glow */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 10%, rgba(172,101,45,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 90%, rgba(114,50,34,0.08) 0%, transparent 70%);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       Screen System
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    #app {
+      position: fixed; inset: 0;
+      overflow: hidden;
+    }
+
+    .screen {
+      position: absolute; inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: env(safe-area-inset-top, 0) 1.5rem env(safe-area-inset-bottom, 0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      will-change: opacity, transform;
+    }
+
+    .screen.is-active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .screen.fade-in  { animation: fadeSlideIn  0.55s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .screen.fade-out { animation: fadeSlideOut 0.38s cubic-bezier(0.55,0,1,0.45) forwards; }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeSlideOut {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-22px); }
+    }
+
+    /* Inner centering wrapper */
+    .screen-inner {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       START SCREEN
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    #screen-start {
+      justify-content: center;
+    }
+    #screen-start .screen-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .brand-mark {
+      font-family: var(--serif-en);
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.5em;
+      color: var(--sepia);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 2.6rem;
+      animation: revealUp 1s ease both 0.1s;
+    }
+
+    .start-emblem {
+      width: 108px;
+      height: 108px;
+      margin-bottom: 2.8rem;
+      animation: revealUp 1s ease both 0.3s, float 5s ease-in-out 1.5s infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-9px); }
+    }
+
+    .start-catch {
+      font-size: 1.02rem;
+      font-weight: 400;
+      line-height: 2.1;
+      letter-spacing: 0.06em;
+      text-align: center;
+      color: var(--text);
+      animation: revealUp 1s ease both 0.5s;
+    }
+
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin: 1.6rem 0;
+      animation: revealUp 1s ease both 0.6s;
+    }
+    .ornament-divider::before,
+    .ornament-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .ornament-divider span {
+      font-family: var(--serif-en);
+      font-size: 0.8rem;
+      color: var(--beige);
+      opacity: 0.8;
+    }
+
+    .start-sub {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: var(--text-lt);
+      text-align: center;
+      animation: revealUp 1s ease both 0.7s;
+    }
+
+    @keyframes revealUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       Buttons
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .btn-start {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 2.4rem auto 0;
+      padding: 1.1rem 2rem;
+      background: var(--green);
+      color: var(--cream);
+      border: none;
+      font-family: var(--serif-jp);
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      animation: revealUp 1s ease both 0.9s;
+    }
+    .btn-start::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(192,150,92,0);
+      transition: background 0.3s;
+    }
+    .btn-start:active::after { background: rgba(192,150,92,0.15); }
+
+    /* Choice buttons */
+    .choice-btn {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--line);
+      padding: 1.25rem 1.4rem 1.25rem 1.6rem;
+      cursor: pointer;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .choice-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 100%;
+      background: var(--green);
+      transition: width 0.35s cubic-bezier(0.22,1,0.36,1);
+      z-index: 0;
+    }
+
+    .choice-btn.chosen::before { width: 100%; }
+
+    .choice-inner {
+      position: relative;
+      z-index: 1;
+      transition: color 0.25s;
+    }
+
+    .choice-btn.chosen .choice-inner { color: var(--cream); }
+
+    .choice-label {
+      display: block;
+      font-family: var(--serif-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--beige);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      transition: color 0.25s;
+    }
+    .choice-btn.chosen .choice-label { color: var(--cream); }
+
+    .choice-main {
+      display: block;
+      font-size: 0.96rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+      transition: color 0.25s;
+    }
+    .choice-btn.chosen .choice-main { color: var(--cream); }
+
+    .choice-main, .choice-sub {
+      white-space: normal;
+      overflow-wrap: anywhere;
+      line-height: 1.8;
+    }
+
+    .choice-sub {
+      display: block;
+      font-size: 0.73rem;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--text-lt);
+      transition: color 0.25s;
+    }
+    .choice-btn.chosen .choice-sub { color: var(--cream); }
+
+    /* CTA button */
+    .btn-cta {
+      display: block;
+      width: 100%;
+      padding: 1.15rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--honey);
+      color: var(--honey);
+      font-family: var(--serif-jp);
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-cta:active { background: var(--honey); color: var(--cream); }
+
+    .btn-retry {
+      display: block;
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 1.05rem 1.5rem;
+      background: #4B5638;
+      border: 1px solid #4B5638;
+      color: var(--cream);
+      font-family: var(--serif-jp);
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      line-height: 1.6;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .btn-retry:hover,
+    .btn-retry:active {
+      background: #3D472D;
+      border-color: #3D472D;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       QUESTION SCREEN
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    #screen-q {
+      justify-content: flex-start;
+      min-height: 100%;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    #screen-q .screen-inner {
+      margin-block: auto;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2.4rem;
+    }
+    .prog-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      transition: background 0.4s, transform 0.4s;
+    }
+    .prog-dot.is-done    { background: var(--beige); }
+    .prog-dot.is-current { background: var(--green); transform: scale(1.4); }
+    .prog-line {
+      flex: 1;
+      max-width: 32px;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .q-number {
+      font-family: var(--serif-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: var(--sepia);
+      text-align: center;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+    }
+    .q-theme {
+      font-family: var(--serif-en);
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      color: var(--beige);
+      text-align: center;
+      margin-bottom: 1.1rem;
+      opacity: 0.85;
+    }
+    .q-divider {
+      width: 28px;
+      height: 1px;
+      background: var(--line);
+      margin: 0 auto 1.5rem;
+    }
+    .q-text {
+      font-size: 0.98rem;
+      font-weight: 400;
+      line-height: 2.0;
+      letter-spacing: 0.06em;
+      text-align: center;
+      color: var(--text);
+      margin-bottom: 2.2rem;
+      white-space: pre-line;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       LOADING SCREEN
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    #screen-loading {
+      justify-content: center;
+      background: var(--green);
+    }
+    #screen-loading::before {
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 20%, rgba(172,101,45,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 70% 80%, rgba(0,0,0,0.2) 0%, transparent 70%);
+    }
+    #screen-loading .screen-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .loading-bee {
+      width: 90px;
+      height: 90px;
+      margin-bottom: 2.5rem;
+    }
+
+    .loading-text {
+      font-size: 0.88rem;
+      font-weight: 400;
+      line-height: 2.1;
+      letter-spacing: 0.1em;
+      color: var(--cream);
+      text-align: center;
+    }
+
+    .loading-dots {
+      display: flex;
+      gap: 0.45rem;
+      justify-content: center;
+      margin-top: 1.6rem;
+    }
+    .loading-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(192,150,92,0.7);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    .loading-dot:nth-child(2) { animation-delay: 0.22s; }
+    .loading-dot:nth-child(3) { animation-delay: 0.44s; }
+
+    @keyframes pulse {
+      0%,100% { opacity: 0.3; transform: scale(0.75); }
+      50%      { opacity: 1;   transform: scale(1.2); }
+    }
+
+    /* Bee animation */
+    .bee-body { animation: beeDrift 3.5s ease-in-out infinite; transform-origin: center; }
+    @keyframes beeDrift {
+      0%,100% { transform: translateY(0) rotate(-2deg); }
+      30%     { transform: translateY(-12px) rotate(4deg); }
+      65%     { transform: translateY(-5px) rotate(-3deg); }
+    }
+    /* Translate each wing root to the shoulder, then animate around local (0, 0). */
+    .bee-wing-l, .bee-wing-r { transform-box: view-box; transform-origin: 0px 0px; }
+    .bee-wing-l { animation: wingL 0.18s ease-in-out infinite alternate; }
+    .bee-wing-r { animation: wingR 0.18s ease-in-out infinite alternate; }
+    @keyframes wingL {
+      from { transform: rotate(-8deg) scaleY(1); }
+      to   { transform: rotate(12deg) scaleY(0.65); }
+    }
+    @keyframes wingR {
+      from { transform: rotate(8deg) scaleY(1); }
+      to   { transform: rotate(-12deg) scaleY(0.65); }
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       RESULT SCREEN
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    #screen-result {
+      justify-content: flex-start;
+      padding-top: 3rem;
+      padding-bottom: 5rem;
+    }
+    #screen-result .screen-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .result-top-label {
+      font-family: var(--serif-en);
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      color: var(--sepia);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: revealUp 0.8s ease 0.1s forwards;
+    }
+    .result-element-badge {
+      font-family: var(--serif-en);
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      color: var(--green);
+      text-align: center;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: revealUp 0.8s ease 0.25s forwards;
+    }
+
+    /* Oracle card */
+    .result-card-wrap {
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto 2rem;
+      opacity: 0;
+      animation: revealUp 0.9s ease 0.4s forwards;
+    }
+
+    .result-card {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--bg-card);
+      position: relative;
+    }
+
+    /* Corner ornaments */
+    .result-card::before,
+    .result-card::after,
+    .result-card .card-corner-br,
+    .result-card .card-corner-tl2 { content: ''; position: absolute; width: 18px; height: 18px; }
+    .result-card::before  { top: 6px; left: 6px; border-top: 1px solid var(--beige); border-left: 1px solid var(--beige); }
+    .result-card::after   { top: 6px; right: 6px; border-top: 1px solid var(--beige); border-right: 1px solid var(--beige); }
+
+    .card-corner-br,
+    .card-corner-bl { position: absolute; width: 18px; height: 18px; }
+    .card-corner-br { bottom: 6px; right: 6px; border-bottom: 1px solid var(--beige); border-right: 1px solid var(--beige); }
+    .card-corner-bl { bottom: 6px; left: 6px; border-bottom: 1px solid var(--beige); border-left: 1px solid var(--beige); }
+
+    .card-illustration {
+      width: 100%;
+      display: block;
+      line-height: 0;
+    }
+    .card-illustration svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card-name-area {
+      padding: 1.3rem 1.5rem 1.4rem;
+      text-align: center;
+      border-top: 1px solid var(--bg-dark);
+    }
+    .honey-name-en {
+      display: block;
+      font-family: var(--serif-en);
+      font-size: 1.55rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+    .honey-name-jp {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      color: var(--text-lt);
+    }
+
+    /* Description */
+    .result-desc-wrap {
+      width: 100%;
+      padding: 0 0.2rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: revealUp 0.9s ease 0.65s forwards;
+    }
+    .result-desc {
+      font-size: 0.88rem;
+      font-weight: 400;
+      line-height: 2.1;
+      letter-spacing: 0.06em;
+      text-align: center;
+      color: var(--text-mid);
+    }
+
+    /* CTA area */
+    .result-cta-wrap {
+      width: 100%;
+      opacity: 0;
+      animation: revealUp 0.9s ease 0.85s forwards;
+    }
+    .cta-note {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--text-lt);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       Misc shared
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .line-ornament {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 1.8rem 0;
+    }
+    .line-ornament::before,
+    .line-ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .line-ornament span {
+      font-family: var(--serif-en);
+      font-size: 0.65rem;
+      color: var(--beige);
+      letter-spacing: 0.2em;
+      opacity: 0.7;
+    }
+
+    /* Scroll fix for result page */
+    #screen-result { overflow-y: auto; }
+
+
+    [hidden] { display: none !important; }
+    .start-sub { line-height: 2; letter-spacing: 0.1em; }
+    .season-note, .result-help {
+      font-size: 0.68rem; line-height: 1.9; text-align: center;
+      color: var(--text-mid); margin-top: 1.2rem;
+    }
+    .result-serving {
+      margin-top: 1.2rem; padding: 1rem;
+      background: var(--bg-card); border: 1px solid var(--line);
+      font-size: 0.8rem; font-weight: 400; line-height: 2; color: var(--text-mid);
+    }
+    .result-product {
+      font-size: 0.75rem; line-height: 1.8; color: var(--text-mid);
+      text-align: center; margin-bottom: 0.6rem;
+    }
+    .cta-note { line-height: 1.9; color: var(--text-mid); }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--honey); outline-offset: 4px; }
+    #screen-start { justify-content: flex-start; }
+    #screen-start .screen-inner { margin-block: auto; padding-block: 2rem; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; }
+    }
+  
+    /* 秋冬の配色：栗色の操作部、琥珀色の背景、濃い茶色の本文 */
+    .choice-label, .q-number, .result-top-label { font-size: 0.7rem; }
+    .q-theme { font-size: 0.75rem; opacity: 1; }
+    .honey-name-jp, .cta-note, .season-note, .result-help { font-size: 0.75rem; }
+    .choice-btn { background: rgba(255,248,235,0.55); }
+    .choice-btn:hover { border-color: var(--beige); }
+    .btn-start:hover { background: var(--green-mid); }
+    .btn-cta { background: var(--green); border-color: var(--green); color: var(--cream); }
+    .btn-cta:hover, .btn-cta:active { background: var(--green-mid); border-color: var(--green-mid); color: var(--cream); }
+    .flavor-map {
+      width: 100%; margin-top: 2rem; padding-top: 1.8rem;
+      border-top: 1px solid var(--line);
+    }
+    .flavor-map-eyebrow {
+      color: var(--sepia); text-align: center; text-transform: uppercase;
+      font-family: var(--serif-en); font-size: 0.7rem; letter-spacing: 0.2em;
+    }
+    .flavor-map h2 {
+      margin: 0.5rem 0 0.8rem; text-align: center;
+      font-size: 1rem; font-weight: 400; color: var(--text);
+    }
+    .flavor-map-intro, .flavor-map figcaption {
+      font-size: 0.75rem; line-height: 1.9; color: var(--text-mid);
+    }
+    .flavor-map-intro { text-align: center; margin-bottom: 1rem; }
+    .flavor-map figure { margin: 0; }
+    .flavor-map-open { display: block; width: 100%; padding: 0; border: 1px solid var(--line); color: var(--text); font-family: inherit; cursor: zoom-in; background: var(--bg-card); }
+    .flavor-map img { display: block; width: 100%; height: auto; }
+    .flavor-map-zoom { display: block; text-align: center; padding: 0.7rem; font-size: 0.8rem; font-weight: 400; }
+    .flavor-map figcaption { margin-top: 0.7rem; }
+
+    .map-dialog {
+      position: fixed; inset: 0; margin: 0; padding: 0; border: 0;
+      width: 100%; max-width: none; height: 100%; height: 100dvh; max-height: none;
+      background: var(--bg); color: var(--text); overflow: hidden;
+    }
+    .map-dialog::backdrop { background: rgba(56,32,20,0.8); }
+    .map-dialog-panel {
+      height: 100%; display: flex; flex-direction: column;
+      padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
+    }
+    .map-dialog-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.6rem;
+      padding: 0.8rem 1rem; border-bottom: 1px solid var(--line); flex-shrink: 0;
+    }
+    .map-dialog-header h2 { font-size: 0.95rem; font-weight: 400; line-height: 1.6; }
+    .map-dialog button {
+      font-family: inherit; font-size: 0.85rem; color: var(--text);
+      background: var(--bg-card); border: 1px solid var(--line);
+      min-width: 44px; min-height: 44px; padding: 0.5rem 0.7rem; cursor: pointer;
+    }
+    .map-dialog button:disabled { opacity: 0.45; cursor: default; }
+    .map-dialog .map-dialog-close { background: var(--green); color: var(--cream); border-color: var(--green); white-space: nowrap; }
+    .map-dialog-tools { display: flex; justify-content: center; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; flex-shrink: 0; }
+    #map-zoom-level { min-width: 3.5rem; text-align: center; font-size: 0.85rem; }
+    #map-dialog-help { padding: 0 1rem 0.6rem; color: var(--text-mid); font-size: 0.75rem; line-height: 1.7; text-align: center; flex-shrink: 0; }
+    .map-dialog-viewport { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y pinch-zoom; background: var(--bg-dark); }
+    .map-dialog-stage { min-width: 100%; min-height: 100%; display: grid; place-items: center; padding: 16px; }
+    #map-dialog-image { display: block; max-width: none; height: auto; user-select: none; -webkit-user-drag: none; }
+
+
+    .result-primary-label {
+      font-size: 0.85rem; line-height: 1.8; color: var(--text-mid);
+      text-align: center; margin-bottom: 0.6rem;
+    }
+    .result-element-badge { font-family: var(--serif-jp); letter-spacing: 0.06em; line-height: 1.9; }
+    .result-comparisons { width: 100%; margin-top: 2rem; padding-top: 1.8rem; border-top: 1px solid var(--line); }
+    .comparison-eyebrow {
+      font-family: var(--serif-en); text-transform: uppercase; letter-spacing: 0.2em;
+      font-size: 0.7rem; color: var(--sepia); text-align: center;
+    }
+    .result-comparisons h2 { margin: 0.6rem 0; font-size: 1rem; line-height: 1.8; font-weight: 400; text-align: center; color: var(--text); }
+    .comparison-intro { margin-bottom: 1.2rem; font-size: 0.78rem; line-height: 1.9; text-align: center; color: var(--text-mid); }
+    .comparison-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+    .comparison-card { padding: 1.25rem; background: var(--bg-card); border: 1px solid var(--line); min-width: 0; }
+    .comparison-reason { color: var(--sepia); font-size: 0.8rem; line-height: 1.9; padding-bottom: 0.7rem; margin-bottom: 0.9rem; border-bottom: 1px solid var(--line); }
+    .comparison-card h3 { color: var(--text); font-size: 1.05rem; font-weight: 400; line-height: 1.7; overflow-wrap: anywhere; }
+    .comparison-name-en { font-family: var(--serif-en); color: var(--text-mid); font-size: 0.95rem; letter-spacing: 0.04em; margin: 0.1rem 0 0.8rem; }
+    .comparison-taste { color: var(--text-mid); font-size: 0.82rem; line-height: 1.9; }
+    .comparison-product { color: var(--text-mid); font-size: 0.74rem; line-height: 1.8; margin: 0.8rem 0; }
+    .btn-compare { display: block; padding: 0.85rem 0.65rem; border: 1px solid var(--green); color: var(--green); text-align: center; text-decoration: none; font-size: 0.83rem; line-height: 1.6; }
+    .btn-compare:hover, .btn-compare:active { background: var(--green); color: var(--cream); }
+
+
+    /* Palette preview: ochre, terracotta, rust, cocoa and warm ivory. */
+    .preview-banner {
+      position: fixed; inset: 0 0 auto; z-index: 10000; padding: 0.45rem 0.75rem;
+      background: #FFF2D8; color: #6D2116; border-bottom: 1px solid #93512F;
+      text-align: center; font-size: 0.7rem; line-height: 1.5; letter-spacing: 0.05em;
+    }
+    body::after { opacity: 0.045; }
+    body::before {
+      background: radial-gradient(ellipse 75% 40% at 5% 0%, rgba(197,139,45,0.16), transparent 70%),
+                  radial-gradient(ellipse 55% 50% at 100% 100%, rgba(167,67,47,0.12), transparent 70%);
+    }
+    #screen-start { background: #7B2B20; color: var(--cream); isolation: isolate; }
+    #screen-start::before {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201000%201400%22%20preserveAspectRatio%3D%22none%22%3E%0A%3Cpath%20d%3D%22M0%200H1000V210C800%2080%20610%2070%20420%20180S110%20210%200%20315Z%22%20fill%3D%22%23C58B2D%22%20opacity%3D%22.52%22%2F%3E%0A%3Cpath%20d%3D%22M0%200H1000V65C850%2010%20750%2015%20630%2090S205%20165%200%20245Z%22%20fill%3D%22%23DDB184%22%20opacity%3D%22.28%22%2F%3E%0A%3Cpath%20d%3D%22M0%20270C215%20115%20380%20245%20565%20230S810%2095%201000%20200V310C805%20230%20630%20390%20460%20345S210%20230%200%20370Z%22%20fill%3D%22%23AF5C2A%22%20opacity%3D%22.55%22%2F%3E%0A%3Cpath%20d%3D%22M0%201030C210%20870%20365%20805%20530%20880S825%201110%201000%20930V1400H0Z%22%20fill%3D%22%23BA6038%22%20opacity%3D%22.7%22%2F%3E%0A%3Cpath%20d%3D%22M0%201190C200%201070%20355%201045%20530%201180S825%201200%201000%201010V1400H0Z%22%20fill%3D%22%234A2A1F%22%20opacity%3D%22.85%22%2F%3E%0A%3C%2Fsvg%3E"); background-size: 100% 100%; opacity: 0.82;
+    }
+    #screen-start .screen-inner { padding-top: 3rem; padding-bottom: 2.5rem; }
+    #screen-start .brand-mark, #screen-start .start-catch,
+    #screen-start .start-sub, #screen-start .season-note { color: #FFF2D8; }
+    #screen-start .start-catch { font-size: 1.28rem; line-height: 2; letter-spacing: 0.08em; }
+    #screen-start .brand-mark { letter-spacing: 0.45em; }
+    #screen-start .ornament-divider span { color: #F5CB77; opacity: 1; }
+    #screen-start .start-emblem [fill="#A66B39"] { fill: #F5CB77; }
+    #screen-start .start-emblem [fill="#70432B"] { fill: #FFF2D8; }
+    #screen-start .start-emblem [stroke="#A66B39"],
+    #screen-start .start-emblem [stroke="#70432B"] { stroke: #F5CB77; }
+    #screen-start .btn-start { background: #FFF2D8; color: #742819; border: 1px solid #FFF2D8; }
+    #screen-start .btn-start:hover, #screen-start .btn-start:active { background: #F3CD83; border-color: #F3CD83; }
+    #screen-q { padding-top: 3.5rem; background: linear-gradient(180deg, #EAC79A 0%, #F7E6CE 32%, #F7E6CE 100%); }
+    .choice-btn { background: #FFF4DE; border-color: #AC7750; box-shadow: 0 3px 0 rgba(123,59,41,0.07); }
+    .choice-label { color: #864A1F; }
+    .choice-btn.chosen .choice-label, .choice-btn.chosen .choice-sub { color: #FFF2D8; }
+    .q-number, .q-theme { color: #743C24; }
+    #screen-result { padding-top: 4rem; }
+    .result-card { border-color: #965333; box-shadow: 0 8px 24px rgba(92,42,25,0.08); }
+    .card-name-area { background: #FFF4DE; }
+    .result-serving { background: #F2D3A8; border-color: #B27B4D; }
+    .comparison-card { background: #FFF4DE; border-color: #A76A43; border-top: 4px solid #B76B31; }
+    .comparison-reason { color: #793D25; border-bottom-color: #CDA77F; }
+    .btn-compare { background: #F0C77D; color: #5B2F21; border-color: #9B6030; }
+    .btn-compare:hover, .btn-compare:active { background: #6D2116; color: #FFF2D8; border-color: #6D2116; }
+    .btn-retry { background: #4A2A1F; border-color: #4A2A1F; color: #FFF2D8; }
+    .btn-retry:hover, .btn-retry:active { background: #321C15; border-color: #321C15; }
+    #screen-loading { background: #6D2116; }
+    .loading-dot { background: #F2C576; }
+    .product-element {
+      display: inline-block; padding: 0.35rem 0.7rem; margin-top: 0.75rem;
+      font-family: var(--serif-jp); font-size: 0.77rem; font-weight: 400;
+      letter-spacing: 0.05em; line-height: 1.7; border: 1px solid currentColor;
+      color: #4D2F1F; background: #DCC0A0;
+    }
+    .product-element[data-element="wind"] { color: #624010; background: #F4D18D; }
+    .product-element[data-element="fire"] { color: #6E2418; background: #F1B29A; }
+    .product-element[data-element="earth"] { color: #4D2F1F; background: #DCC0A0; }
+    .product-element[data-element="water"] { color: #673722; background: #F0D2B7; }
+    .comparison-elements { margin-top: 0; margin-bottom: 0.8rem; }
+
+</style>
+</head>
+<body>
+<div class="preview-banner" role="note">デザイン確認用・本番には未反映</div>
+<div id="app">
+
+  <!-- ═══════════════════════════════
+       START SCREEN
+  ═══════════════════════════════ -->
+  <div id="screen-start" class="screen is-active">
+    <div class="screen-inner">
+      <p class="brand-mark">Mariposa Honey</p>
+
+      <!-- Animated Emblem SVG -->
+      <svg class="start-emblem" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <defs>
+          <radialGradient id="emblem-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F5EFE2"/>
+            <stop offset="100%" stop-color="#C0965C" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <!-- Outer ring -->
+        <circle cx="54" cy="54" r="50" stroke="#A66B39" stroke-width="0.6" opacity="0.5"/>
+        <circle cx="54" cy="54" r="44" stroke="#A66B39" stroke-width="0.3" opacity="0.35"/>
+        <!-- Honeycomb hex -->
+        <polygon points="54,22 68,30 68,46 54,54 40,46 40,30" stroke="#70432B" stroke-width="0.8" opacity="0.5"/>
+        <polygon points="54,54 68,62 68,78 54,86 40,78 40,62" stroke="#70432B" stroke-width="0.8" opacity="0.5"/>
+        <polygon points="22,38 36,30 36,46 22,54 8,46 8,30" stroke="#A66B39" stroke-width="0.5" opacity="0.25" transform="translate(14,0)"/>
+        <polygon points="70,38 84,30 84,46 70,54 56,46 56,30" stroke="#A66B39" stroke-width="0.5" opacity="0.25" transform="translate(0,0)"/>
+        <!-- Bee silhouette -->
+        <!-- Body -->
+        <ellipse cx="54" cy="48" rx="8" ry="12" fill="#A66B39" opacity="0.7"/>
+        <path d="M46,48 Q54,58 62,48" stroke="#70432B" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M46,52 Q54,62 62,52" stroke="#70432B" stroke-width="0.8" fill="none" opacity="0.5"/>
+        <!-- Wings -->
+        <ellipse cx="42" cy="43" rx="10" ry="6" fill="#A66B39" opacity="0.25" transform="rotate(-20 42 43)"/>
+        <ellipse cx="66" cy="43" rx="10" ry="6" fill="#A66B39" opacity="0.25" transform="rotate(20 66 43)"/>
+        <!-- Head -->
+        <circle cx="54" cy="36" r="5.5" fill="#70432B" opacity="0.65"/>
+        <!-- Antennae -->
+        <path d="M51,32 Q47,25 43,22" stroke="#70432B" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M57,32 Q61,25 65,22" stroke="#70432B" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <circle cx="43" cy="22" r="1.5" fill="#A66B39" opacity="0.7"/>
+        <circle cx="65" cy="22" r="1.5" fill="#A66B39" opacity="0.7"/>
+        <!-- Honey drop below -->
+        <path d="M54,70 Q60,80 54,88 Q48,80 54,70" fill="#A66B39" opacity="0.55"/>
+      </svg>
+
+      <p class="start-catch">秋冬のあなたに<br>ぴったりの一匙を。</p>
+
+      <div class="ornament-divider"><span>✦</span></div>
+
+      <p class="start-sub">温かいお茶と、季節のおやつに。<br>秋冬のはちみつ診断</p>
+
+      <button class="btn-start" id="btn-start">診断をはじめる</button>
+      <p class="season-note">3つの質問で、好みのはちみつを。</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       QUESTION SCREEN (dynamic)
+  ═══════════════════════════════ -->
+  <div id="screen-q" class="screen">
+    <div class="screen-inner">
+      <!-- Progress -->
+      <div class="progress-wrap" id="progress-dots"></div>
+      <!-- Question content injected by JS -->
+      <div id="q-content"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       LOADING SCREEN
+  ═══════════════════════════════ -->
+  <div id="screen-loading" class="screen">
+    <div class="screen-inner">
+      <!-- Animated Bee -->
+      <svg class="loading-bee" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <g class="bee-body">
+          <!-- Wings -->
+          <g class="bee-wing-anchor" transform="translate(38 52)">
+            <g class="bee-wing-l">
+              <path d="M0,0 C-8,-16 -25,-24 -28,-13 C-31,-2 -13,5 0,0Z" fill="rgba(255,248,235,0.65)" stroke="rgba(255,248,235,0.8)" stroke-width="0.7"/>
+            </g>
+          </g>
+          <g class="bee-wing-anchor" transform="translate(52 52)">
+            <g class="bee-wing-r">
+              <path d="M0,0 C8,-16 25,-24 28,-13 C31,-2 13,5 0,0Z" fill="rgba(255,248,235,0.65)" stroke="rgba(255,248,235,0.8)" stroke-width="0.7"/>
+            </g>
+          </g>
+          <!-- Body segments -->
+          <ellipse cx="45" cy="55" rx="13" ry="18" fill="#A66B39" opacity="0.85"/>
+          <path d="M32,50 Q45,48 58,50" stroke="#70432B" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <path d="M32,55 Q45,53 58,55" stroke="#70432B" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <path d="M33,60 Q45,58 57,60" stroke="#70432B" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <!-- Stinger -->
+          <path d="M45,73 L45,80" stroke="#70432B" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          <!-- Head -->
+          <circle cx="45" cy="34" r="9" fill="#C4801A" opacity="0.9"/>
+          <!-- Eyes -->
+          <circle cx="41" cy="32" r="2" fill="#261508" opacity="0.7"/>
+          <circle cx="49" cy="32" r="2" fill="#261508" opacity="0.7"/>
+          <!-- Antennae -->
+          <path d="M41,26 Q36,17 30,14" stroke="rgba(250,246,238,0.7)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <path d="M49,26 Q54,17 60,14" stroke="rgba(250,246,238,0.7)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <circle cx="30" cy="14" r="2" fill="rgba(250,246,238,0.7)"/>
+          <circle cx="60" cy="14" r="2" fill="rgba(250,246,238,0.7)"/>
+          <!-- Legs -->
+          <path d="M36,56 Q30,60 26,65" stroke="rgba(250,246,238,0.5)" stroke-width="1" stroke-linecap="round" fill="none"/>
+          <path d="M54,56 Q60,60 64,65" stroke="rgba(250,246,238,0.5)" stroke-width="1" stroke-linecap="round" fill="none"/>
+          <path d="M34,62 Q28,66 26,72" stroke="rgba(250,246,238,0.4)" stroke-width="1" stroke-linecap="round" fill="none"/>
+          <path d="M56,62 Q62,66 64,72" stroke="rgba(250,246,238,0.4)" stroke-width="1" stroke-linecap="round" fill="none"/>
+        </g>
+      </svg>
+      <p class="loading-text">ミツバチがあなたのための<br>蜜を探しています...</p>
+      <div class="loading-dots">
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       RESULT SCREEN (dynamic)
+  ═══════════════════════════════ -->
+  <div id="screen-result" class="screen">
+    <div class="screen-inner">
+      <p class="result-top-label">Your First Choice</p>
+      <p class="result-primary-label" id="result-primary-label">あなたに一番おすすめのはちみつ</p>
+      <p class="result-element-badge" id="result-element"></p>
+      <div class="result-card-wrap">
+        <div class="result-card" id="result-card">
+          <div class="card-illustration" id="card-illustration"></div>
+          <div class="card-corner-br"></div>
+          <div class="card-corner-bl"></div>
+          <div class="card-name-area">
+            <span class="honey-name-en" id="result-name-en"></span>
+            <span class="honey-name-jp" id="result-name-jp"></span>
+            <p class="product-element" id="result-product-element" hidden></p>
+          </div>
+        </div>
+      </div>
+      <div class="result-desc-wrap">
+        <div class="line-ornament"><span>✦</span></div>
+        <p class="result-desc" id="result-desc"></p>
+        <p class="result-serving" id="result-serving"></p>
+        <div class="line-ornament"><span>✦</span></div>
+      </div>
+      <div class="result-cta-wrap">
+        <p class="result-product" id="result-product"></p>
+        <p class="cta-note" id="result-stock-note"></p>
+        <a class="btn-cta" id="btn-shop" href="#" target="_blank" rel="noopener">商品を見る</a>
+        <section class="result-comparisons" id="result-comparisons" aria-labelledby="comparison-title" hidden>
+          <p class="comparison-eyebrow">Compare the Flavors</p>
+          <h2 id="comparison-title">味わいの違いで、こちらのはちみつも</h2>
+          <p class="comparison-intro" id="comparison-intro"></p>
+          <div class="comparison-list" id="comparison-list"></div>
+        </section>
+        <section class="flavor-map" aria-labelledby="flavor-map-title">
+          <p class="flavor-map-eyebrow">Honey Flavor Map</p>
+          <h2 id="flavor-map-title">味わいマップで比べる</h2>
+          <p class="flavor-map-intro">香りと甘みの違いを、ほかのはちみつと見比べてみてください。</p>
+          <figure>
+            <button type="button" class="flavor-map-open" id="flavor-map-open" aria-haspopup="dialog" aria-controls="flavor-map-dialog" aria-label="はちみつ味わいマップをこの画面で拡大する">
+              <img src="images/honey-flavor-map.jpeg" width="1080" height="1080" loading="lazy" decoding="async" alt="はちみつの味わいマップ。縦軸は上がすっきり・ライト、下が濃厚・リッチ。横軸は左がフルーティ・フローラル、右がキャラメル・ウッド。">
+              <span class="flavor-map-zoom">タップして拡大する ＋</span>
+            </button>
+            <figcaption>味わいの位置は目安です。掲載商品の在庫は商品ページでご確認ください。</figcaption>
+          </figure>
+        </section>
+        <button class="btn-retry" id="btn-retry">もう一度診断する</button>
+        <p class="result-help">在庫・価格は商品ページでご確認ください。<br>はちみつは1歳未満の乳児には与えないでください。</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<dialog id="flavor-map-dialog" class="map-dialog" aria-labelledby="map-dialog-title" aria-describedby="map-dialog-help">
+  <div class="map-dialog-panel">
+    <header class="map-dialog-header">
+      <h2 id="map-dialog-title">はちみつ味わいマップ</h2>
+      <button type="button" id="map-dialog-close" class="map-dialog-close" autofocus>閉じる ×</button>
+    </header>
+    <div class="map-dialog-tools" aria-label="画像の拡大・縮小">
+      <button type="button" id="map-zoom-out" aria-label="縮小する">−</button>
+      <output id="map-zoom-level" aria-live="polite">200%</output>
+      <button type="button" id="map-zoom-in" aria-label="拡大する">＋</button>
+      <button type="button" id="map-zoom-fit">全体表示</button>
+    </div>
+    <p id="map-dialog-help">指で動かして見たい場所を確認できます。</p>
+    <div class="map-dialog-viewport" id="map-dialog-viewport" tabindex="0" aria-label="拡大した味わいマップ。上下左右にスクロールできます。">
+      <div class="map-dialog-stage" id="map-dialog-stage">
+        <img id="map-dialog-image" src="images/honey-flavor-map.jpeg" width="1080" height="1080" alt="はちみつの味わいマップ。上はすっきり・ライト、下は濃厚・リッチ。左はフルーティ・フローラル、右はキャラメル・ウッド。" decoding="async">
+      </div>
+    </div>
+  </div>
+</dialog>
+
+
+<script>
+/* ═══════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════ */
+
+// 公開商品ページの購入表示を確認: 2026-10-27 (JST)
+// BASEの在庫とは自動連携していません。品切れ時は available を false にします。
+// RESULTS は16商品、PROFILES は本命8タイプと比較候補の組み合わせです。
+// エレメントは商品説明と公式カテゴリを照合 (2026-10-27)。フォレストは分類未確認のため非表示。
+const ELEMENTS = {
+  "wind": {
+    "jp": "風",
+    "en": "Wind"
+  },
+  "fire": {
+    "jp": "火",
+    "en": "Fire"
+  },
+  "earth": {
+    "jp": "土",
+    "en": "Earth"
+  },
+  "water": {
+    "jp": "水",
+    "en": "Water"
+  }
+};
+const RESULTS = {
+  "karri": {
+    "nameEn": "Karri",
+    "nameJp": "カリ",
+    "element": "風 — Wind",
+    "elementKey": "wind",
+    "illustrationKey": "karri",
+    "desc": "やさしい甘さと、すっきりとした後味。温かいお茶を片手に、静かな時間を楽しみたいあなたに。クリーミーな口あたりをゆっくり味わう一本です。",
+    "serving": "秋冬の楽しみ方：紅茶やハーブティーに添えて。香ばしいトーストにも。",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/156925156",
+    "available": true,
+    "taste": "やさしくクリーミーな甘みと、すっきりした後味。",
+    "elements": [
+      "wind"
+    ]
+  },
+  "cinnamon": {
+    "nameEn": "Cinnamon",
+    "nameJp": "シナモン",
+    "element": "火 — Fire",
+    "elementKey": "fire",
+    "illustrationKey": "scottish_heather",
+    "desc": "シナモンの甘く華やかな香りが好きなあなたに。いつものコーヒーや朝食に少し添えるだけで、秋冬らしいスパイスの風味を楽しめます。",
+    "serving": "秋冬の楽しみ方：朝のコーヒーやミルクティーに少量を。香りを確かめながらどうぞ。",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/68103953",
+    "available": true,
+    "taste": "シナモンの甘く華やかなスパイスの香り。",
+    "elements": [
+      "fire"
+    ]
+  },
+  "jarrah": {
+    "nameEn": "Jarrah",
+    "nameJp": "ジャラ",
+    "element": "土 — Earth",
+    "elementKey": "earth",
+    "illustrationKey": "jarrah",
+    "desc": "黒糖やナッツを思わせる、深くまろやかな甘み。しっかりとしたコクを楽しみたいあなたに。なめらかな口あたりで、朝の食卓にもよく合います。",
+    "serving": "秋冬の楽しみ方：バタートーストやチーズに。そのまま少量ずつ味わっても。",
+    "productLabel": "380g / ELIXIR",
+    "shopUrl": "https://mariposa8.theshop.jp/items/80334356",
+    "available": true,
+    "taste": "黒糖やキャラメルを思わせる深いコク。",
+    "elements": [
+      "earth"
+    ]
+  },
+  "ginger_honey": {
+    "nameEn": "Ginger Honey",
+    "nameJp": "ジンジャーハニー",
+    "element": "火・土 — Fire / Earth",
+    "elementKey": "fire",
+    "illustrationKey": "ginger_honey",
+    "desc": "生姜のきりっとした辛みを楽しみたいあなたに。マレーシアのベントンジンジャーとはちみつを合わせた、香り豊かな一本。肌寒い朝の飲み物におすすめです。",
+    "serving": "秋冬の楽しみ方：少量をぬるま湯や紅茶に溶かして。辛みがあるので少しずつ。",
+    "productLabel": "250g / 13Honey",
+    "shopUrl": "https://mariposa8.theshop.jp/items/104752871",
+    "available": true,
+    "taste": "ベントンジンジャーのきりっとした辛み。",
+    "elements": [
+      "fire",
+      "earth"
+    ]
+  },
+  "lemon_myrtle": {
+    "nameEn": "Lemon Myrtle",
+    "nameJp": "レモンマートル",
+    "element": "水 — Water",
+    "elementKey": "water",
+    "illustrationKey": "lemon_myrtle",
+    "desc": "レモンを思わせるハーブの香りと、さっぱりとした甘み。夜のひと休みにも軽やかな風味を選びたいあなたに。温かいお茶との組み合わせを楽しめます。",
+    "serving": "秋冬の楽しみ方：紅茶やハーブティーに少量を加えて、爽やかな香りを。",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/68104030",
+    "available": true,
+    "taste": "レモンを思わせる、爽やかなハーブの香り。",
+    "elements": [
+      "water"
+    ]
+  },
+  "native": {
+    "nameEn": "Native Honey",
+    "nameJp": "ネイティブハニー",
+    "element": "土 — Earth",
+    "elementKey": "earth",
+    "illustrationKey": "rewarewa",
+    "desc": "キャラメルのような甘みを、毎日の食卓でたっぷり楽しみたいあなたに。ニュージーランドの野生の花々から届くはちみつです。朝食やおやつの時間にどうぞ。",
+    "serving": "秋冬の楽しみ方：トーストやパンケーキに。温かいコーヒーのお供にも。",
+    "productLabel": "1kg / The Authentic Honey Co.",
+    "shopUrl": "https://mariposa8.theshop.jp/items/82941591",
+    "available": true,
+    "taste": "野生の花々から届く、キャラメルを思わせる甘み。",
+    "elements": [
+      "earth"
+    ]
+  },
+  "hakea": {
+    "nameEn": "Hakea",
+    "nameJp": "ハケア",
+    "element": "水 — Water",
+    "elementKey": "water",
+    "illustrationKey": "leatherwood",
+    "desc": "バニラを思わせる香りと、キャラメルのような濃厚な甘み。おやつをゆっくり味わいたいあなたに。焼き芋に添えると、秋冬らしいひと皿を楽しめます。",
+    "serving": "秋冬の楽しみ方：温かい焼き芋にとろりとかけて。まずはそのままひとさじ。",
+    "productLabel": "380g / ELIXIR",
+    "shopUrl": "https://mariposa8.theshop.jp/items/91766769",
+    "available": true,
+    "taste": "バニラを思わせる香りと、濃厚なキャラメル風味。",
+    "elements": [
+      "water"
+    ]
+  },
+  "wandoo": {
+    "nameEn": "Wandoo",
+    "nameJp": "ワンドゥ",
+    "element": "土 — Earth",
+    "elementKey": "earth",
+    "illustrationKey": "wandoo",
+    "desc": "キャラメルのような丸い甘みに、落ち着いた木の香り。濃厚さと軽やかな後味の両方を楽しみたいあなたに。夜のおやつやお茶の時間に寄り添う一本です。",
+    "serving": "秋冬の楽しみ方：スコーンやナッツに添えて。ほうじ茶やミルクティーのお供にも。",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/128021189",
+    "available": true,
+    "taste": "キャラメルのような丸い甘みと、落ち着いた木の香り。",
+    "elements": [
+      "earth"
+    ]
+  },
+  "stingless": {
+    "nameEn": "Stingless Honey",
+    "nameJp": "スティングレス",
+    "element": "火 — Fire",
+    "elementKey": "fire",
+    "illustrationKey": "lemon_myrtle",
+    "desc": "甘さだけでなく、はっきりした酸味も楽しみたいあなたに。さらさらした口あたりと、甘酸っぱい風味が特徴のはちみつです。水や炭酸で割る楽しみ方にもよく合います。",
+    "serving": "少量ずつ水や炭酸で割り、お好みの甘酸っぱさでどうぞ。",
+    "productLabel": "1500g / 13Honey",
+    "shopUrl": "https://mariposa8.theshop.jp/items/65208572",
+    "taste": "さらさらした口あたりと、はっきりした甘酸っぱさ。",
+    "available": true,
+    "elements": [
+      "fire"
+    ]
+  },
+  "wildflower": {
+    "nameEn": "Wildflower",
+    "nameJp": "ワイルドフラワー",
+    "element": "土 — Earth",
+    "elementKey": "earth",
+    "illustrationKey": "leatherwood",
+    "desc": "花々の香りと、ほどよいコクの両方を楽しみたいあなたに。軽すぎず濃厚すぎない味わいを、朝食からおやつまで、毎日の食卓で楽しめる一本です。",
+    "serving": "トーストやヨーグルトに添えて、花々の風味を楽しんでください。",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/68103891",
+    "taste": "花々の香りと、日々の食卓に合わせやすい甘み。",
+    "available": true,
+    "elements": [
+      "earth"
+    ]
+  },
+  "marri": {
+    "nameEn": "Marri",
+    "nameJp": "マリ",
+    "element": "土 — Earth",
+    "elementKey": "earth",
+    "illustrationKey": "jarrah",
+    "desc": "滑らかでマイルドな口あたりの中に、深みのある風味を楽しめるはちみつです。花々の軽やかな甘みから、もう少しコクのある味へ進みたい方に。",
+    "serving": "まずはそのまま少量ずつ。トーストにもよく合います。",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/65013027",
+    "taste": "滑らかでマイルドながら、深みのある風味。",
+    "available": true,
+    "elements": [
+      "earth"
+    ]
+  },
+  "forest": {
+    "nameEn": "Forest Honey",
+    "nameJp": "フォレストハニー",
+    "element": "",
+    "elementKey": "neutral",
+    "illustrationKey": "rewarewa",
+    "desc": "花の香りも、しっかりしたコクも楽しみたいあなたに。ラトビアの森の百花蜜です。今回のロットはリンデンのすっきり感と、そばの花の深みが同居した、芳醇な味わいです。",
+    "serving": "そのまま味わうほか、朝のコーヒーに少量加えても楽しめます。",
+    "productLabel": "450g / HOLISTETIQUE",
+    "shopUrl": "https://mariposa8.theshop.jp/items/121733077",
+    "taste": "リンデンのすっきり感と、そばの花の深みを併せ持つ百花蜜。",
+    "available": true,
+    "elements": []
+  },
+  "dryandra": {
+    "nameEn": "Dryandra",
+    "nameJp": "ドライアンドラ",
+    "element": "水 — Water",
+    "elementKey": "water",
+    "illustrationKey": "leatherwood",
+    "desc": "濃厚な甘みに、ほんのりした塩気と花の香りが重なるはちみつです。キャラメル系の甘みが好きで、風味の違いも楽しみたい方に。",
+    "serving": "まずはそのまま味わって。パンや焼き芋に添えてもどうぞ。",
+    "productLabel": "380g / ELIXIR",
+    "shopUrl": "https://mariposa8.theshop.jp/items/86707796",
+    "taste": "ほんのりした塩気と花の香りが重なる、おやつのような甘み。",
+    "available": true,
+    "elements": [
+      "water"
+    ]
+  },
+  "rose_banksia": {
+    "nameEn": "Rose Banksia",
+    "nameJp": "ローズバンクシア",
+    "element": "土 — Earth",
+    "elementKey": "earth",
+    "illustrationKey": "wandoo",
+    "desc": "ねっとりした口あたりと、濃厚な甘みをゆっくり楽しめるはちみつです。ひとさじのおやつとして、余韻までじっくり味わいたい方に。",
+    "serving": "少量をそのまま、お茶のお供に。バタートーストにも。",
+    "productLabel": "380g / ELIXIR",
+    "shopUrl": "https://mariposa8.theshop.jp/items/71525345",
+    "taste": "水飴を思わせるねっとりした口あたりと、濃厚な甘み。",
+    "available": true,
+    "elements": [
+      "earth"
+    ]
+  },
+  "blackbutt": {
+    "nameEn": "Blackbutt",
+    "nameJp": "ブラックバット",
+    "element": "土 — Earth",
+    "elementKey": "earth",
+    "illustrationKey": "wandoo",
+    "desc": "深く濃い味わいを、じっくり楽しみたいあなたに。西オーストラリアのユーカリの一種、ブラックバットから採れるはちみつ。味わいマップでは、濃厚なキャラメル・ウッド寄りの一本です。",
+    "serving": "まずはそのまま少量ずつ。コーヒーや紅茶のお供にも。",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/64977161",
+    "taste": "濃厚なキャラメル・ウッド寄りの、深く濃い味わい。",
+    "available": true,
+    "elements": [
+      "earth"
+    ]
+  },
+  "murchison": {
+    "nameEn": "Murchison",
+    "nameJp": "マーチソン",
+    "element": "土 — Earth",
+    "elementKey": "earth",
+    "illustrationKey": "rewarewa",
+    "desc": "生キャラメルや練乳を思わせる濃厚さと、ねっとりした口あたりが特徴です。複雑な野草の香りも重なり、そのまま少しずつ味わう楽しさがあります。",
+    "serving": "コーヒーや紅茶のお茶請けに、そのまま少量ずつどうぞ。",
+    "productLabel": "380g / HOLISTETIQUE",
+    "shopUrl": "https://mariposa8.theshop.jp/items/65013896",
+    "taste": "生キャラメルや練乳を思わせる濃厚なコクと、野草の香り。",
+    "available": true,
+    "elements": [
+      "earth"
+    ]
+  }
+};
+const PROFILES = {
+  "karri": {
+    "title": "軽やかで穏やかな甘み",
+    "primary": "karri",
+    "spoon": "クリーミーな口あたりと軽い後味を、少量ずつそのまま楽しんでください。",
+    "food": "香ばしいトーストに添えて、やさしい甘みを。",
+    "warm": "紅茶やハーブティーに添えて、穏やかな甘みを楽しんでください。",
+    "comparisons": [
+      {
+        "key": "lemon_myrtle",
+        "reason": "ハーブの爽やかな香りを楽しむなら"
+      },
+      {
+        "key": "wandoo",
+        "reason": "軽やかさを残しつつ、キャラメルや木の香りを楽しむなら"
+      }
+    ]
+  },
+  "stingless": {
+    "title": "甘酸っぱく、さっぱり",
+    "primary": "stingless",
+    "spoon": "はっきりした酸味があります。まずは少量ずつ、その甘酸っぱさを確かめてください。",
+    "food": "ヨーグルトなどに少量を加えて、甘酸っぱい風味を。",
+    "warm": "ぬるま湯などで薄めて、お好みの甘酸っぱさで楽しんでください。",
+    "cold": "水や炭酸で少量ずつ割って、さっぱりした甘酸っぱさを楽しんでください。",
+    "comparisons": [
+      {
+        "key": "karri",
+        "reason": "酸味よりも、やさしい甘みを楽しむなら"
+      },
+      {
+        "key": "forest",
+        "reason": "もう少し濃厚で、花々の香りとコクを楽しむなら"
+      }
+    ]
+  },
+  "wildflower": {
+    "title": "花の香りと甘みのバランス",
+    "primary": "wildflower",
+    "spoon": "少量ずつそのまま味わい、花々の香りを楽しんでください。",
+    "food": "トーストやヨーグルトに添えて、毎日の食卓に花々の甘みを。",
+    "warm": "紅茶に少量を添えて、香りと甘みの組み合わせを楽しんでください。",
+    "comparisons": [
+      {
+        "key": "karri",
+        "reason": "より軽やかな味わいを選ぶなら"
+      },
+      {
+        "key": "marri",
+        "reason": "もう少しコクのある甘みを選ぶなら"
+      }
+    ]
+  },
+  "native": {
+    "title": "日々楽しむキャラメルの甘み",
+    "primary": "native",
+    "spoon": "キャラメルのような甘みを、ひとさじのおやつとして楽しんでください。",
+    "food": "トーストやパンケーキに。バターのコクと合わせても楽しめます。",
+    "warm": "温かいコーヒーのお供に。まずは少量をそのまま味わってから、お茶と交互にどうぞ。",
+    "comparisons": [
+      {
+        "key": "wandoo",
+        "reason": "より軽やかで、木の香りが感じられる味なら"
+      },
+      {
+        "key": "jarrah",
+        "reason": "黒糖を思わせる、より深いコクを楽しむなら"
+      }
+    ]
+  },
+  "forest": {
+    "title": "花の香りも、濃厚さも",
+    "primary": "forest",
+    "spoon": "少量ずつそのまま味わい、花々の芳醇な香りとコクを楽しんでください。",
+    "food": "トーストに添えて。煮込み料理やドレッシングの隠し味にも使えます。",
+    "warm": "朝のコーヒーに少量加えて、深みのある香りを楽しんでください。",
+    "comparisons": [
+      {
+        "key": "wildflower",
+        "reason": "もう少し軽やかで、食卓に合わせやすい味なら"
+      },
+      {
+        "key": "murchison",
+        "reason": "さらに濃厚な、キャラメル系の満足感を楽しむなら"
+      }
+    ]
+  },
+  "hakea": {
+    "title": "おやつのような濃厚な甘み",
+    "primary": "hakea",
+    "spoon": "まずはそのまま少量ずつ。バニラを思わせる香りと濃厚な甘みを楽しんでください。",
+    "food": "温かい焼き芋にとろりとかけて、秋冬らしいおやつに。",
+    "warm": "温かいお茶のお供に、そのまま少量ずつ。濃厚な甘みとお茶を交互に楽しんでください。",
+    "comparisons": [
+      {
+        "key": "dryandra",
+        "reason": "ほんのりした塩気と花の香りも楽しむなら"
+      },
+      {
+        "key": "rose_banksia",
+        "reason": "より濃厚で、ねっとりした余韻を楽しむなら"
+      }
+    ]
+  },
+  "blackbutt": {
+    "title": "深く濃い味わいをじっくり",
+    "primary": "blackbutt",
+    "spoon": "深く濃い味わいを、少量ずつそのまま楽しんでください。",
+    "food": "トーストやナッツに少量を添えて、濃厚な甘みを楽しんでください。",
+    "warm": "コーヒーや紅茶のお供に、少量ずつじっくり味わってください。",
+    "comparisons": [
+      {
+        "key": "jarrah",
+        "reason": "濃厚さを少し抑えた、キャラメル系のコクなら"
+      },
+      {
+        "key": "murchison",
+        "reason": "さらに濃厚な味わいを、そのまま少しずつ楽しむなら"
+      }
+    ]
+  },
+  "cinnamon": {
+    "title": "スパイスの香りを楽しむ",
+    "primary": "cinnamon",
+    "spoon": "シナモンの香りがあります。まずは少量から、お好みの量で楽しんでください。",
+    "food": "トーストや焼き芋に少量を添えて、甘く華やかなスパイスの香りを。",
+    "warm": "コーヒーやミルクティーに少量を。香りを確かめながら加えてください。",
+    "comparisons": [
+      {
+        "key": "lemon_myrtle",
+        "reason": "スパイスより、爽やかなハーブの香りなら"
+      },
+      {
+        "key": "ginger_honey",
+        "reason": "甘い香りより、生姜のきりっとした辛みなら"
+      }
+    ]
+  }
+};
+const QUESTIONS = [{
+  "id": "q1",
+  "step": 1,
+  "number": "Question  01",
+  "theme": "味わいの方向",
+  "text": "この秋冬、どんな味わいの\nはちみつに惹かれますか？",
+  "choices": [
+    {
+      "id": "A",
+      "label": "Light & Fresh",
+      "main": "軽やかで爽やかな味",
+      "sub": "重すぎず、さっぱり楽しみたい"
+    },
+    {
+      "id": "B",
+      "label": "Floral",
+      "main": "花々の香りと甘み",
+      "sub": "花の香りや、ほどよいコクを楽しみたい"
+    },
+    {
+      "id": "C",
+      "label": "Caramel",
+      "main": "キャラメルを思わせる甘み",
+      "sub": "おやつのような甘さを楽しみたい"
+    },
+    {
+      "id": "D",
+      "label": "Distinctive",
+      "main": "個性のある深い風味",
+      "sub": "濃い味わいやスパイスの香りを楽しみたい"
+    }
+  ]
+}];
+const Q2_BRANCHES = {
+  "A": {
+    "theme": "爽やかさの好み",
+    "text": "軽やかな味の中でも、\n惹かれるのはどちらですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Gentle",
+        "main": "やさしく穏やかな甘み",
+        "sub": "クリーミーな口あたりと、すっきりした後味",
+        "profile": "karri"
+      },
+      {
+        "id": "B",
+        "label": "Sweet & Sour",
+        "main": "甘酸っぱく、さっぱり",
+        "sub": "甘さだけでなく、はっきりした酸味も楽しみたい",
+        "profile": "stingless"
+      }
+    ]
+  },
+  "B": {
+    "theme": "花の香りとコク",
+    "text": "花々の風味に、\nどれくらいのコクを合わせたいですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Balanced",
+        "main": "軽さとコクのほどよいバランス",
+        "sub": "日々の食卓で楽しみやすい甘み",
+        "profile": "wildflower"
+      },
+      {
+        "id": "B",
+        "label": "Full & Floral",
+        "main": "芳醇な香りと、しっかりしたコク",
+        "sub": "花々の香りも濃厚さも、じっくり楽しみたい",
+        "profile": "forest"
+      }
+    ]
+  },
+  "C": {
+    "theme": "キャラメルの甘み",
+    "text": "おやつのような甘みなら、\nどちらを楽しみたいですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Everyday",
+        "main": "日々楽しめるキャラメルの甘み",
+        "sub": "朝食やおやつで、たっぷり楽しみたい",
+        "profile": "native"
+      },
+      {
+        "id": "B",
+        "label": "Vanilla & Rich",
+        "main": "バニラを思わせる濃厚な甘み",
+        "sub": "ひとさじや焼き芋で、満足感を楽しみたい",
+        "profile": "hakea"
+      }
+    ]
+  },
+  "D": {
+    "theme": "個性のある風味",
+    "text": "気になる味の個性は、\nどちらですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Deep & Woody",
+        "main": "深く濃い、木の香りとコク",
+        "sub": "濃厚なキャラメル・ウッド寄りの味をじっくり",
+        "profile": "blackbutt"
+      },
+      {
+        "id": "B",
+        "label": "Spiced",
+        "main": "甘く華やかなスパイスの香り",
+        "sub": "シナモンの香りを、食卓や飲み物に添えたい",
+        "profile": "cinnamon"
+      }
+    ]
+  }
+};
+const USAGE_QUESTION = {
+  "id": "q3",
+  "step": 3,
+  "number": "Question  03",
+  "theme": "秋冬の楽しみ方",
+  "text": "はちみつを、どんなふうに\n楽しみたいですか？",
+  "choices": [
+    {
+      "id": "A",
+      "label": "One Spoon",
+      "main": "そのまま、ひとさじ",
+      "sub": "香りや口あたりをじっくり味わう",
+      "use": "spoon"
+    },
+    {
+      "id": "B",
+      "label": "With Food",
+      "main": "食べ物に添えて",
+      "sub": "トーストや焼き芋など、食卓のお供に",
+      "use": "food"
+    },
+    {
+      "id": "C",
+      "label": "Warm Drink",
+      "main": "温かい飲み物と",
+      "sub": "紅茶やコーヒーに加えたり、お茶請けに",
+      "use": "warm"
+    },
+    {
+      "id": "D",
+      "label": "Refreshing Drink",
+      "main": "水や炭酸で割って",
+      "sub": "お好みの濃さで、さっぱり楽しむ",
+      "use": "cold"
+    }
+  ]
+};
+
+function getQ2(answer) {
+  const branch = Q2_BRANCHES[answer];
+  if (!branch) throw new Error('Invalid diagnosis answer');
+  return { id: 'q2', step: 2, number: 'Question  02', ...branch };
+}
+
+function selectRecommendations(profileKey) {
+  const profile = PROFILES[profileKey];
+  if (!profile) return { primary: null, comparisons: [], substituted: false };
+  const candidates = [profile.primary, ...profile.comparisons.map(c => c.key)];
+  const available = candidates.filter((key, index) =>
+    candidates.indexOf(key) === index && RESULTS[key]?.available === true);
+  const primary = available[0] || null;
+  return {
+    primary,
+    substituted: primary !== null && primary !== profile.primary,
+    comparisons: available.slice(1, 3).map(key => ({
+      key,
+      reason: primary === profile.primary
+        ? profile.comparisons.find(c => c.key === key).reason
+        : '別の味わいも比べるなら'
+    }))
+  };
+}
+
+function servingFor(profileKey, productKey, use) {
+  const product = RESULTS[productKey];
+  if (!product) return '';
+  const profile = PROFILES[profileKey];
+  if (profile && profile.primary === productKey && profile[use]) return profile[use];
+  if (use === 'cold') return '少量のぬるま湯でよく溶かしてから、水や炭酸に少しずつ加え、お好みの濃さで楽しんでください。';
+  if (use === 'spoon') return 'まずは少量ずつそのまま。香りや口あたりをゆっくり楽しんでください。';
+  if (use === 'food') return 'トーストなどに少量を添えて、食材と甘みの組み合わせを楽しんでください。';
+  if (use === 'warm') return '温かいお茶のお供に、そのまま少量ずつ。お茶と交互に味わってください。';
+  return product.serving.replace(/^秋冬の楽しみ方：/, '');
+}
+
+function productLink(shopUrl, productKey, placement = 'primary') {
+  const url = new URL(shopUrl);
+  url.searchParams.set('utm_source', 'honey_diagnosis');
+  url.searchParams.set('utm_medium', 'referral');
+  url.searchParams.set('utm_campaign', 'autumn_winter_2026');
+  url.searchParams.set('utm_content', productKey);
+  url.searchParams.set('utm_term', placement);
+  return url.href;
+}
+
+/* ═══════════════════════════════════════════════════
+   CARD SVG — GEOMETRIC TAROT ILLUSTRATIONS
+═══════════════════════════════════════════════════ */
+
+function cardSVG(key) {
+  const E = {
+    wind:    {bg:'#F4D18D', dk:'#624010', md:'#8A571C', lt:'#BC8126', vl:'rgba(188,129,38,0.14)'},
+    fire:    {bg:'#E9A181', dk:'#6E2418', md:'#963A24', lt:'#BE5A35', vl:'rgba(150,58,36,0.14)'},
+    earth:   {bg:'#D7B28A', dk:'#4D2F1F', md:'#70452D', lt:'#9C6942', vl:'rgba(112,69,45,0.14)'},
+    water:   {bg:'#F0CEAB', dk:'#673722', md:'#935333', lt:'#BA7B4A', vl:'rgba(147,83,51,0.12)'},
+    neutral: {bg:'#EDDAC1', dk:'#55382A', md:'#80543A', lt:'#AA7B53', vl:'rgba(128,84,58,0.12)'}
+  };
+  const e = E[RESULTS[key].elementKey];
+
+  // Helpers
+  const P = (cx,cy,r,n,deg=0) => {
+    const pts=[];
+    for(let i=0;i<n;i++){
+      const a=(i/n*Math.PI*2)+(deg-90)*Math.PI/180;
+      pts.push((cx+r*Math.cos(a)).toFixed(2)+','+(cy+r*Math.sin(a)).toFixed(2));
+    }
+    return pts.join(' ');
+  };
+  const ST = (cx,cy,R,ri,n,deg=0) => {
+    const pts=[];
+    for(let i=0;i<n*2;i++){
+      const rad=i%2===0?R:ri;
+      const a=(i/(n*2)*Math.PI*2)+(deg-90)*Math.PI/180;
+      pts.push((cx+rad*Math.cos(a)).toFixed(2)+','+(cy+rad*Math.sin(a)).toFixed(2));
+    }
+    return pts.join(' ');
+  };
+  const XY = (cx,cy,r,deg) => {
+    const a=(deg-90)*Math.PI/180;
+    return {x:(cx+r*Math.cos(a)).toFixed(2), y:(cy+r*Math.sin(a)).toFixed(2)};
+  };
+  const SPOKES = (cx,cy,r1,r2,n,deg=0,sw=0.5,op=0.3) => {
+    let s='';
+    for(let i=0;i<n;i++){
+      const a=(i/n*Math.PI*2)+(deg-90)*Math.PI/180;
+      s+=`<line x1="${(cx+r1*Math.cos(a)).toFixed(2)}" y1="${(cy+r1*Math.sin(a)).toFixed(2)}" x2="${(cx+r2*Math.cos(a)).toFixed(2)}" y2="${(cy+r2*Math.sin(a)).toFixed(2)}" stroke="${e.md}" stroke-width="${sw}" opacity="${op}"/>`;
+    }
+    return s;
+  };
+  const DOT = (cx,cy,r,op=0.5) => `<circle cx="${cx.toFixed(2)}" cy="${cy.toFixed(2)}" r="${r}" fill="${e.md}" opacity="${op}"/>`;
+  const RING = (cx,cy,r,sw=0.5,op=0.35) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${e.md}" stroke-width="${sw}" opacity="${op}"/>`;
+
+  const cx=160, cy=150;
+
+  // Card frame — thin double border + corner marks
+  const frame = `
+    <rect x="12" y="12" width="296" height="316" fill="${e.vl}" rx="2"/>
+    <rect x="12" y="12" width="296" height="316" fill="none" stroke="${e.md}" stroke-width="0.6" opacity="0.45" rx="2"/>
+    <rect x="18" y="18" width="284" height="304" fill="none" stroke="${e.lt}" stroke-width="0.3" opacity="0.3" rx="1"/>
+    <line x1="12" y1="26" x2="12" y2="12" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="12" y1="12" x2="26" y2="12" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="308" y1="26" x2="308" y2="12" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="308" y1="12" x2="294" y2="12" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="12" y1="302" x2="12" y2="316" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="12" y1="316" x2="26" y2="316" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="308" y1="302" x2="308" y2="316" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="308" y1="316" x2="294" y2="316" stroke="${e.md}" stroke-width="1.2" opacity="0.6"/>`;
+
+  const motifs = {
+
+    // ━━━━ KARRI ── 夜×爽やか×B ── 風 ─ Night Compass ━━━━
+    karri: (() => {
+      let s = '';
+      // Guide circle
+      s += RING(cx,cy,104,0.4,0.2);
+      // 3 concentric rings
+      s += RING(cx,cy,88,0.5,0.35);
+      s += RING(cx,cy,58,0.5,0.3);
+      s += RING(cx,cy,30,0.5,0.28);
+      // 16 spokes thin
+      s += SPOKES(cx,cy,4,86,16,0,0.4,0.18);
+      // 8-pointed star (compass)
+      s += `<polygon points="${ST(cx,cy,58,22,8)}" fill="${e.lt}" fill-opacity="0.15" stroke="${e.md}" stroke-width="0.7" opacity="0.8"/>`;
+      // Inner 4-pointed cross
+      s += `<polygon points="${ST(cx,cy,28,11,4)}" fill="${e.lt}" fill-opacity="0.2" stroke="${e.md}" stroke-width="0.7" opacity="0.85"/>`;
+      // Crescent moon (two overlapping circles, top)
+      s += `<circle cx="${cx}" cy="${cy-76}" r="20" fill="${e.lt}" opacity="0.38"/>`;
+      s += `<circle cx="${cx+7}" cy="${cy-79}" r="15" fill="${e.bg}" opacity="1"/>`;
+      // 4 wind arcs
+      s += `<path d="M ${cx-88},${cy} Q ${cx-55},${cy-38} ${cx},${cy-88}" fill="none" stroke="${e.md}" stroke-width="0.7" opacity="0.35"/>`;
+      s += `<path d="M ${cx+88},${cy} Q ${cx+55},${cy+38} ${cx},${cy+88}" fill="none" stroke="${e.md}" stroke-width="0.7" opacity="0.35"/>`;
+      s += `<path d="M ${cx-62},${cy-62} Q ${cx-10},${cy-30} ${cx+28},${cy-82}" fill="none" stroke="${e.lt}" stroke-width="0.6" opacity="0.3"/>`;
+      s += `<path d="M ${cx+62},${cy+62} Q ${cx+10},${cy+30} ${cx-28},${cy+82}" fill="none" stroke="${e.lt}" stroke-width="0.6" opacity="0.3"/>`;
+      // Small dots at 8 compass points (r=88)
+      for(let i=0;i<8;i++){const p=XY(cx,cy,88,i*45);s+=DOT(+p.x,+p.y,2.5,0.5);}
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="6" fill="${e.lt}" opacity="0.5"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="2.5" fill="${e.dk}" opacity="0.7"/>`;
+      return s;
+    })(),
+
+    // ━━━━ LEATHERWOOD ── 朝×爽やか×A ── 風 ─ Morning Pentagram ━━━━
+    leatherwood: (() => {
+      let s = '';
+      s += RING(cx,cy,102,0.4,0.2);
+      s += RING(cx,cy,86,0.5,0.3);
+      // Pentagon outer
+      s += `<polygon points="${P(cx,cy,86,5)}" fill="none" stroke="${e.md}" stroke-width="0.6" opacity="0.4"/>`;
+      // Pentagram (5-pointed star)
+      s += `<polygon points="${ST(cx,cy,86,32,5)}" fill="${e.lt}" fill-opacity="0.12" stroke="${e.md}" stroke-width="0.7" opacity="0.75"/>`;
+      // 5 petal circles at pentagon vertices
+      for(let i=0;i<5;i++){
+        const a=(i/5*Math.PI*2)-Math.PI/2;
+        const px=(cx+62*Math.cos(a)), py=(cy+62*Math.sin(a));
+        s+=`<circle cx="${px.toFixed(2)}" cy="${py.toFixed(2)}" r="22" fill="${e.lt}" fill-opacity="0.12" stroke="${e.md}" stroke-width="0.55" opacity="0.6"/>`;
+      }
+      // Inner small pentagon
+      s += `<polygon points="${P(cx,cy,28,5)}" fill="none" stroke="${e.md}" stroke-width="0.6" opacity="0.45"/>`;
+      // Inner pentagram small
+      s += `<polygon points="${ST(cx,cy,28,11,5)}" fill="${e.lt}" fill-opacity="0.2" stroke="${e.md}" stroke-width="0.6" opacity="0.7"/>`;
+      // 5 spokes from center to petal edges
+      s += SPOKES(cx,cy,4,62,5,0,0.5,0.22);
+      // Sparkle dots — morning light
+      const sparkles=[[cx-90,cy-35],[cx+90,cy-35],[cx,cy-102],[cx-68,cy+72],[cx+68,cy+72]];
+      sparkles.forEach(([sx,sy])=>{ s+=DOT(sx,sy,2,0.45); s+=DOT(sx,sy,4.5,0.12); });
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="7" fill="${e.lt}" opacity="0.45"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="2.8" fill="${e.dk}" opacity="0.65"/>`;
+      return s;
+    })(),
+
+    // ━━━━ SCOTTISH HEATHER ── 朝×濃厚×B ── 火 ─ Fire Yantra ━━━━
+    scottish_heather: (() => {
+      let s = '';
+      s += RING(cx,cy,106,0.4,0.2);
+      s += RING(cx,cy,90,0.5,0.3);
+      // 12-spoke sun rays
+      s += SPOKES(cx,cy,92,108,12,0,0.7,0.35);
+      // Outer sun ring
+      s += RING(cx,cy,108,0.4,0.28);
+      // Hexagram (two triangles — fire & its reflection)
+      s += `<polygon points="${P(cx,cy,80,3,0)}"  fill="${e.lt}" fill-opacity="0.12" stroke="${e.md}" stroke-width="0.8" opacity="0.65"/>`;
+      s += `<polygon points="${P(cx,cy,80,3,180)}" fill="${e.lt}" fill-opacity="0.08" stroke="${e.md}" stroke-width="0.8" opacity="0.55"/>`;
+      // Inner hexagram smaller
+      s += `<polygon points="${P(cx,cy,50,3,0)}"  fill="${e.lt}" fill-opacity="0.15" stroke="${e.md}" stroke-width="0.7" opacity="0.7"/>`;
+      s += `<polygon points="${P(cx,cy,50,3,180)}" fill="${e.lt}" fill-opacity="0.1"  stroke="${e.md}" stroke-width="0.7" opacity="0.6"/>`;
+      // Innermost triangle (fire point up)
+      s += `<polygon points="${P(cx,cy,26,3,0)}" fill="${e.lt}" fill-opacity="0.25" stroke="${e.md}" stroke-width="0.7" opacity="0.8"/>`;
+      // Circle inscribed between hexagrams
+      s += RING(cx,cy,50,0.4,0.3);
+      s += RING(cx,cy,26,0.4,0.35);
+      // 6 dots at outer hexagon vertices
+      for(let i=0;i<6;i++){const p=XY(cx,cy,80,i*60);s+=DOT(+p.x,+p.y,3,0.45);}
+      // Center sun
+      s += `<circle cx="${cx}" cy="${cy}" r="10" fill="${e.lt}" opacity="0.3"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="4" fill="${e.dk}" opacity="0.6"/>`;
+      return s;
+    })(),
+
+    // ━━━━ JARRAH ── 夜×濃厚×A ── 土 ─ Hexagonal Earth ━━━━
+    jarrah: (() => {
+      let s = '';
+      // Outer circle
+      s += RING(cx,cy,104,0.4,0.22);
+      // 3 hexagons (concentric)
+      [84,56,28].forEach((r,i)=>{
+        s += `<polygon points="${P(cx,cy,r,6)}" fill="none" stroke="${e.md}" stroke-width="${i===0?0.7:0.55}" opacity="${0.45-i*0.05}"/>`;
+      });
+      // Hexagram (two triangles) at r=56
+      s += `<polygon points="${P(cx,cy,56,3,0)}"   fill="${e.lt}" fill-opacity="0.1"  stroke="${e.md}" stroke-width="0.6" opacity="0.6"/>`;
+      s += `<polygon points="${P(cx,cy,56,3,180)}"  fill="${e.lt}" fill-opacity="0.08" stroke="${e.md}" stroke-width="0.6" opacity="0.5"/>`;
+      // 6 satellite circles at outer hexagon vertices
+      for(let i=0;i<6;i++){
+        const p=XY(cx,cy,84,i*60);
+        s+=`<circle cx="${p.x}" cy="${p.y}" r="9" fill="${e.lt}" fill-opacity="0.18" stroke="${e.md}" stroke-width="0.5" opacity="0.6"/>`;
+        s+=DOT(+p.x,+p.y,2.5,0.45);
+      }
+      // Spokes to each satellite
+      s += SPOKES(cx,cy,4,75,6,0,0.5,0.2);
+      // Inner downward triangle (earth, grounding)
+      s += `<polygon points="${P(cx,cy,28,3,180)}" fill="${e.lt}" fill-opacity="0.25" stroke="${e.md}" stroke-width="0.7" opacity="0.75"/>`;
+      // Circle fits inside inner hexagon
+      s += RING(cx,cy,28,0.4,0.3);
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="8" fill="${e.lt}" opacity="0.3"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="3.5" fill="${e.dk}" opacity="0.65"/>`;
+      return s;
+    })(),
+
+    // ━━━━ GINGER HONEY ── 朝×爽やか×B ── 火 ─ Solar Octagram ━━━━
+    ginger_honey: (() => {
+      let s = '';
+      // Outer rings
+      s += RING(cx,cy,106,0.4,0.22);
+      s += RING(cx,cy,90,0.5,0.28);
+      // 16 radial burst lines
+      s += SPOKES(cx,cy,50,88,16,0,0.5,0.2);
+      // Outer 8-pointed star (two squares)
+      s += `<polygon points="${P(cx,cy,78,4,0)}"  fill="${e.lt}" fill-opacity="0.1"  stroke="${e.md}" stroke-width="0.7" opacity="0.6"/>`;
+      s += `<polygon points="${P(cx,cy,78,4,45)}" fill="${e.lt}" fill-opacity="0.1"  stroke="${e.md}" stroke-width="0.7" opacity="0.6"/>`;
+      // 8-pointed star over them
+      s += `<polygon points="${ST(cx,cy,78,32,8,0)}" fill="${e.lt}" fill-opacity="0.14" stroke="${e.md}" stroke-width="0.8" opacity="0.75"/>`;
+      // Inner octagram smaller
+      s += `<polygon points="${P(cx,cy,48,4,0)}"  fill="none" stroke="${e.md}" stroke-width="0.55" opacity="0.5"/>`;
+      s += `<polygon points="${P(cx,cy,48,4,45)}" fill="none" stroke="${e.md}" stroke-width="0.55" opacity="0.5"/>`;
+      s += `<polygon points="${ST(cx,cy,48,20,8,0)}" fill="${e.lt}" fill-opacity="0.18" stroke="${e.md}" stroke-width="0.6" opacity="0.7"/>`;
+      // 8 dots at outer star tips
+      for(let i=0;i<8;i++){const p=XY(cx,cy,78,i*45);s+=DOT(+p.x,+p.y,3,0.45);}
+      // Innermost circle
+      s += RING(cx,cy,20,0.5,0.4);
+      // Center fire burst
+      s += `<circle cx="${cx}" cy="${cy}" r="10" fill="${e.lt}" opacity="0.35"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="4" fill="${e.dk}" opacity="0.65"/>`;
+      return s;
+    })(),
+
+    // ━━━━ LEMON MYRTLE ── 夜×爽やか×A ── 水 ─ Water Ripple ━━━━
+    lemon_myrtle: (() => {
+      let s = '';
+      // 5 concentric ripple circles (varying opacity — like water rings)
+      [20,42,62,82,100].forEach((r,i)=>{
+        s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${e.md}" stroke-width="${i===4?0.4:0.55}" opacity="${0.45-i*0.06}"/>`;
+      });
+      // Moon crescent at top
+      s += `<circle cx="${cx}" cy="${cy-78}" r="22" fill="${e.lt}" opacity="0.35"/>`;
+      s += `<circle cx="${cx+8}" cy="${cy-82}" r="17" fill="${e.bg}" opacity="1"/>`;
+      // Moon reflection line (dashed, vertical)
+      s += `<line x1="${cx}" y1="${cy-56}" x2="${cx}" y2="${cy+100}" stroke="${e.md}" stroke-width="0.4" stroke-dasharray="3,5" opacity="0.22"/>`;
+      // 4 sweeping water arcs — rotational flow
+      const arcs=[0,90,180,270];
+      arcs.forEach(d=>{
+        const a1=XY(cx,cy,100,d); const a2=XY(cx,cy,60,d+60); const a3=XY(cx,cy,100,d+90);
+        s+=`<path d="M${a1.x},${a1.y} Q${a2.x},${a2.y} ${a3.x},${a3.y}" fill="none" stroke="${e.lt}" stroke-width="0.7" opacity="0.35"/>`;
+      });
+      // Vesica piscis at center — two overlapping circles
+      s += `<circle cx="${cx-18}" cy="${cy}" r="32" fill="none" stroke="${e.md}" stroke-width="0.55" opacity="0.4"/>`;
+      s += `<circle cx="${cx+18}" cy="${cy}" r="32" fill="none" stroke="${e.md}" stroke-width="0.55" opacity="0.4"/>`;
+      // 6 dot ornaments on largest ring
+      for(let i=0;i<6;i++){const p=XY(cx,cy,100,i*60);s+=DOT(+p.x,+p.y,2.5,0.4);}
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="7" fill="${e.lt}" opacity="0.4"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="2.8" fill="${e.dk}" opacity="0.6"/>`;
+      return s;
+    })(),
+
+    // ━━━━ REWAREWA ── 朝×濃厚×A ── 土 ─ Pentagon Growth ━━━━
+    rewarewa: (() => {
+      let s = '';
+      s += RING(cx,cy,104,0.4,0.2);
+      // 3 concentric pentagons (up = growth)
+      [84,55,26].forEach((r,i)=>{
+        s += `<polygon points="${P(cx,cy,r,5,0)}" fill="none" stroke="${e.md}" stroke-width="${i===0?0.7:0.55}" opacity="${0.45-i*0.05}"/>`;
+      });
+      // Pentagram at r=84
+      s += `<polygon points="${ST(cx,cy,84,32,5,0)}" fill="${e.lt}" fill-opacity="0.12" stroke="${e.md}" stroke-width="0.7" opacity="0.7"/>`;
+      // 5 upward-pointing small triangles at pentagon vertices (r=84)
+      for(let i=0;i<5;i++){
+        const a=(i/5*Math.PI*2)-Math.PI/2;
+        const tx=cx+84*Math.cos(a), ty=cy+84*Math.sin(a);
+        // Small equilateral triangle pointing away from center
+        const ang=(Math.atan2(ty-cy,tx-cx)*180/Math.PI)+90;
+        const tp=[
+          [(tx+12*Math.cos((ang-90-0)*Math.PI/180)).toFixed(2),(ty+12*Math.sin((ang-90-0)*Math.PI/180)).toFixed(2)],
+          [(tx+12*Math.cos((ang-90+120)*Math.PI/180)).toFixed(2),(ty+12*Math.sin((ang-90+120)*Math.PI/180)).toFixed(2)],
+          [(tx+12*Math.cos((ang-90+240)*Math.PI/180)).toFixed(2),(ty+12*Math.sin((ang-90+240)*Math.PI/180)).toFixed(2)]
+        ];
+        s+=`<polygon points="${tp.map(p=>p.join(',')).join(' ')}" fill="${e.lt}" fill-opacity="0.2" stroke="${e.md}" stroke-width="0.55" opacity="0.6"/>`;
+      }
+      // Growth spokes (5 lines from center to pentagon vertices)
+      s += SPOKES(cx,cy,4,82,5,0,0.5,0.2);
+      // Inner pentagram small
+      s += `<polygon points="${ST(cx,cy,26,10,5,0)}" fill="${e.lt}" fill-opacity="0.25" stroke="${e.md}" stroke-width="0.6" opacity="0.75"/>`;
+      // 5 dots at inner pentagon
+      for(let i=0;i<5;i++){const p=XY(cx,cy,55,i*72);s+=DOT(+p.x,+p.y,2.5,0.4);}
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="8" fill="${e.lt}" opacity="0.38"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="3" fill="${e.dk}" opacity="0.65"/>`;
+      return s;
+    })(),
+
+    // ━━━━ WANDOO ── 夜×濃厚×B ── 土 ─ Ancient Octagon Mandala ━━━━
+    wandoo: (() => {
+      let s = '';
+      // 4 concentric octagons
+      [90,68,46,24].forEach((r,i)=>{
+        s += `<polygon points="${P(cx,cy,r,8,0)}" fill="${i===0?e.lt:'none'}" fill-opacity="0.07" stroke="${e.md}" stroke-width="${i===0?0.7:0.55}" opacity="${0.45-i*0.04}"/>`;
+      });
+      // 8-pointed star at r=68 (two squares)
+      s += `<polygon points="${P(cx,cy,68,4,0)}"  fill="none" stroke="${e.md}" stroke-width="0.5" opacity="0.45"/>`;
+      s += `<polygon points="${P(cx,cy,68,4,45)}" fill="none" stroke="${e.md}" stroke-width="0.5" opacity="0.45"/>`;
+      // 8-pointed star solid
+      s += `<polygon points="${ST(cx,cy,68,28,8,0)}" fill="${e.lt}" fill-opacity="0.14" stroke="${e.md}" stroke-width="0.7" opacity="0.7"/>`;
+      // 8 diamond ornaments between outer octagon and circle
+      for(let i=0;i<8;i++){
+        const p=XY(cx,cy,90,i*45);
+        // Small diamond (4-pointed star, squished)
+        const q=XY(cx,cy,90+8,i*45), q2=XY(cx,cy,90-8,i*45);
+        const r=XY(cx,cy+0,90,(i*45)+90),r2=XY(cx,cy,90,(i*45)-90);
+        const a=(i*45-90)*Math.PI/180;
+        const ddx=cx+90*Math.cos(a), ddy=cy+90*Math.sin(a);
+        const perp=a+Math.PI/2;
+        const d=[
+          [(ddx+7*Math.cos(a)).toFixed(2),(ddy+7*Math.sin(a)).toFixed(2)],
+          [(ddx+4*Math.cos(perp)).toFixed(2),(ddy+4*Math.sin(perp)).toFixed(2)],
+          [(ddx-7*Math.cos(a)).toFixed(2),(ddy-7*Math.sin(a)).toFixed(2)],
+          [(ddx-4*Math.cos(perp)).toFixed(2),(ddy-4*Math.sin(perp)).toFixed(2)]
+        ];
+        s+=`<polygon points="${d.map(pp=>pp.join(',')).join(' ')}" fill="${e.lt}" fill-opacity="0.25" stroke="${e.md}" stroke-width="0.5" opacity="0.6"/>`;
+      }
+      // 8 tick lines (outer ring ornament)
+      s += SPOKES(cx,cy,94,106,8,0,0.6,0.3);
+      s += RING(cx,cy,106,0.4,0.22);
+      // 8 spokes to octagon vertices
+      s += SPOKES(cx,cy,4,88,8,0,0.4,0.18);
+      // Inner downward triangle (ancient, deep)
+      s += `<polygon points="${P(cx,cy,24,3,180)}" fill="${e.lt}" fill-opacity="0.28" stroke="${e.md}" stroke-width="0.6" opacity="0.75"/>`;
+      // Center
+      s += `<circle cx="${cx}" cy="${cy}" r="9" fill="${e.lt}" opacity="0.32"/>`;
+      s += `<circle cx="${cx}" cy="${cy}" r="3.5" fill="${e.dk}" opacity="0.7"/>`;
+      return s;
+    })()
+
+  };
+
+  const nameRow = RESULTS[key].nameEn;
+  const elemRow = RESULTS[key].element;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 340">
+  <rect width="320" height="340" fill="${e.bg}"/>
+  ${frame}
+  ${motifs[RESULTS[key].illustrationKey]||''}
+  <line x1="26" y1="308" x2="294" y2="308" stroke="${e.md}" stroke-width="0.4" opacity="0.35"/>
+  <text x="160" y="324" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="12" font-style="italic" fill="${e.dk}" letter-spacing="2.5" opacity="1">${nameRow}</text>
+  <text x="160" y="336" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" fill="${e.dk}" letter-spacing="3" opacity="1">${elemRow}</text>
+</svg>`;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════ */
+
+const state = {
+  screen: 'start',
+  busy: false,
+  step: 0,           // 1,2,3
+  answers: {},       // {q1:'A', q2:'B', q3:'A'}
+  result: null,
+  profile: null,
+  use: null,
+  currentQ: null
+};
+
+/* ═══════════════════════════════════════════════════
+   SCREEN TRANSITIONS
+═══════════════════════════════════════════════════ */
+
+function goTo(id, onSwitch) {
+  const current = document.querySelector('.screen.is-active');
+  const next    = document.getElementById('screen-' + id);
+  if (!next || current === next) return;
+
+  current.classList.add('fade-out');
+
+  setTimeout(() => {
+    current.classList.remove('is-active', 'fade-out');
+    if (onSwitch) onSwitch();
+    next.scrollTop = 0;
+    next.classList.add('is-active', 'fade-in');
+    setTimeout(() => next.classList.remove('fade-in'), 600);
+  }, 380);
+
+  state.screen = id;
+}
+
+/* ═══════════════════════════════════════════════════
+   QUESTION RENDERING
+═══════════════════════════════════════════════════ */
+
+function renderProgress(step) {
+  const dots = document.getElementById('progress-dots');
+  dots.innerHTML = [1,2,3].map((s,i) => {
+    let cls = 'prog-dot';
+    if (s < step)  cls += ' is-done';
+    if (s === step) cls += ' is-current';
+    return (i > 0 ? `<div class="prog-line"></div>` : '') + `<div class="${cls}"></div>`;
+  }).join('');
+}
+
+function renderQuestion(q) {
+  state.currentQ = q;
+  document.getElementById('screen-q').scrollTop = 0;
+  state.busy = false;
+  renderProgress(q.step);
+
+  const html = `
+    <p class="q-number">${q.number}</p>
+    <p class="q-theme">${q.theme}</p>
+    <div class="q-divider"></div>
+    <p class="q-text">${q.text.replace(/\n/g,'<br>')}</p>
+    <div class="choices" id="choice-list">
+      ${q.choices.map(c => `
+        <button class="choice-btn" data-id="${c.id}" ${c.profile ? `data-profile="${c.profile}"` : ''}>
+          <div class="choice-inner">
+            <span class="choice-label">${c.label}</span>
+            <span class="choice-main">${c.main}</span>
+            <span class="choice-sub">${c.sub || ''}</span>
+          </div>
+        </button>
+      `).join('')}
+    </div>`;
+
+  const qContent = document.getElementById('q-content');
+
+  // Animate swap if already visible
+  qContent.style.opacity = '0';
+  qContent.style.transform = 'translateY(12px)';
+  qContent.innerHTML = html;
+
+  requestAnimationFrame(() => {
+    qContent.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+    qContent.style.opacity = '1';
+    qContent.style.transform = 'translateY(0)';
+  });
+
+  // Bind choices
+  document.getElementById('choice-list').querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', () => handleChoice(btn));
+  });
+}
+
+function handleChoice(btn) {
+  if (state.busy) return;
+  state.busy = true;
+  document.querySelectorAll('.choice-btn').forEach(b => b.style.pointerEvents = 'none');
+  btn.classList.add('chosen');
+  const choice = state.currentQ.choices.find(c => c.id === btn.dataset.id);
+  const step = state.currentQ.step;
+
+  setTimeout(() => {
+    state.answers['q' + step] = choice.id;
+    if (step === 1) {
+      renderQuestion(getQ2(choice.id));
+    } else if (step === 2) {
+      state.profile = choice.profile;
+      renderQuestion(USAGE_QUESTION);
+    } else {
+      state.use = choice.use;
+      goTo('loading');
+      setTimeout(() => {
+        renderResult(state.profile);
+        goTo('result');
+      }, 1700);
+    }
+  }, 400);
+}
+
+/* ═══════════════════════════════════════════════════
+   RESULT RENDERING
+═══════════════════════════════════════════════════ */
+
+function elementLabel(product) {
+  return product?.elements?.length
+    ? 'エレメント：' + product.elements.map(key => ELEMENTS[key].jp).join('・')
+    : '';
+}
+
+function renderResult(profileKey) {
+  const profile = PROFILES[profileKey];
+  const selection = selectRecommendations(profileKey);
+  const key = selection.primary;
+  const r = key ? RESULTS[key] : null;
+  const shop = document.getElementById('btn-shop');
+  state.profile = profileKey;
+  state.result = key;
+  document.querySelector('.result-card-wrap').hidden = !r;
+  document.getElementById('result-primary-label').textContent = !r
+    ? 'お好みに近いはちみつを探す'
+    : selection.substituted ? 'お好みに近い、別の一瓶をご紹介します' : 'あなたに一番おすすめのはちみつ';
+  document.getElementById('result-element').textContent = selection.substituted ? '味わいを比べて選ぶ' : profile ? profile.title : '秋冬のはちみつ選び';
+  document.getElementById('result-name-en').textContent = r ? r.nameEn : '';
+  document.getElementById('result-name-jp').textContent = r ? r.nameJp : '';
+  const mainElement = document.getElementById('result-product-element');
+  mainElement.textContent = elementLabel(r);
+  mainElement.hidden = !elementLabel(r);
+  mainElement.dataset.element = r?.elements?.[0] || '';
+
+  document.getElementById('result-desc').textContent = r ? r.desc
+    : 'お好みに近いはちみつは、ただいまご案内をお休みしています。ストアで販売中の商品をご覧ください。';
+  document.getElementById('result-serving').textContent = r
+    ? 'あなたへの楽しみ方：' + servingFor(profileKey, key, state.use) : '';
+  document.getElementById('result-serving').hidden = !r;
+  document.getElementById('result-product').textContent = r ? r.productLabel : '';
+  document.getElementById('result-stock-note').textContent = !r ? ''
+    : selection.substituted ? '本命のはちみつはご案内をお休みしているため、比較候補からご紹介しています。'
+    : 'お好みの風味に合わせて選んだ一瓶';
+  shop.href = productLink(r ? r.shopUrl : 'https://mariposa8.theshop.jp/', key || 'store');
+  shop.textContent = r ? 'このはちみつを見る' : 'ストアの商品を見る';
+  document.getElementById('card-illustration').innerHTML = r ? cardSVG(key) : '';
+
+  const list = document.getElementById('comparison-list');
+  list.replaceChildren();
+  document.getElementById('result-comparisons').hidden = selection.comparisons.length === 0;
+  document.getElementById('comparison-intro').textContent = selection.substituted
+    ? 'ほかの味わいも、こちらから比べられます。'
+    : '本命との味わいの違いから、' + selection.comparisons.length + '種類をご紹介します。';
+  selection.comparisons.forEach(({ key: comparisonKey, reason }, index) => {
+    const product = RESULTS[comparisonKey];
+    const article = document.createElement('article');
+    article.className = 'comparison-card';
+    article.dataset.product = comparisonKey;
+    const reasonEl = document.createElement('p');
+    reasonEl.className = 'comparison-reason';
+    reasonEl.textContent = reason;
+    const name = document.createElement('h3');
+    name.textContent = product.nameJp;
+    const english = document.createElement('p');
+    english.className = 'comparison-name-en';
+    english.textContent = product.nameEn;
+    const element = document.createElement('p');
+    element.className = 'product-element comparison-elements';
+    element.textContent = elementLabel(product);
+    element.hidden = !elementLabel(product);
+    element.dataset.element = product.elements?.[0] || '';
+    const taste = document.createElement('p');
+    taste.className = 'comparison-taste';
+    taste.textContent = product.taste;
+    const label = document.createElement('p');
+    label.className = 'comparison-product';
+    label.textContent = product.productLabel;
+    const link = document.createElement('a');
+    link.className = 'btn-compare';
+    link.href = productLink(product.shopUrl, comparisonKey, 'comparison_' + (index + 1));
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = 'このはちみつを見る';
+    link.setAttribute('aria-label', product.nameJp + 'の商品を見る');
+    article.append(reasonEl, name, english, element, taste, label, link);
+    list.append(article);
+  });
+
+  ['.result-top-label','.result-primary-label','.result-element-badge','.result-card-wrap',
+   '.result-desc-wrap','.result-cta-wrap'].forEach(sel => {
+    const el = document.querySelector(sel);
+    if (el) { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; }
+  });
+}
+
+/* ═══════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════ */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const mapDialog = document.getElementById('flavor-map-dialog');
+  const mapOpen = document.getElementById('flavor-map-open');
+  const mapViewport = document.getElementById('map-dialog-viewport');
+  const mapImage = document.getElementById('map-dialog-image');
+  const mapStage = document.getElementById('map-dialog-stage');
+  let mapZoom = 2;
+  let mapResizeFrame = 0;
+
+  function resizeMap(center = false) {
+    const oldWidth = mapStage.offsetWidth;
+    const oldHeight = mapStage.offsetHeight;
+    const centerX = oldWidth ? (mapViewport.scrollLeft + mapViewport.clientWidth / 2) / oldWidth : 0.5;
+    const centerY = oldHeight ? (mapViewport.scrollTop + mapViewport.clientHeight / 2) / oldHeight : 0.5;
+    const fit = Math.max(1, Math.min(1080, mapViewport.clientWidth - 32, mapViewport.clientHeight - 32));
+    const size = Math.round(fit * mapZoom);
+    mapImage.style.width = size + 'px';
+    mapStage.style.width = Math.max(mapViewport.clientWidth, size + 32) + 'px';
+    mapStage.style.height = Math.max(mapViewport.clientHeight, size + 32) + 'px';
+    mapViewport.scrollLeft = (center ? 0.5 : centerX) * mapStage.offsetWidth - mapViewport.clientWidth / 2;
+    mapViewport.scrollTop = (center ? 0.5 : centerY) * mapStage.offsetHeight - mapViewport.clientHeight / 2;
+    document.getElementById('map-zoom-level').value = Math.round(mapZoom * 100) + '%';
+    document.getElementById('map-zoom-out').disabled = mapZoom <= 1;
+    document.getElementById('map-zoom-in').disabled = mapZoom >= 4;
+  }
+
+  mapOpen.addEventListener('click', () => {
+    mapZoom = 2;
+    mapDialog.showModal();
+    resizeMap(true);
+  });
+  document.getElementById('map-dialog-close').addEventListener('click', () => mapDialog.close());
+  mapDialog.addEventListener('close', () => mapOpen.focus({ preventScroll: true }));
+  document.getElementById('map-zoom-in').addEventListener('click', () => {
+    mapZoom = Math.min(4, mapZoom + 0.5);
+    resizeMap();
+  });
+  document.getElementById('map-zoom-out').addEventListener('click', () => {
+    mapZoom = Math.max(1, mapZoom - 0.5);
+    resizeMap();
+  });
+  document.getElementById('map-zoom-fit').addEventListener('click', () => {
+    mapZoom = 1;
+    resizeMap(true);
+  });
+  window.addEventListener('resize', () => {
+    if (!mapDialog.open) return;
+    cancelAnimationFrame(mapResizeFrame);
+    mapResizeFrame = requestAnimationFrame(() => resizeMap());
+  });
+
+  // Start button: start → q (different screens, goTo works normally)
+  document.getElementById('btn-start').addEventListener('click', () => {
+    goTo('q', () => renderQuestion(QUESTIONS[0]));
+  });
+
+  // Retry: result → start (different screens, goTo works normally)
+  document.getElementById('btn-retry').addEventListener('click', () => {
+    state.busy = false;
+    state.answers = {};
+    state.result  = null;
+    state.profile = null;
+    state.use = null;
+    state.currentQ = null;
+    goTo('start');
+  });
+});
+</script>
+</body>
+</html>
+
