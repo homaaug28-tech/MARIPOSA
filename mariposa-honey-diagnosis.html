@@ -13,19 +13,19 @@
        CSS Custom Properties
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     :root {
-      --bg:        #F0E2CD;
-      --bg-card:   #FFF8EB;
-      --bg-dark:   #DCC4A5;
-      --text:      #382014;
-      --text-mid:  #65402C;
-      --text-lt:   #76513A;
-      --green:     #653128;
-      --green-mid: #7B3D2D;
-      --beige:     #89512F;
-      --honey:     #875020;
-      --sepia:     #73462F;
-      --cream:     #FFF8EB;
-      --line:      rgba(137,81,47,0.45);
+      --bg:        #F7E6CE;
+      --bg-card:   #FFF4DE;
+      --bg-dark:   #E6C29A;
+      --text:      #43271E;
+      --text-mid:  #693D2B;
+      --text-lt:   #774332;
+      --green:     #8C3020;
+      --green-mid: #6D2116;
+      --beige:     #93512F;
+      --honey:     #955414;
+      --sepia:     #7B3B29;
+      --cream:     #FFF2D8;
+      --line:      rgba(123,67,38,0.48);
       --serif-jp:  'Noto Serif JP', serif;
       --serif-en:  'Cormorant Garamond', serif;
     }
@@ -764,6 +764,103 @@
     .btn-compare { display: block; padding: 0.85rem 0.65rem; border: 1px solid var(--green); color: var(--green); text-align: center; text-decoration: none; font-size: 0.83rem; line-height: 1.6; }
     .btn-compare:hover, .btn-compare:active { background: var(--green); color: var(--cream); }
 
+
+    /* Autumn palette: ochre, terracotta, rust, cocoa and warm ivory. */
+    body::after { opacity: 0.045; }
+    body::before {
+      background: radial-gradient(ellipse 75% 40% at 5% 0%, rgba(197,139,45,0.16), transparent 70%),
+                  radial-gradient(ellipse 55% 50% at 100% 100%, rgba(167,67,47,0.12), transparent 70%);
+    }
+    #app { background: #7B2B20; isolation: isolate; }
+    #screen-start { background: transparent; color: var(--cream); isolation: isolate; }
+    #app::before {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201000%201400%22%20preserveAspectRatio%3D%22none%22%3E%0A%3Cpath%20d%3D%22M0%200H1000V210C800%2080%20610%2070%20420%20180S110%20210%200%20315Z%22%20fill%3D%22%23C58B2D%22%20opacity%3D%22.52%22%2F%3E%0A%3Cpath%20d%3D%22M0%200H1000V65C850%2010%20750%2015%20630%2090S205%20165%200%20245Z%22%20fill%3D%22%23DDB184%22%20opacity%3D%22.28%22%2F%3E%0A%3Cpath%20d%3D%22M0%20270C215%20115%20380%20245%20565%20230S810%2095%201000%20200V310C805%20230%20630%20390%20460%20345S210%20230%200%20370Z%22%20fill%3D%22%23AF5C2A%22%20opacity%3D%22.55%22%2F%3E%0A%3Cpath%20d%3D%22M0%201030C210%20870%20365%20805%20530%20880S825%201110%201000%20930V1400H0Z%22%20fill%3D%22%23BA6038%22%20opacity%3D%22.7%22%2F%3E%0A%3Cpath%20d%3D%22M0%201190C200%201070%20355%201045%20530%201180S825%201200%201000%201010V1400H0Z%22%20fill%3D%22%234A2A1F%22%20opacity%3D%22.85%22%2F%3E%0A%3C%2Fsvg%3E"); background-size: 100% 100%; opacity: 0.82;
+    }
+    #screen-start .screen-inner { padding-top: 3rem; padding-bottom: 2.5rem; }
+    #screen-start .brand-mark, #screen-start .start-catch,
+    #screen-start .start-sub, #screen-start .season-note { color: #FFF2D8; }
+    #screen-start .start-catch { font-size: 1.28rem; line-height: 2; letter-spacing: 0.08em; }
+    #screen-start .brand-mark { letter-spacing: 0.45em; }
+    #screen-start .ornament-divider span { color: #F5CB77; opacity: 1; }
+    #screen-start .start-emblem [fill="#A66B39"] { fill: #F5CB77; }
+    #screen-start .start-emblem [fill="#70432B"] { fill: #FFF2D8; }
+    #screen-start .start-emblem [stroke="#A66B39"],
+    #screen-start .start-emblem [stroke="#70432B"] { stroke: #F5CB77; }
+    #screen-start .btn-start { background: #FFF2D8; color: #742819; border: 1px solid #FFF2D8; }
+    #screen-start .btn-start:hover, #screen-start .btn-start:active { background: #F3CD83; border-color: #F3CD83; }
+    #screen-q { padding-top: 3.5rem; background: transparent; }
+    .choice-btn { background: #FFF4DE; border-color: #AC7750; box-shadow: 0 3px 0 rgba(123,59,41,0.07); }
+    .choice-label { color: #864A1F; }
+    .choice-btn.chosen .choice-label, .choice-btn.chosen .choice-sub { color: #FFF2D8; }
+    .q-number, .q-theme { color: #743C24; }
+    #screen-result { padding-top: 4rem; }
+    .result-card { border-color: #965333; box-shadow: 0 8px 24px rgba(92,42,25,0.08); }
+    .card-name-area { background: #FFF4DE; }
+    .result-serving { background: #F2D3A8; border-color: #B27B4D; }
+    .comparison-card { background: #FFF4DE; border-color: #A76A43; border-top: 4px solid #B76B31; }
+    .comparison-reason { color: #793D25; border-bottom-color: #CDA77F; }
+    .btn-compare { background: #F0C77D; color: #5B2F21; border-color: #9B6030; }
+    .btn-compare:hover, .btn-compare:active { background: #6D2116; color: #FFF2D8; border-color: #6D2116; }
+    .btn-retry { background: #4A2A1F; border-color: #4A2A1F; color: #FFF2D8; }
+    .btn-retry:hover, .btn-retry:active { background: #321C15; border-color: #321C15; }
+    #screen-loading { background: transparent; }
+    .loading-dot { background: #F2C576; }
+    .product-element {
+      display: inline-block; padding: 0.35rem 0.7rem; margin-top: 0.75rem;
+      font-family: var(--serif-jp); font-size: 0.77rem; font-weight: 400;
+      letter-spacing: 0.05em; line-height: 1.7; border: 1px solid currentColor;
+      color: #4D2F1F; background: #DCC0A0;
+    }
+    .product-element[data-element="wind"] { color: #624010; background: #F4D18D; }
+    .product-element[data-element="fire"] { color: #6E2418; background: #F1B29A; }
+    .product-element[data-element="earth"] { color: #4D2F1F; background: #DCC0A0; }
+    .product-element[data-element="water"] { color: #673722; background: #F0D2B7; }
+    .comparison-elements { margin-top: 0; margin-bottom: 0.8rem; }
+
+
+    #app::after {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background: rgba(49,20,12,0.18);
+    }
+
+    /* Use the cover landscape on every step; keep reading surfaces opaque. */
+    #screen-q .q-number, #screen-q .q-theme, #screen-q .q-text,
+    #screen-result .result-top-label, #screen-result .result-primary-label,
+    #screen-result .result-element-badge,
+    .result-cta-wrap > .result-product, .result-cta-wrap > .cta-note,
+    .comparison-eyebrow, .result-comparisons h2, .comparison-intro,
+    .result-cta-wrap > .result-help {
+      color: #FFF2D8; font-weight: 400;
+    }
+    #screen-q .q-text { font-size: 1.02rem; }
+    #screen-q .q-number, #screen-q .q-theme,
+    #screen-result .result-top-label, #screen-result .result-primary-label,
+    .comparison-eyebrow, .comparison-intro { font-size: 0.8rem; }
+    #screen-q .q-divider, .prog-line { background: rgba(255,242,216,0.65); }
+    .prog-dot { background: rgba(255,242,216,0.5); }
+    .prog-dot.is-done { background: #FFF2D8; }
+    .prog-dot.is-current { background: #F5CB77; }
+    .choice-btn { border-color: #E0AF79; }
+    .choice-btn.chosen { background: #6D2116; border-color: #FFF2D8; }
+    #screen-q button:focus-visible,
+    #screen-result > .screen-inner > .result-cta-wrap > a:focus-visible {
+      outline-color: #FFF2D8;
+    }
+    .result-desc-wrap {
+      padding: 0 1.25rem; background: #FFF4DE;
+      border: 1px solid #D5A575; box-shadow: 0 8px 24px rgba(49,20,12,0.12);
+    }
+    .result-comparisons { border-top-color: rgba(255,242,216,0.6); }
+    .flavor-map {
+      padding: 1.4rem 1.1rem; background: #FFF4DE; border: 1px solid #D5A575;
+    }
+    .btn-retry { border-color: #F0C77D; }
+    .loading-text { color: #FFF2D8; font-size: 1rem; font-weight: 400; }
+    .loading-bee [fill="#A66B39"] { fill: #F2C576; opacity: 1; }
+    .loading-bee [fill="#C4801A"] { fill: #F7D897; opacity: 1; }
+    .loading-bee [stroke="#70432B"] { stroke: #4A2A1F; opacity: 1; }
+
 </style>
 </head>
 <body>
@@ -902,6 +999,7 @@
           <div class="card-name-area">
             <span class="honey-name-en" id="result-name-en"></span>
             <span class="honey-name-jp" id="result-name-jp"></span>
+            <p class="product-element" id="result-product-element" hidden></p>
           </div>
         </div>
       </div>
@@ -971,7 +1069,25 @@
 // 公開商品ページの購入表示を確認: 2026-10-27 (JST)
 // BASEの在庫とは自動連携していません。品切れ時は available を false にします。
 // RESULTS は16商品、PROFILES は本命8タイプと比較候補の組み合わせです。
-// 未確認のエレメント分類は付けず、elementKey はカードの配色にのみ使用します。
+// エレメントは商品説明と公式カテゴリを照合 (2026-10-27)。フォレストは分類未確認のため非表示。
+const ELEMENTS = {
+  "wind": {
+    "jp": "風",
+    "en": "Wind"
+  },
+  "fire": {
+    "jp": "火",
+    "en": "Fire"
+  },
+  "earth": {
+    "jp": "土",
+    "en": "Earth"
+  },
+  "water": {
+    "jp": "水",
+    "en": "Water"
+  }
+};
 const RESULTS = {
   "karri": {
     "nameEn": "Karri",
@@ -984,7 +1100,10 @@ const RESULTS = {
     "productLabel": "300g / Honey in the Garden",
     "shopUrl": "https://mariposa8.theshop.jp/items/156925156",
     "available": true,
-    "taste": "やさしくクリーミーな甘みと、すっきりした後味。"
+    "taste": "やさしくクリーミーな甘みと、すっきりした後味。",
+    "elements": [
+      "wind"
+    ]
   },
   "cinnamon": {
     "nameEn": "Cinnamon",
@@ -997,7 +1116,10 @@ const RESULTS = {
     "productLabel": "300g / Honey in the Garden",
     "shopUrl": "https://mariposa8.theshop.jp/items/68103953",
     "available": true,
-    "taste": "シナモンの甘く華やかなスパイスの香り。"
+    "taste": "シナモンの甘く華やかなスパイスの香り。",
+    "elements": [
+      "fire"
+    ]
   },
   "jarrah": {
     "nameEn": "Jarrah",
@@ -1010,12 +1132,15 @@ const RESULTS = {
     "productLabel": "380g / ELIXIR",
     "shopUrl": "https://mariposa8.theshop.jp/items/80334356",
     "available": true,
-    "taste": "黒糖やキャラメルを思わせる深いコク。"
+    "taste": "黒糖やキャラメルを思わせる深いコク。",
+    "elements": [
+      "earth"
+    ]
   },
   "ginger_honey": {
     "nameEn": "Ginger Honey",
     "nameJp": "ジンジャーハニー",
-    "element": "火 — Fire",
+    "element": "火・土 — Fire / Earth",
     "elementKey": "fire",
     "illustrationKey": "ginger_honey",
     "desc": "生姜のきりっとした辛みを楽しみたいあなたに。マレーシアのベントンジンジャーとはちみつを合わせた、香り豊かな一本。肌寒い朝の飲み物におすすめです。",
@@ -1023,7 +1148,11 @@ const RESULTS = {
     "productLabel": "250g / 13Honey",
     "shopUrl": "https://mariposa8.theshop.jp/items/104752871",
     "available": true,
-    "taste": "ベントンジンジャーのきりっとした辛み。"
+    "taste": "ベントンジンジャーのきりっとした辛み。",
+    "elements": [
+      "fire",
+      "earth"
+    ]
   },
   "lemon_myrtle": {
     "nameEn": "Lemon Myrtle",
@@ -1036,12 +1165,15 @@ const RESULTS = {
     "productLabel": "300g / Honey in the Garden",
     "shopUrl": "https://mariposa8.theshop.jp/items/68104030",
     "available": true,
-    "taste": "レモンを思わせる、爽やかなハーブの香り。"
+    "taste": "レモンを思わせる、爽やかなハーブの香り。",
+    "elements": [
+      "water"
+    ]
   },
   "native": {
     "nameEn": "Native Honey",
     "nameJp": "ネイティブハニー",
-    "element": "ニュージーランドの野生の花々",
+    "element": "土 — Earth",
     "elementKey": "earth",
     "illustrationKey": "rewarewa",
     "desc": "キャラメルのような甘みを、毎日の食卓でたっぷり楽しみたいあなたに。ニュージーランドの野生の花々から届くはちみつです。朝食やおやつの時間にどうぞ。",
@@ -1049,7 +1181,10 @@ const RESULTS = {
     "productLabel": "1kg / The Authentic Honey Co.",
     "shopUrl": "https://mariposa8.theshop.jp/items/82941591",
     "available": true,
-    "taste": "野生の花々から届く、キャラメルを思わせる甘み。"
+    "taste": "野生の花々から届く、キャラメルを思わせる甘み。",
+    "elements": [
+      "earth"
+    ]
   },
   "hakea": {
     "nameEn": "Hakea",
@@ -1062,7 +1197,10 @@ const RESULTS = {
     "productLabel": "380g / ELIXIR",
     "shopUrl": "https://mariposa8.theshop.jp/items/91766769",
     "available": true,
-    "taste": "バニラを思わせる香りと、濃厚なキャラメル風味。"
+    "taste": "バニラを思わせる香りと、濃厚なキャラメル風味。",
+    "elements": [
+      "water"
+    ]
   },
   "wandoo": {
     "nameEn": "Wandoo",
@@ -1075,38 +1213,47 @@ const RESULTS = {
     "productLabel": "300g / Honey in the Garden",
     "shopUrl": "https://mariposa8.theshop.jp/items/128021189",
     "available": true,
-    "taste": "キャラメルのような丸い甘みと、落ち着いた木の香り。"
+    "taste": "キャラメルのような丸い甘みと、落ち着いた木の香り。",
+    "elements": [
+      "earth"
+    ]
   },
   "stingless": {
     "nameEn": "Stingless Honey",
     "nameJp": "スティングレス",
-    "element": "甘酸っぱく、軽やか",
-    "elementKey": "wind",
+    "element": "火 — Fire",
+    "elementKey": "fire",
     "illustrationKey": "lemon_myrtle",
     "desc": "甘さだけでなく、はっきりした酸味も楽しみたいあなたに。さらさらした口あたりと、甘酸っぱい風味が特徴のはちみつです。水や炭酸で割る楽しみ方にもよく合います。",
     "serving": "少量ずつ水や炭酸で割り、お好みの甘酸っぱさでどうぞ。",
     "productLabel": "1500g / 13Honey",
     "shopUrl": "https://mariposa8.theshop.jp/items/65208572",
     "taste": "さらさらした口あたりと、はっきりした甘酸っぱさ。",
-    "available": true
+    "available": true,
+    "elements": [
+      "fire"
+    ]
   },
   "wildflower": {
     "nameEn": "Wildflower",
     "nameJp": "ワイルドフラワー",
-    "element": "花の香りと、ほどよいコク",
-    "elementKey": "wind",
+    "element": "土 — Earth",
+    "elementKey": "earth",
     "illustrationKey": "leatherwood",
     "desc": "花々の香りと、ほどよいコクの両方を楽しみたいあなたに。軽すぎず濃厚すぎない味わいを、朝食からおやつまで、毎日の食卓で楽しめる一本です。",
     "serving": "トーストやヨーグルトに添えて、花々の風味を楽しんでください。",
     "productLabel": "300g / Honey in the Garden",
     "shopUrl": "https://mariposa8.theshop.jp/items/68103891",
     "taste": "花々の香りと、日々の食卓に合わせやすい甘み。",
-    "available": true
+    "available": true,
+    "elements": [
+      "earth"
+    ]
   },
   "marri": {
     "nameEn": "Marri",
     "nameJp": "マリ",
-    "element": "まろやかで、深みのある甘み",
+    "element": "土 — Earth",
     "elementKey": "earth",
     "illustrationKey": "jarrah",
     "desc": "滑らかでマイルドな口あたりの中に、深みのある風味を楽しめるはちみつです。花々の軽やかな甘みから、もう少しコクのある味へ進みたい方に。",
@@ -1114,25 +1261,29 @@ const RESULTS = {
     "productLabel": "300g / Honey in the Garden",
     "shopUrl": "https://mariposa8.theshop.jp/items/65013027",
     "taste": "滑らかでマイルドながら、深みのある風味。",
-    "available": true
+    "available": true,
+    "elements": [
+      "earth"
+    ]
   },
   "forest": {
     "nameEn": "Forest Honey",
     "nameJp": "フォレストハニー",
-    "element": "花々の芳醇な香りとコク",
-    "elementKey": "earth",
+    "element": "",
+    "elementKey": "neutral",
     "illustrationKey": "rewarewa",
     "desc": "花の香りも、しっかりしたコクも楽しみたいあなたに。ラトビアの森の百花蜜です。今回のロットはリンデンのすっきり感と、そばの花の深みが同居した、芳醇な味わいです。",
     "serving": "そのまま味わうほか、朝のコーヒーに少量加えても楽しめます。",
     "productLabel": "450g / HOLISTETIQUE",
     "shopUrl": "https://mariposa8.theshop.jp/items/121733077",
     "taste": "リンデンのすっきり感と、そばの花の深みを併せ持つ百花蜜。",
-    "available": true
+    "available": true,
+    "elements": []
   },
   "dryandra": {
     "nameEn": "Dryandra",
     "nameJp": "ドライアンドラ",
-    "element": "ほのかな塩気と花の香り",
+    "element": "水 — Water",
     "elementKey": "water",
     "illustrationKey": "leatherwood",
     "desc": "濃厚な甘みに、ほんのりした塩気と花の香りが重なるはちみつです。キャラメル系の甘みが好きで、風味の違いも楽しみたい方に。",
@@ -1140,12 +1291,15 @@ const RESULTS = {
     "productLabel": "380g / ELIXIR",
     "shopUrl": "https://mariposa8.theshop.jp/items/86707796",
     "taste": "ほんのりした塩気と花の香りが重なる、おやつのような甘み。",
-    "available": true
+    "available": true,
+    "elements": [
+      "water"
+    ]
   },
   "rose_banksia": {
     "nameEn": "Rose Banksia",
     "nameJp": "ローズバンクシア",
-    "element": "ねっとり濃厚な余韻",
+    "element": "土 — Earth",
     "elementKey": "earth",
     "illustrationKey": "wandoo",
     "desc": "ねっとりした口あたりと、濃厚な甘みをゆっくり楽しめるはちみつです。ひとさじのおやつとして、余韻までじっくり味わいたい方に。",
@@ -1153,12 +1307,15 @@ const RESULTS = {
     "productLabel": "380g / ELIXIR",
     "shopUrl": "https://mariposa8.theshop.jp/items/71525345",
     "taste": "水飴を思わせるねっとりした口あたりと、濃厚な甘み。",
-    "available": true
+    "available": true,
+    "elements": [
+      "earth"
+    ]
   },
   "blackbutt": {
     "nameEn": "Blackbutt",
     "nameJp": "ブラックバット",
-    "element": "深く濃い、木の香りとコク",
+    "element": "土 — Earth",
     "elementKey": "earth",
     "illustrationKey": "wandoo",
     "desc": "深く濃い味わいを、じっくり楽しみたいあなたに。西オーストラリアのユーカリの一種、ブラックバットから採れるはちみつ。味わいマップでは、濃厚なキャラメル・ウッド寄りの一本です。",
@@ -1166,12 +1323,15 @@ const RESULTS = {
     "productLabel": "300g / Honey in the Garden",
     "shopUrl": "https://mariposa8.theshop.jp/items/64977161",
     "taste": "濃厚なキャラメル・ウッド寄りの、深く濃い味わい。",
-    "available": true
+    "available": true,
+    "elements": [
+      "earth"
+    ]
   },
   "murchison": {
     "nameEn": "Murchison",
     "nameJp": "マーチソン",
-    "element": "生キャラメルのような濃厚さ",
+    "element": "土 — Earth",
     "elementKey": "earth",
     "illustrationKey": "rewarewa",
     "desc": "生キャラメルや練乳を思わせる濃厚さと、ねっとりした口あたりが特徴です。複雑な野草の香りも重なり、そのまま少しずつ味わう楽しさがあります。",
@@ -1179,7 +1339,10 @@ const RESULTS = {
     "productLabel": "380g / HOLISTETIQUE",
     "shopUrl": "https://mariposa8.theshop.jp/items/65013896",
     "taste": "生キャラメルや練乳を思わせる濃厚なコクと、野草の香り。",
-    "available": true
+    "available": true,
+    "elements": [
+      "earth"
+    ]
   }
 };
 const PROFILES = {
@@ -1527,10 +1690,11 @@ function productLink(shopUrl, productKey, placement = 'primary') {
 
 function cardSVG(key) {
   const E = {
-    wind:  {bg:'#F2E7CB', dk:'#55401D', md:'#80612D', lt:'#AA854A', vl:'rgba(170,133,74,0.1)'},
-    fire:  {bg:'#F0D9CF', dk:'#61291F', md:'#8C4031', lt:'#B46549', vl:'rgba(180,101,73,0.1)'},
-    earth: {bg:'#E7DCCD', dk:'#3C3321', md:'#66543A', lt:'#94784F', vl:'rgba(148,120,79,0.1)'},
-    water: {bg:'#EFE0D0', dk:'#583426', md:'#825339', lt:'#AA774E', vl:'rgba(170,119,78,0.1)'}
+    wind:    {bg:'#F4D18D', dk:'#624010', md:'#8A571C', lt:'#BC8126', vl:'rgba(188,129,38,0.14)'},
+    fire:    {bg:'#E9A181', dk:'#6E2418', md:'#963A24', lt:'#BE5A35', vl:'rgba(150,58,36,0.14)'},
+    earth:   {bg:'#D7B28A', dk:'#4D2F1F', md:'#70452D', lt:'#9C6942', vl:'rgba(112,69,45,0.14)'},
+    water:   {bg:'#F0CEAB', dk:'#673722', md:'#935333', lt:'#BA7B4A', vl:'rgba(147,83,51,0.12)'},
+    neutral: {bg:'#EDDAC1', dk:'#55382A', md:'#80543A', lt:'#AA7B53', vl:'rgba(128,84,58,0.12)'}
   };
   const e = E[RESULTS[key].elementKey];
 
@@ -1976,6 +2140,12 @@ function handleChoice(btn) {
    RESULT RENDERING
 ═══════════════════════════════════════════════════ */
 
+function elementLabel(product) {
+  return product?.elements?.length
+    ? 'エレメント：' + product.elements.map(key => ELEMENTS[key].jp).join('・')
+    : '';
+}
+
 function renderResult(profileKey) {
   const profile = PROFILES[profileKey];
   const selection = selectRecommendations(profileKey);
@@ -1991,6 +2161,11 @@ function renderResult(profileKey) {
   document.getElementById('result-element').textContent = selection.substituted ? '味わいを比べて選ぶ' : profile ? profile.title : '秋冬のはちみつ選び';
   document.getElementById('result-name-en').textContent = r ? r.nameEn : '';
   document.getElementById('result-name-jp').textContent = r ? r.nameJp : '';
+  const mainElement = document.getElementById('result-product-element');
+  mainElement.textContent = elementLabel(r);
+  mainElement.hidden = !elementLabel(r);
+  mainElement.dataset.element = r?.elements?.[0] || '';
+
   document.getElementById('result-desc').textContent = r ? r.desc
     : 'お好みに近いはちみつは、ただいまご案内をお休みしています。ストアで販売中の商品をご覧ください。';
   document.getElementById('result-serving').textContent = r
@@ -2023,6 +2198,11 @@ function renderResult(profileKey) {
     const english = document.createElement('p');
     english.className = 'comparison-name-en';
     english.textContent = product.nameEn;
+    const element = document.createElement('p');
+    element.className = 'product-element comparison-elements';
+    element.textContent = elementLabel(product);
+    element.hidden = !elementLabel(product);
+    element.dataset.element = product.elements?.[0] || '';
     const taste = document.createElement('p');
     taste.className = 'comparison-taste';
     taste.textContent = product.taste;
@@ -2036,7 +2216,7 @@ function renderResult(profileKey) {
     link.rel = 'noopener';
     link.textContent = 'このはちみつを見る';
     link.setAttribute('aria-label', product.nameJp + 'の商品を見る');
-    article.append(reasonEl, name, english, taste, label, link);
+    article.append(reasonEl, name, english, element, taste, label, link);
     list.append(article);
   });
 
