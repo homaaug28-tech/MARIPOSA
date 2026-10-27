@@ -741,6 +741,29 @@
     .map-dialog-stage { min-width: 100%; min-height: 100%; display: grid; place-items: center; padding: 16px; }
     #map-dialog-image { display: block; max-width: none; height: auto; user-select: none; -webkit-user-drag: none; }
 
+
+    .result-primary-label {
+      font-size: 0.85rem; line-height: 1.8; color: var(--text-mid);
+      text-align: center; margin-bottom: 0.6rem;
+    }
+    .result-element-badge { font-family: var(--serif-jp); letter-spacing: 0.06em; line-height: 1.9; }
+    .result-comparisons { width: 100%; margin-top: 2rem; padding-top: 1.8rem; border-top: 1px solid var(--line); }
+    .comparison-eyebrow {
+      font-family: var(--serif-en); text-transform: uppercase; letter-spacing: 0.2em;
+      font-size: 0.7rem; color: var(--sepia); text-align: center;
+    }
+    .result-comparisons h2 { margin: 0.6rem 0; font-size: 1rem; line-height: 1.8; font-weight: 400; text-align: center; color: var(--text); }
+    .comparison-intro { margin-bottom: 1.2rem; font-size: 0.78rem; line-height: 1.9; text-align: center; color: var(--text-mid); }
+    .comparison-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+    .comparison-card { padding: 1.25rem; background: var(--bg-card); border: 1px solid var(--line); min-width: 0; }
+    .comparison-reason { color: var(--sepia); font-size: 0.8rem; line-height: 1.9; padding-bottom: 0.7rem; margin-bottom: 0.9rem; border-bottom: 1px solid var(--line); }
+    .comparison-card h3 { color: var(--text); font-size: 1.05rem; font-weight: 400; line-height: 1.7; overflow-wrap: anywhere; }
+    .comparison-name-en { font-family: var(--serif-en); color: var(--text-mid); font-size: 0.95rem; letter-spacing: 0.04em; margin: 0.1rem 0 0.8rem; }
+    .comparison-taste { color: var(--text-mid); font-size: 0.82rem; line-height: 1.9; }
+    .comparison-product { color: var(--text-mid); font-size: 0.74rem; line-height: 1.8; margin: 0.8rem 0; }
+    .btn-compare { display: block; padding: 0.85rem 0.65rem; border: 1px solid var(--green); color: var(--green); text-align: center; text-decoration: none; font-size: 0.83rem; line-height: 1.6; }
+    .btn-compare:hover, .btn-compare:active { background: var(--green); color: var(--cream); }
+
 </style>
 </head>
 <body>
@@ -868,7 +891,8 @@
   ═══════════════════════════════ -->
   <div id="screen-result" class="screen">
     <div class="screen-inner">
-      <p class="result-top-label">Your Honey</p>
+      <p class="result-top-label">Your First Choice</p>
+      <p class="result-primary-label" id="result-primary-label">あなたに一番おすすめのはちみつ</p>
       <p class="result-element-badge" id="result-element"></p>
       <div class="result-card-wrap">
         <div class="result-card" id="result-card">
@@ -891,6 +915,12 @@
         <p class="result-product" id="result-product"></p>
         <p class="cta-note" id="result-stock-note"></p>
         <a class="btn-cta" id="btn-shop" href="#" target="_blank" rel="noopener">商品を見る</a>
+        <section class="result-comparisons" id="result-comparisons" aria-labelledby="comparison-title" hidden>
+          <p class="comparison-eyebrow">Compare the Flavors</p>
+          <h2 id="comparison-title">味わいの違いで、こちらのはちみつも</h2>
+          <p class="comparison-intro" id="comparison-intro"></p>
+          <div class="comparison-list" id="comparison-list"></div>
+        </section>
         <section class="flavor-map" aria-labelledby="flavor-map-title">
           <p class="flavor-map-eyebrow">Honey Flavor Map</p>
           <h2 id="flavor-map-title">味わいマップで比べる</h2>
@@ -938,10 +968,10 @@
    DATA
 ═══════════════════════════════════════════════════ */
 
-// 在庫は自動連携ではありません。確認日: 2026-10-26 (JST)
-// 品切れ時は該当商品の available を false にしてください。
-// 同じ食べ方の代替候補も販売停止の場合、商品を推薦せずストアへ案内します。
-// elementKey はカードの配色。Native Honey にエレメント分類は付けていません。
+// 公開商品ページの購入表示を確認: 2026-10-27 (JST)
+// BASEの在庫とは自動連携していません。品切れ時は available を false にします。
+// RESULTS は16商品、PROFILES は本命8タイプと比較候補の組み合わせです。
+// 未確認のエレメント分類は付けず、elementKey はカードの配色にのみ使用します。
 const RESULTS = {
   "karri": {
     "nameEn": "Karri",
@@ -951,12 +981,10 @@ const RESULTS = {
     "illustrationKey": "karri",
     "desc": "やさしい甘さと、すっきりとした後味。温かいお茶を片手に、静かな時間を楽しみたいあなたに。クリーミーな口あたりをゆっくり味わう一本です。",
     "serving": "秋冬の楽しみ方：紅茶やハーブティーに添えて。香ばしいトーストにも。",
-    "productLabel": "750g / Honey in the Garden",
-    "shopUrl": "https://mariposa8.theshop.jp/items/138397344",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/156925156",
     "available": true,
-    "alternatives": [
-      "lemon_myrtle"
-    ]
+    "taste": "やさしくクリーミーな甘みと、すっきりした後味。"
   },
   "cinnamon": {
     "nameEn": "Cinnamon",
@@ -966,12 +994,10 @@ const RESULTS = {
     "illustrationKey": "scottish_heather",
     "desc": "シナモンの甘く華やかな香りが好きなあなたに。いつものコーヒーや朝食に少し添えるだけで、秋冬らしいスパイスの風味を楽しめます。",
     "serving": "秋冬の楽しみ方：朝のコーヒーやミルクティーに少量を。香りを確かめながらどうぞ。",
-    "productLabel": "1kg / Honey in the Garden",
-    "shopUrl": "https://mariposa8.theshop.jp/items/156924159",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/68103953",
     "available": true,
-    "alternatives": [
-      "ginger_honey"
-    ]
+    "taste": "シナモンの甘く華やかなスパイスの香り。"
   },
   "jarrah": {
     "nameEn": "Jarrah",
@@ -981,12 +1007,10 @@ const RESULTS = {
     "illustrationKey": "jarrah",
     "desc": "黒糖やナッツを思わせる、深くまろやかな甘み。しっかりとしたコクを楽しみたいあなたに。なめらかな口あたりで、朝の食卓にもよく合います。",
     "serving": "秋冬の楽しみ方：バタートーストやチーズに。そのまま少量ずつ味わっても。",
-    "productLabel": "1kg / Honey in the Garden",
-    "shopUrl": "https://mariposa8.theshop.jp/items/156924847",
+    "productLabel": "380g / ELIXIR",
+    "shopUrl": "https://mariposa8.theshop.jp/items/80334356",
     "available": true,
-    "alternatives": [
-      "native"
-    ]
+    "taste": "黒糖やキャラメルを思わせる深いコク。"
   },
   "ginger_honey": {
     "nameEn": "Ginger Honey",
@@ -999,9 +1023,7 @@ const RESULTS = {
     "productLabel": "250g / 13Honey",
     "shopUrl": "https://mariposa8.theshop.jp/items/104752871",
     "available": true,
-    "alternatives": [
-      "cinnamon"
-    ]
+    "taste": "ベントンジンジャーのきりっとした辛み。"
   },
   "lemon_myrtle": {
     "nameEn": "Lemon Myrtle",
@@ -1011,12 +1033,10 @@ const RESULTS = {
     "illustrationKey": "lemon_myrtle",
     "desc": "レモンを思わせるハーブの香りと、さっぱりとした甘み。夜のひと休みにも軽やかな風味を選びたいあなたに。温かいお茶との組み合わせを楽しめます。",
     "serving": "秋冬の楽しみ方：紅茶やハーブティーに少量を加えて、爽やかな香りを。",
-    "productLabel": "1kg / Honey in the Garden",
-    "shopUrl": "https://mariposa8.theshop.jp/items/156923939",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/68104030",
     "available": true,
-    "alternatives": [
-      "karri"
-    ]
+    "taste": "レモンを思わせる、爽やかなハーブの香り。"
   },
   "native": {
     "nameEn": "Native Honey",
@@ -1029,9 +1049,7 @@ const RESULTS = {
     "productLabel": "1kg / The Authentic Honey Co.",
     "shopUrl": "https://mariposa8.theshop.jp/items/82941591",
     "available": true,
-    "alternatives": [
-      "jarrah"
-    ]
+    "taste": "野生の花々から届く、キャラメルを思わせる甘み。"
   },
   "hakea": {
     "nameEn": "Hakea",
@@ -1044,9 +1062,7 @@ const RESULTS = {
     "productLabel": "380g / ELIXIR",
     "shopUrl": "https://mariposa8.theshop.jp/items/91766769",
     "available": true,
-    "alternatives": [
-      "wandoo"
-    ]
+    "taste": "バニラを思わせる香りと、濃厚なキャラメル風味。"
   },
   "wandoo": {
     "nameEn": "Wandoo",
@@ -1056,162 +1072,452 @@ const RESULTS = {
     "illustrationKey": "wandoo",
     "desc": "キャラメルのような丸い甘みに、落ち着いた木の香り。濃厚さと軽やかな後味の両方を楽しみたいあなたに。夜のおやつやお茶の時間に寄り添う一本です。",
     "serving": "秋冬の楽しみ方：スコーンやナッツに添えて。ほうじ茶やミルクティーのお供にも。",
-    "productLabel": "750g / Honey in the Garden",
-    "shopUrl": "https://mariposa8.theshop.jp/items/97539037",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/128021189",
     "available": true,
-    "alternatives": [
-      "hakea"
+    "taste": "キャラメルのような丸い甘みと、落ち着いた木の香り。"
+  },
+  "stingless": {
+    "nameEn": "Stingless Honey",
+    "nameJp": "スティングレス",
+    "element": "甘酸っぱく、軽やか",
+    "elementKey": "wind",
+    "illustrationKey": "lemon_myrtle",
+    "desc": "甘さだけでなく、はっきりした酸味も楽しみたいあなたに。さらさらした口あたりと、甘酸っぱい風味が特徴のはちみつです。水や炭酸で割る楽しみ方にもよく合います。",
+    "serving": "少量ずつ水や炭酸で割り、お好みの甘酸っぱさでどうぞ。",
+    "productLabel": "1500g / 13Honey",
+    "shopUrl": "https://mariposa8.theshop.jp/items/65208572",
+    "taste": "さらさらした口あたりと、はっきりした甘酸っぱさ。",
+    "available": true
+  },
+  "wildflower": {
+    "nameEn": "Wildflower",
+    "nameJp": "ワイルドフラワー",
+    "element": "花の香りと、ほどよいコク",
+    "elementKey": "wind",
+    "illustrationKey": "leatherwood",
+    "desc": "花々の香りと、ほどよいコクの両方を楽しみたいあなたに。軽すぎず濃厚すぎない味わいを、朝食からおやつまで、毎日の食卓で楽しめる一本です。",
+    "serving": "トーストやヨーグルトに添えて、花々の風味を楽しんでください。",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/68103891",
+    "taste": "花々の香りと、日々の食卓に合わせやすい甘み。",
+    "available": true
+  },
+  "marri": {
+    "nameEn": "Marri",
+    "nameJp": "マリ",
+    "element": "まろやかで、深みのある甘み",
+    "elementKey": "earth",
+    "illustrationKey": "jarrah",
+    "desc": "滑らかでマイルドな口あたりの中に、深みのある風味を楽しめるはちみつです。花々の軽やかな甘みから、もう少しコクのある味へ進みたい方に。",
+    "serving": "まずはそのまま少量ずつ。トーストにもよく合います。",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/65013027",
+    "taste": "滑らかでマイルドながら、深みのある風味。",
+    "available": true
+  },
+  "forest": {
+    "nameEn": "Forest Honey",
+    "nameJp": "フォレストハニー",
+    "element": "花々の芳醇な香りとコク",
+    "elementKey": "earth",
+    "illustrationKey": "rewarewa",
+    "desc": "花の香りも、しっかりしたコクも楽しみたいあなたに。ラトビアの森の百花蜜です。今回のロットはリンデンのすっきり感と、そばの花の深みが同居した、芳醇な味わいです。",
+    "serving": "そのまま味わうほか、朝のコーヒーに少量加えても楽しめます。",
+    "productLabel": "450g / HOLISTETIQUE",
+    "shopUrl": "https://mariposa8.theshop.jp/items/121733077",
+    "taste": "リンデンのすっきり感と、そばの花の深みを併せ持つ百花蜜。",
+    "available": true
+  },
+  "dryandra": {
+    "nameEn": "Dryandra",
+    "nameJp": "ドライアンドラ",
+    "element": "ほのかな塩気と花の香り",
+    "elementKey": "water",
+    "illustrationKey": "leatherwood",
+    "desc": "濃厚な甘みに、ほんのりした塩気と花の香りが重なるはちみつです。キャラメル系の甘みが好きで、風味の違いも楽しみたい方に。",
+    "serving": "まずはそのまま味わって。パンや焼き芋に添えてもどうぞ。",
+    "productLabel": "380g / ELIXIR",
+    "shopUrl": "https://mariposa8.theshop.jp/items/86707796",
+    "taste": "ほんのりした塩気と花の香りが重なる、おやつのような甘み。",
+    "available": true
+  },
+  "rose_banksia": {
+    "nameEn": "Rose Banksia",
+    "nameJp": "ローズバンクシア",
+    "element": "ねっとり濃厚な余韻",
+    "elementKey": "earth",
+    "illustrationKey": "wandoo",
+    "desc": "ねっとりした口あたりと、濃厚な甘みをゆっくり楽しめるはちみつです。ひとさじのおやつとして、余韻までじっくり味わいたい方に。",
+    "serving": "少量をそのまま、お茶のお供に。バタートーストにも。",
+    "productLabel": "380g / ELIXIR",
+    "shopUrl": "https://mariposa8.theshop.jp/items/71525345",
+    "taste": "水飴を思わせるねっとりした口あたりと、濃厚な甘み。",
+    "available": true
+  },
+  "blackbutt": {
+    "nameEn": "Blackbutt",
+    "nameJp": "ブラックバット",
+    "element": "深く濃い、木の香りとコク",
+    "elementKey": "earth",
+    "illustrationKey": "wandoo",
+    "desc": "深く濃い味わいを、じっくり楽しみたいあなたに。西オーストラリアのユーカリの一種、ブラックバットから採れるはちみつ。味わいマップでは、濃厚なキャラメル・ウッド寄りの一本です。",
+    "serving": "まずはそのまま少量ずつ。コーヒーや紅茶のお供にも。",
+    "productLabel": "300g / Honey in the Garden",
+    "shopUrl": "https://mariposa8.theshop.jp/items/64977161",
+    "taste": "濃厚なキャラメル・ウッド寄りの、深く濃い味わい。",
+    "available": true
+  },
+  "murchison": {
+    "nameEn": "Murchison",
+    "nameJp": "マーチソン",
+    "element": "生キャラメルのような濃厚さ",
+    "elementKey": "earth",
+    "illustrationKey": "rewarewa",
+    "desc": "生キャラメルや練乳を思わせる濃厚さと、ねっとりした口あたりが特徴です。複雑な野草の香りも重なり、そのまま少しずつ味わう楽しさがあります。",
+    "serving": "コーヒーや紅茶のお茶請けに、そのまま少量ずつどうぞ。",
+    "productLabel": "380g / HOLISTETIQUE",
+    "shopUrl": "https://mariposa8.theshop.jp/items/65013896",
+    "taste": "生キャラメルや練乳を思わせる濃厚なコクと、野草の香り。",
+    "available": true
+  }
+};
+const PROFILES = {
+  "karri": {
+    "title": "軽やかで穏やかな甘み",
+    "primary": "karri",
+    "spoon": "クリーミーな口あたりと軽い後味を、少量ずつそのまま楽しんでください。",
+    "food": "香ばしいトーストに添えて、やさしい甘みを。",
+    "warm": "紅茶やハーブティーに添えて、穏やかな甘みを楽しんでください。",
+    "comparisons": [
+      {
+        "key": "lemon_myrtle",
+        "reason": "ハーブの爽やかな香りを楽しむなら"
+      },
+      {
+        "key": "wandoo",
+        "reason": "軽やかさを残しつつ、キャラメルや木の香りを楽しむなら"
+      }
+    ]
+  },
+  "stingless": {
+    "title": "甘酸っぱく、さっぱり",
+    "primary": "stingless",
+    "spoon": "はっきりした酸味があります。まずは少量ずつ、その甘酸っぱさを確かめてください。",
+    "food": "ヨーグルトなどに少量を加えて、甘酸っぱい風味を。",
+    "warm": "ぬるま湯などで薄めて、お好みの甘酸っぱさで楽しんでください。",
+    "cold": "水や炭酸で少量ずつ割って、さっぱりした甘酸っぱさを楽しんでください。",
+    "comparisons": [
+      {
+        "key": "karri",
+        "reason": "酸味よりも、やさしい甘みを楽しむなら"
+      },
+      {
+        "key": "forest",
+        "reason": "もう少し濃厚で、花々の香りとコクを楽しむなら"
+      }
+    ]
+  },
+  "wildflower": {
+    "title": "花の香りと甘みのバランス",
+    "primary": "wildflower",
+    "spoon": "少量ずつそのまま味わい、花々の香りを楽しんでください。",
+    "food": "トーストやヨーグルトに添えて、毎日の食卓に花々の甘みを。",
+    "warm": "紅茶に少量を添えて、香りと甘みの組み合わせを楽しんでください。",
+    "comparisons": [
+      {
+        "key": "karri",
+        "reason": "より軽やかな味わいを選ぶなら"
+      },
+      {
+        "key": "marri",
+        "reason": "もう少しコクのある甘みを選ぶなら"
+      }
+    ]
+  },
+  "native": {
+    "title": "日々楽しむキャラメルの甘み",
+    "primary": "native",
+    "spoon": "キャラメルのような甘みを、ひとさじのおやつとして楽しんでください。",
+    "food": "トーストやパンケーキに。バターのコクと合わせても楽しめます。",
+    "warm": "温かいコーヒーのお供に。まずは少量をそのまま味わってから、お茶と交互にどうぞ。",
+    "comparisons": [
+      {
+        "key": "wandoo",
+        "reason": "より軽やかで、木の香りが感じられる味なら"
+      },
+      {
+        "key": "jarrah",
+        "reason": "黒糖を思わせる、より深いコクを楽しむなら"
+      }
+    ]
+  },
+  "forest": {
+    "title": "花の香りも、濃厚さも",
+    "primary": "forest",
+    "spoon": "少量ずつそのまま味わい、花々の芳醇な香りとコクを楽しんでください。",
+    "food": "トーストに添えて。煮込み料理やドレッシングの隠し味にも使えます。",
+    "warm": "朝のコーヒーに少量加えて、深みのある香りを楽しんでください。",
+    "comparisons": [
+      {
+        "key": "wildflower",
+        "reason": "もう少し軽やかで、食卓に合わせやすい味なら"
+      },
+      {
+        "key": "murchison",
+        "reason": "さらに濃厚な、キャラメル系の満足感を楽しむなら"
+      }
+    ]
+  },
+  "hakea": {
+    "title": "おやつのような濃厚な甘み",
+    "primary": "hakea",
+    "spoon": "まずはそのまま少量ずつ。バニラを思わせる香りと濃厚な甘みを楽しんでください。",
+    "food": "温かい焼き芋にとろりとかけて、秋冬らしいおやつに。",
+    "warm": "温かいお茶のお供に、そのまま少量ずつ。濃厚な甘みとお茶を交互に楽しんでください。",
+    "comparisons": [
+      {
+        "key": "dryandra",
+        "reason": "ほんのりした塩気と花の香りも楽しむなら"
+      },
+      {
+        "key": "rose_banksia",
+        "reason": "より濃厚で、ねっとりした余韻を楽しむなら"
+      }
+    ]
+  },
+  "blackbutt": {
+    "title": "深く濃い味わいをじっくり",
+    "primary": "blackbutt",
+    "spoon": "深く濃い味わいを、少量ずつそのまま楽しんでください。",
+    "food": "トーストやナッツに少量を添えて、濃厚な甘みを楽しんでください。",
+    "warm": "コーヒーや紅茶のお供に、少量ずつじっくり味わってください。",
+    "comparisons": [
+      {
+        "key": "jarrah",
+        "reason": "濃厚さを少し抑えた、キャラメル系のコクなら"
+      },
+      {
+        "key": "murchison",
+        "reason": "さらに濃厚な味わいを、そのまま少しずつ楽しむなら"
+      }
+    ]
+  },
+  "cinnamon": {
+    "title": "スパイスの香りを楽しむ",
+    "primary": "cinnamon",
+    "spoon": "シナモンの香りがあります。まずは少量から、お好みの量で楽しんでください。",
+    "food": "トーストや焼き芋に少量を添えて、甘く華やかなスパイスの香りを。",
+    "warm": "コーヒーやミルクティーに少量を。香りを確かめながら加えてください。",
+    "comparisons": [
+      {
+        "key": "lemon_myrtle",
+        "reason": "スパイスより、爽やかなハーブの香りなら"
+      },
+      {
+        "key": "ginger_honey",
+        "reason": "甘い香りより、生姜のきりっとした辛みなら"
+      }
     ]
   }
 };
-
-const QUESTIONS = [
-  {
-    "id": "q1",
-    "step": 1,
-    "number": "Question  01",
-    "theme": "秋冬のひとさじ",
-    "text": "肌寒い季節、はちみつを楽しみたい\n「時間」はどちらですか？",
+const QUESTIONS = [{
+  "id": "q1",
+  "step": 1,
+  "number": "Question  01",
+  "theme": "味わいの方向",
+  "text": "この秋冬、どんな味わいの\nはちみつに惹かれますか？",
+  "choices": [
+    {
+      "id": "A",
+      "label": "Light & Fresh",
+      "main": "軽やかで爽やかな味",
+      "sub": "重すぎず、さっぱり楽しみたい"
+    },
+    {
+      "id": "B",
+      "label": "Floral",
+      "main": "花々の香りと甘み",
+      "sub": "花の香りや、ほどよいコクを楽しみたい"
+    },
+    {
+      "id": "C",
+      "label": "Caramel",
+      "main": "キャラメルを思わせる甘み",
+      "sub": "おやつのような甘さを楽しみたい"
+    },
+    {
+      "id": "D",
+      "label": "Distinctive",
+      "main": "個性のある深い風味",
+      "sub": "濃い味わいやスパイスの香りを楽しみたい"
+    }
+  ]
+}];
+const Q2_BRANCHES = {
+  "A": {
+    "theme": "爽やかさの好み",
+    "text": "軽やかな味の中でも、\n惹かれるのはどちらですか？",
     "choices": [
       {
         "id": "A",
-        "label": "Morning",
-        "main": "朝〜日中",
-        "sub": "朝食や仕事の合間に、好きな甘みを楽しみたい"
+        "label": "Gentle",
+        "main": "やさしく穏やかな甘み",
+        "sub": "クリーミーな口あたりと、すっきりした後味",
+        "profile": "karri"
       },
       {
         "id": "B",
-        "label": "Evening",
-        "main": "夕方〜夜",
-        "sub": "一日の終わりに、ゆっくりお茶やおやつを楽しみたい"
+        "label": "Sweet & Sour",
+        "main": "甘酸っぱく、さっぱり",
+        "sub": "甘さだけでなく、はっきりした酸味も楽しみたい",
+        "profile": "stingless"
       }
     ]
   },
-  {
-    "id": "q2",
-    "step": 2,
-    "number": "Question  02",
-    "theme": "秋冬の食べ方",
-    "text": "この秋冬、試してみたい\n「楽しみ方」はどちらですか？",
+  "B": {
+    "theme": "花の香りとコク",
+    "text": "花々の風味に、\nどれくらいのコクを合わせたいですか？",
     "choices": [
       {
         "id": "A",
-        "label": "Warm Drink",
-        "main": "温かい飲み物と",
-        "sub": "紅茶やコーヒーに添えて、香りと甘みを楽しむ"
+        "label": "Balanced",
+        "main": "軽さとコクのほどよいバランス",
+        "sub": "日々の食卓で楽しみやすい甘み",
+        "profile": "wildflower"
       },
       {
         "id": "B",
-        "label": "One Spoon",
-        "main": "食べ物に添えて・そのままで",
-        "sub": "トーストや焼き芋に添えて、ひとさじをじっくり味わう"
-      }
-    ]
-  }
-];
-
-const Q3_BRANCHES = {
-  "AA": {
-    "theme": "朝の香りの好み",
-    "text": "朝の温かい一杯に、\nどんな香りを添えたいですか？",
-    "choices": [
-      {
-        "id": "A",
-        "label": "Ginger",
-        "main": "きりっとした生姜の辛み",
-        "sub": "甘さの中に、はっきりした刺激がほしい",
-        "result": "ginger_honey"
-      },
-      {
-        "id": "B",
-        "label": "Cinnamon",
-        "main": "甘く華やかなスパイスの香り",
-        "sub": "シナモンの香りをゆっくり楽しみたい",
-        "result": "cinnamon"
+        "label": "Full & Floral",
+        "main": "芳醇な香りと、しっかりしたコク",
+        "sub": "花々の香りも濃厚さも、じっくり楽しみたい",
+        "profile": "forest"
       }
     ]
   },
-  "AB": {
-    "theme": "朝の甘みの好み",
-    "text": "トーストや、ひとさじのお供に。\n惹かれる甘みはどちらですか？",
+  "C": {
+    "theme": "キャラメルの甘み",
+    "text": "おやつのような甘みなら、\nどちらを楽しみたいですか？",
     "choices": [
       {
         "id": "A",
-        "label": "Caramel",
-        "main": "キャラメルのような甘み",
-        "sub": "毎日の朝食やおやつでたっぷり楽しみたい",
-        "result": "native"
+        "label": "Everyday",
+        "main": "日々楽しめるキャラメルの甘み",
+        "sub": "朝食やおやつで、たっぷり楽しみたい",
+        "profile": "native"
       },
       {
         "id": "B",
-        "label": "Deep & Rich",
-        "main": "黒糖やナッツのような深いコク",
-        "sub": "濃厚な甘みを少しずつ味わいたい",
-        "result": "jarrah"
-      }
-    ]
-  },
-  "BA": {
-    "theme": "夜のお茶の好み",
-    "text": "ひと休みの温かいお茶に、\n合わせたい味はどちらですか？",
-    "choices": [
-      {
-        "id": "A",
-        "label": "Herbal",
-        "main": "レモンのようなハーブの香り",
-        "sub": "爽やかな風味でさっぱり楽しみたい",
-        "result": "lemon_myrtle"
-      },
-      {
-        "id": "B",
-        "label": "Mild",
-        "main": "やさしくクリーミーな甘み",
-        "sub": "穏やかな味わいと軽い後味が好き",
-        "result": "karri"
-      }
-    ]
-  },
-  "BB": {
-    "theme": "夜のおやつの好み",
-    "text": "秋冬のおやつ時間に、\n楽しみたい余韻はどちらですか？",
-    "choices": [
-      {
-        "id": "A",
-        "label": "Vanilla",
+        "label": "Vanilla & Rich",
         "main": "バニラを思わせる濃厚な甘み",
-        "sub": "焼き芋に、とろりとかけて味わいたい",
-        "result": "hakea"
+        "sub": "ひとさじや焼き芋で、満足感を楽しみたい",
+        "profile": "hakea"
+      }
+    ]
+  },
+  "D": {
+    "theme": "個性のある風味",
+    "text": "気になる味の個性は、\nどちらですか？",
+    "choices": [
+      {
+        "id": "A",
+        "label": "Deep & Woody",
+        "main": "深く濃い、木の香りとコク",
+        "sub": "濃厚なキャラメル・ウッド寄りの味をじっくり",
+        "profile": "blackbutt"
       },
       {
         "id": "B",
-        "label": "Woody",
-        "main": "落ち着いた木の香りと丸い甘み",
-        "sub": "スコーンやナッツとゆっくり楽しみたい",
-        "result": "wandoo"
+        "label": "Spiced",
+        "main": "甘く華やかなスパイスの香り",
+        "sub": "シナモンの香りを、食卓や飲み物に添えたい",
+        "profile": "cinnamon"
       }
     ]
   }
 };
+const USAGE_QUESTION = {
+  "id": "q3",
+  "step": 3,
+  "number": "Question  03",
+  "theme": "秋冬の楽しみ方",
+  "text": "はちみつを、どんなふうに\n楽しみたいですか？",
+  "choices": [
+    {
+      "id": "A",
+      "label": "One Spoon",
+      "main": "そのまま、ひとさじ",
+      "sub": "香りや口あたりをじっくり味わう",
+      "use": "spoon"
+    },
+    {
+      "id": "B",
+      "label": "With Food",
+      "main": "食べ物に添えて",
+      "sub": "トーストや焼き芋など、食卓のお供に",
+      "use": "food"
+    },
+    {
+      "id": "C",
+      "label": "Warm Drink",
+      "main": "温かい飲み物と",
+      "sub": "紅茶やコーヒーに加えたり、お茶請けに",
+      "use": "warm"
+    },
+    {
+      "id": "D",
+      "label": "Refreshing Drink",
+      "main": "水や炭酸で割って",
+      "sub": "お好みの濃さで、さっぱり楽しむ",
+      "use": "cold"
+    }
+  ]
+};
 
-function getQ3(a1, a2) {
-  const branch = Q3_BRANCHES[a1 + a2];
-  if (!branch) throw new Error('Invalid diagnosis answers');
-  return { id: 'q3', step: 3, number: 'Question  03', ...branch };
+function getQ2(answer) {
+  const branch = Q2_BRANCHES[answer];
+  if (!branch) throw new Error('Invalid diagnosis answer');
+  return { id: 'q2', step: 2, number: 'Question  02', ...branch };
 }
 
-function selectProduct(preferredKey) {
-  const preferred = RESULTS[preferredKey];
-  if (!preferred) return null;
-  return [preferredKey, ...preferred.alternatives]
-    .find(key => RESULTS[key] && RESULTS[key].available === true) || null;
+function selectRecommendations(profileKey) {
+  const profile = PROFILES[profileKey];
+  if (!profile) return { primary: null, comparisons: [], substituted: false };
+  const candidates = [profile.primary, ...profile.comparisons.map(c => c.key)];
+  const available = candidates.filter((key, index) =>
+    candidates.indexOf(key) === index && RESULTS[key]?.available === true);
+  const primary = available[0] || null;
+  return {
+    primary,
+    substituted: primary !== null && primary !== profile.primary,
+    comparisons: available.slice(1, 3).map(key => ({
+      key,
+      reason: primary === profile.primary
+        ? profile.comparisons.find(c => c.key === key).reason
+        : '別の味わいも比べるなら'
+    }))
+  };
 }
 
-function productLink(shopUrl, productKey) {
+function servingFor(profileKey, productKey, use) {
+  const product = RESULTS[productKey];
+  if (!product) return '';
+  const profile = PROFILES[profileKey];
+  if (profile && profile.primary === productKey && profile[use]) return profile[use];
+  if (use === 'cold') return '少量のぬるま湯でよく溶かしてから、水や炭酸に少しずつ加え、お好みの濃さで楽しんでください。';
+  if (use === 'spoon') return 'まずは少量ずつそのまま。香りや口あたりをゆっくり楽しんでください。';
+  if (use === 'food') return 'トーストなどに少量を添えて、食材と甘みの組み合わせを楽しんでください。';
+  if (use === 'warm') return '温かいお茶のお供に、そのまま少量ずつ。お茶と交互に味わってください。';
+  return product.serving.replace(/^秋冬の楽しみ方：/, '');
+}
+
+function productLink(shopUrl, productKey, placement = 'primary') {
   const url = new URL(shopUrl);
   url.searchParams.set('utm_source', 'honey_diagnosis');
   url.searchParams.set('utm_medium', 'referral');
   url.searchParams.set('utm_campaign', 'autumn_winter_2026');
   url.searchParams.set('utm_content', productKey);
+  url.searchParams.set('utm_term', placement);
   return url.href;
 }
 
@@ -1557,6 +1863,8 @@ const state = {
   step: 0,           // 1,2,3
   answers: {},       // {q1:'A', q2:'B', q3:'A'}
   result: null,
+  profile: null,
+  use: null,
   currentQ: null
 };
 
@@ -1598,6 +1906,7 @@ function renderProgress(step) {
 
 function renderQuestion(q) {
   state.currentQ = q;
+  document.getElementById('screen-q').scrollTop = 0;
   state.busy = false;
   renderProgress(q.step);
 
@@ -1608,7 +1917,7 @@ function renderQuestion(q) {
     <p class="q-text">${q.text.replace(/\n/g,'<br>')}</p>
     <div class="choices" id="choice-list">
       ${q.choices.map(c => `
-        <button class="choice-btn" data-id="${c.id}" ${c.result ? `data-result="${c.result}"` : ''}>
+        <button class="choice-btn" data-id="${c.id}" ${c.profile ? `data-profile="${c.profile}"` : ''}>
           <div class="choice-inner">
             <span class="choice-label">${c.label}</span>
             <span class="choice-main">${c.main}</span>
@@ -1640,33 +1949,23 @@ function renderQuestion(q) {
 function handleChoice(btn) {
   if (state.busy) return;
   state.busy = true;
-
-  // Disable all choices immediately for visual feedback
   document.querySelectorAll('.choice-btn').forEach(b => b.style.pointerEvents = 'none');
   btn.classList.add('chosen');
+  const choice = state.currentQ.choices.find(c => c.id === btn.dataset.id);
+  const step = state.currentQ.step;
 
-  const choiceId = btn.dataset.id;
-  const q = state.currentQ;
-
-  // Wait for the fill animation, then transition
   setTimeout(() => {
-    if (q.step === 1) {
-      // Q1→Q2: same #screen-q element — call renderQuestion directly
-      state.answers.q1 = choiceId;
-      renderQuestion(QUESTIONS[1]);
-
-    } else if (q.step === 2) {
-      // Q2→Q3: same #screen-q element — call renderQuestion directly
-      state.answers.q2 = choiceId;
-      renderQuestion(getQ3(state.answers.q1, choiceId));
-
+    state.answers['q' + step] = choice.id;
+    if (step === 1) {
+      renderQuestion(getQ2(choice.id));
+    } else if (step === 2) {
+      state.profile = choice.profile;
+      renderQuestion(USAGE_QUESTION);
     } else {
-      // Q3→Loading→Result: different screens, use goTo normally
-      const resultKey = btn.dataset.result;
-      state.result = resultKey;
+      state.use = choice.use;
       goTo('loading');
       setTimeout(() => {
-        renderResult(resultKey);
+        renderResult(state.profile);
         goTo('result');
       }, 1700);
     }
@@ -1677,30 +1976,71 @@ function handleChoice(btn) {
    RESULT RENDERING
 ═══════════════════════════════════════════════════ */
 
-function renderResult(preferredKey) {
-  const key = selectProduct(preferredKey);
+function renderResult(profileKey) {
+  const profile = PROFILES[profileKey];
+  const selection = selectRecommendations(profileKey);
+  const key = selection.primary;
   const r = key ? RESULTS[key] : null;
-  const card = document.querySelector('.result-card-wrap');
   const shop = document.getElementById('btn-shop');
+  state.profile = profileKey;
   state.result = key;
-  card.hidden = !r;
-
-  document.getElementById('result-element').textContent = r ? r.element : '秋冬のはちみつ選び';
+  document.querySelector('.result-card-wrap').hidden = !r;
+  document.getElementById('result-primary-label').textContent = !r
+    ? 'お好みに近いはちみつを探す'
+    : selection.substituted ? 'お好みに近い、別の一瓶をご紹介します' : 'あなたに一番おすすめのはちみつ';
+  document.getElementById('result-element').textContent = selection.substituted ? '味わいを比べて選ぶ' : profile ? profile.title : '秋冬のはちみつ選び';
   document.getElementById('result-name-en').textContent = r ? r.nameEn : '';
   document.getElementById('result-name-jp').textContent = r ? r.nameJp : '';
   document.getElementById('result-desc').textContent = r ? r.desc
     : 'お好みに近いはちみつは、ただいまご案内をお休みしています。ストアで販売中の商品をご覧ください。';
-  document.getElementById('result-serving').textContent = r ? r.serving : '';
+  document.getElementById('result-serving').textContent = r
+    ? 'あなたへの楽しみ方：' + servingFor(profileKey, key, state.use) : '';
+  document.getElementById('result-serving').hidden = !r;
   document.getElementById('result-product').textContent = r ? r.productLabel : '';
   document.getElementById('result-stock-note').textContent = !r ? ''
-    : key === preferredKey ? 'あなたの好みに合わせて選んだ一瓶'
-    : '第一候補はご案内をお休みしているため、同じ楽しみ方に合う別の一瓶をご紹介しています。';
+    : selection.substituted ? '本命のはちみつはご案内をお休みしているため、比較候補からご紹介しています。'
+    : 'お好みの風味に合わせて選んだ一瓶';
   shop.href = productLink(r ? r.shopUrl : 'https://mariposa8.theshop.jp/', key || 'store');
   shop.textContent = r ? 'このはちみつを見る' : 'ストアの商品を見る';
   document.getElementById('card-illustration').innerHTML = r ? cardSVG(key) : '';
 
-  // Reset animations
-  ['.result-top-label','.result-element-badge','.result-card-wrap',
+  const list = document.getElementById('comparison-list');
+  list.replaceChildren();
+  document.getElementById('result-comparisons').hidden = selection.comparisons.length === 0;
+  document.getElementById('comparison-intro').textContent = selection.substituted
+    ? 'ほかの味わいも、こちらから比べられます。'
+    : '本命との味わいの違いから、' + selection.comparisons.length + '種類をご紹介します。';
+  selection.comparisons.forEach(({ key: comparisonKey, reason }, index) => {
+    const product = RESULTS[comparisonKey];
+    const article = document.createElement('article');
+    article.className = 'comparison-card';
+    article.dataset.product = comparisonKey;
+    const reasonEl = document.createElement('p');
+    reasonEl.className = 'comparison-reason';
+    reasonEl.textContent = reason;
+    const name = document.createElement('h3');
+    name.textContent = product.nameJp;
+    const english = document.createElement('p');
+    english.className = 'comparison-name-en';
+    english.textContent = product.nameEn;
+    const taste = document.createElement('p');
+    taste.className = 'comparison-taste';
+    taste.textContent = product.taste;
+    const label = document.createElement('p');
+    label.className = 'comparison-product';
+    label.textContent = product.productLabel;
+    const link = document.createElement('a');
+    link.className = 'btn-compare';
+    link.href = productLink(product.shopUrl, comparisonKey, 'comparison_' + (index + 1));
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = 'このはちみつを見る';
+    link.setAttribute('aria-label', product.nameJp + 'の商品を見る');
+    article.append(reasonEl, name, english, taste, label, link);
+    list.append(article);
+  });
+
+  ['.result-top-label','.result-primary-label','.result-element-badge','.result-card-wrap',
    '.result-desc-wrap','.result-cta-wrap'].forEach(sel => {
     const el = document.querySelector(sel);
     if (el) { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; }
@@ -1773,6 +2113,9 @@ document.addEventListener('DOMContentLoaded', () => {
     state.busy = false;
     state.answers = {};
     state.result  = null;
+    state.profile = null;
+    state.use = null;
+    state.currentQ = null;
     goTo('start');
   });
 });
